@@ -1,0 +1,4 @@
+org.apache.felix:org.apache.felix.converter:0.3.0-SNAPSHOT
+org.apache.felix:org.apache.felix.schematizer:0.3.0-SNAPSHOT
+org.apache.felix:org.apache.felix.serializer:0.3.0-SNAPSHOT
+org.apache.felix:org.apache.felix.persister:0.3.0-SNAPSHOT

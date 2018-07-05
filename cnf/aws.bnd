@@ -1,0 +1,20 @@
+base.version:		${site.version}.${tstamp}
+Bundle-Version:		${build.version}
+-releaserepo:		${repo}
+
+Bundle-Version:		${build.version}
+Bundle-Description: ${site.description}
+Bundle-Name:		${site.name}
+
+Angular-Website: \
+	net.leangen.expedition.platform.website;\
+		pid=${site.pid};\
+		expedition.web.name=${site.name};\
+		expedition.web.description=${site.description};\
+		expedition.web.version=${site.version};\
+		expedition.web.uri=${site.uri};\
+		expedition.web.resources=${site.resources};\
+
+-includeresource: \
+	{readme.md}, \
+	static/${site.pid}=dist

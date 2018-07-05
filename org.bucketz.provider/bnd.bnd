@@ -1,0 +1,19 @@
+base.version:		1.0.0.${tstamp}
+Bundle-Version:		${build.version}
+-releaserepo:		${repo}
+
+Bundle-Name:		Bucketz Provider
+Bundle-Description: \
+  Provides an adapter for persisting DTOs to various bucket-oriented stores.
+
+Export-Package: \
+	org.bucketz,\
+	org.bucketz.store
+
+Private-Package: \
+	org.bucketz.impl,\
+	org.bucketz.export.impl
+
+-buildpath: \
+	osgi.enroute.base.api;version=2.0,\
+	org.bucketz.api;version=snapshot

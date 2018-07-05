@@ -1,0 +1,54 @@
+javac.source: 			1.8
+javac.target: 			1.8
+-runee:					JavaSE-1.8
+
+Service-Component: 		*
+-dsannotations: 		*
+-metatypeannotations:	*
+-contract:				*
+
+
+test-cases: 			${classes;NAMED;*Test}
+-resolve.effective:		resolve, active
+
+# Used for local releases
+local:					${build}/local
+
+# If the RELEASE variable is set, it signals that we want to release externally.
+# Otherwise, we only release locally.
+userepo:				${env;REMOTE_RELEASE;}
+repo:					${if;${userepo};"Local,Release";Local}
+
+# Nexus Maven Repositories
+nexus.location:			${nexus.base}/repository
+nexus.repo:				${nexus.location}/maven
+# The Release repo holds the released provider bundles to be deployed
+releaserepo:			${nexus.location}/${workspace.name}
+osgirepo:				osgi-distro
+# OBR Repository
+obrrepo:				${nexus.location}/obr
+
+
+# For patches required for deploying
+-plugin.7.Patches:  \
+    aQute.bnd.repository.maven.provider.MavenBndRepository; \
+    	releaseUrl			=   ${nexus.location}/patches/; \
+    	snapshotUrl			=   ${nexus.location}/patches/; \
+		name				=	Patches
+
+
+# For local releases
+-plugin.9.Local: \
+        aQute.bnd.deployer.repository.LocalIndexedRepo; \
+            name                =       Local; \
+            pretty              =       true ; \
+            local               =       ${local}; \
+            description			=		"For local releases"
+
+
+# This is the Release repository for released API bundles, also used for baselining 
+-plugin.9.2.Release:  \
+    aQute.bnd.repository.maven.provider.MavenBndRepository; \
+    	releaseUrl			=   ${releaserepo}/; \
+		name				=	Release
+

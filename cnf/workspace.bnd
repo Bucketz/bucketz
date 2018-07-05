@@ -1,0 +1,25 @@
+########################################################################################
+# Workspace Properties
+########################################################################################
+
+# The common workspace information for all projects in this workspace.
+workspace.name:			bucketz
+workspace.group:		org.bucketz
+
+# Copyright information
+copyright.holder:		David Leangen
+
+# Product-related information
+product.vendor:			leangen.net
+
+# GIT
+git.baseUrl:			https://github.com/
+git.group:				bucketz
+
+# Resource Repository
+# Notes:
+#   * Use the environment variables "REPO_PASSWORD" and "REPO_USERNAME" in the OS
+#     environment to set the username and password of the Resource Repository
+#   * Set the environment variable "REMOTE_RELEASE" to "true" in order to trigger
+#     a release to the Repository
+nexus.base				http://repo.bioscene.net

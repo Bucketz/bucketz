@@ -1,0 +1,16 @@
+base.version:		1.0.0.${tstamp}
+Bundle-Version:		${build.version}
+-releaserepo:		${repo}
+
+Bundle-Name:		Bucketz Utility Library
+Bundle-Description:	Library for common Bucketz operations.
+
+Private-Package: \
+	org.bucketz.lib
+
+-buildpath: \
+	osgi.enroute.base.api;version=2.0,\
+	org.bucketz.api,\
+	org.apache.felix.converter,\
+	org.apache.felix.schematizer,\
+	org.apache.felix.serializer

@@ -1,0 +1,57 @@
+-include 				${workspace}/cnf/workspace.bnd
+
+copyright.year:			${tstamp;yyyy}
+copyright:				Copyright (c) ${copyright.holder} (2014, ${copyright.year}). All Rights Reserved.
+git.url:				${git.baseUrl}/${git.group}/${workspace.name}
+
+Bundle-Copyright: 		${copyright}
+Bundle-Vendor:    		${product.vendor}
+Bundle-License: 		http://leangen.net; \
+                			link="http://leangen.net"; \
+                			description="eXpedition License"
+Bundle-DocURL:    		http://leangen.net
+Bundle-SCM:       		url=${git.url}, \
+                  			connection=scm:git:${git.url}.git, \
+                  			developerConnection=scm:git:${git.url}.git
+Bundle-Developers: 		leangen.net; \
+							email=david@leangen.net; \
+							name="leangen.net"; \
+							organization="leangen.net"
+
+Bundle-ContactAddress:	david@leangen.net
+
+Bundle-Category:		eXpedition Platform
+
+# Not yet sure what this is for, but looks neat!
+Git-Descriptor:   		${system-allow-fail;git describe --dirty --always}
+Git-SHA:          		${system-allow-fail;git rev-list -1 HEAD}
+
+-testpath: \
+	osgi.enroute.junit.wrapper,\
+	osgi.enroute.hamcrest.wrapper
+
+-groupid:               ${workspace.group}
+
+-baseline: 				
+-baselinerepo:			Release
+
+# The credentials that are used on the CI server.
+# These are passed in via the environment. The values are stored
+# on the CI server.
+pwd = ${env;REPO_PASSWORD;}
+usr = ${env;REPO_USERNAME;}
+
+# If the build is Local, use the timestamp with the version. Otherwise, if this
+# is a release build, remove the timestamp.
+vmask = ${if;${userepo};===~;====}
+build.version = ${versionmask;${vmask};${base.version}}
+
+# When building locally (no password environment variable is set)
+# use Maven (and any credentials in settings.xml). Otherwise use
+# the provided credentials.
+-connection-settings: \
+	${if;${pwd};server;maven}; \
+		id=${nexus.base}; \
+		username=${usr}; \
+		password=${pwd}, \
+		-bnd
