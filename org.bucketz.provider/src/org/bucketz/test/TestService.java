@@ -2,11 +2,10 @@ package org.bucketz.test;
 
 import org.apache.felix.serializer.Serializer;
 import org.bucketz.BucketIO;
-import org.bucketz.BucketStore;
-import org.bucketz.BucketStoreFactory;
-import org.bucketz.BucketStoreProvider;
 import org.bucketz.Bucketz;
 import org.bucketz.lib.BucketIOFactory;
+import org.bucketz.store.BucketStore;
+import org.bucketz.store.BucketStoreFactory;
 import org.osgi.service.component.ComponentContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -16,10 +15,12 @@ import org.osgi.service.log.LogService;
 @Component(immediate=true)
 public class TestService
 {
-    @Reference private BucketStoreProvider provider;
+    @Reference private BucketStoreFactory factory;
     @Reference private BucketStoreFactory.ConfigurationBuilder builder;
     @Reference private LogService logger;
     @Reference private Serializer serializer;
+
+    private BucketStore<TestDTO> store;
 
     @Activate
     void activate( ComponentContext context )
@@ -47,12 +48,17 @@ public class TestService
                 .get();
         try
         {
-            provider.newStore( config, descriptor, io );
+            store = factory.newStore( config, descriptor, io );
         }
         catch ( Exception e )
         {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+    }
+
+    void deactivate()
+    {
+        factory.release( store );
     }
 }

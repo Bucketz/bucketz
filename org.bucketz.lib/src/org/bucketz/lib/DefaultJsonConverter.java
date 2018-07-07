@@ -1,8 +1,8 @@
 package org.bucketz.lib;
 
 import org.apache.felix.serializer.Serializer;
-import org.bucketz.BucketDescriptor;
 import org.bucketz.Codec;
+import org.bucketz.store.BucketDescriptor;
 
 public class DefaultJsonConverter<D>
     implements Codec<D>

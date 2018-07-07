@@ -3,9 +3,6 @@ package org.bucketz;
 import java.net.URI;
 import java.util.Optional;
 
-import org.bucketz.BucketStore.Format;
-import org.bucketz.BucketStore.Packaging;
-
 public interface Bucket
 {
     /**
@@ -64,4 +61,51 @@ public interface Bucket
      * This is Optional because the contents may not yet have been read from its Store.
      */
     Optional<String> content();
+
+    /**
+     * Describes the format of the Bucket contents. Usually the contents are in JSON 
+     * format, but not always. The format depends on the data schema. Very simple 
+     * schemas are sometimes easier to store in a different format, particularly TSV.
+     */
+    static enum Format
+    { 
+        /**
+         * If not specified, this is the default.
+         */
+        JSON, 
+
+        /**
+         * Tab-separated values.
+         */
+        TSV;
+    }
+
+    /**
+     * A Bucket can contain a single object, or a collection of objects. To describe the contents,
+     * we use the concept of a Bucket packaging.
+     */
+    static enum Packaging
+    { 
+        /**
+         * A "Multi-Object Bucket" is a single Bucket that packages an entire collection of DTOs.
+         * 
+         * If not specified, this is the default packaging.
+         */
+        MULTI, 
+
+        /**
+         * A "Partitioned Bucket" is one DTO in a single collection, whereby each DTO is 
+         * packaged as a single Bucket. In other words, instead of the set of DTOs being a 
+         * single Bucket with a collection of DTOs, there is a collection of Buckets each 
+         * with a single DTO.
+         */
+        PARTITIONED, 
+
+        /**
+         * A "SingleObject Bucket" is more rare, but still important. There are cases where we 
+         * need a single object, which needs to be persisted. The purpose of the SingleObjectBucket 
+         * is to just package and store this object “as is”.
+         */
+        SINGLE;
+    }
 }

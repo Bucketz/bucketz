@@ -1,6 +1,5 @@
 package org.bucketz.store;
 
-import org.bucketz.BucketStore;
 import org.osgi.annotation.versioning.ProviderType;
 
 /**

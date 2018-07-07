@@ -5,9 +5,9 @@ import java.util.Dictionary;
 import java.util.Hashtable;
 import java.util.List;
 
-import org.bucketz.BucketDescriptor;
-import org.bucketz.BucketStore;
 import org.bucketz.Bucketz;
+import org.bucketz.store.BucketDescriptor;
+import org.bucketz.store.BucketStore;
 import org.bucketz.store.BundleStore;
 import org.bucketz.store.CloudStore;
 import org.bucketz.store.FileStore;

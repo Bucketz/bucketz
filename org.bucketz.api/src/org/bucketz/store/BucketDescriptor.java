@@ -1,9 +1,10 @@
-package org.bucketz;
+package org.bucketz.store;
 
 import java.util.Comparator;
 import java.util.Optional;
 import java.util.function.Function;
 
+import org.bucketz.Bucket;
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -87,14 +88,14 @@ public interface BucketDescriptor<D>
      */
     Optional<String> containerName();
 
-    default BucketStore.Format format()
+    default Bucket.Format format()
     {
-        return BucketStore.Format.JSON;
+        return Bucket.Format.JSON;
     }
 
-    default BucketStore.Packaging packaging()
+    default Bucket.Packaging packaging()
     {
-        return BucketStore.Packaging.MULTI;
+        return Bucket.Packaging.MULTI;
     }
 
     default Optional<String> filter()
@@ -124,14 +125,14 @@ public interface BucketDescriptor<D>
             return Optional.empty();
         }
 
-        default BucketStore.Format format()
+        default Bucket.Format format()
         {
-            return BucketStore.Format.JSON;
+            return Bucket.Format.JSON;
         }
 
-        default BucketStore.Packaging packaging()
+        default Bucket.Packaging packaging()
         {
-            return BucketStore.Packaging.SINGLE;
+            return Bucket.Packaging.SINGLE;
         }        
     }
 
@@ -149,8 +150,8 @@ public interface BucketDescriptor<D>
         Builder<D> compareWith( Comparator<D> aComparator );
         Builder<D> representWith( String aBundleRepresentativeName );
         Builder<D> containWith( String aContainerName );
-        Builder<D> formatAs( BucketStore.Format aFormat );
-        Builder<D> packageAs( BucketStore.Packaging packaging );
+        Builder<D> formatAs( Bucket.Format aFormat );
+        Builder<D> packageAs( Bucket.Packaging packaging );
         Builder<D> filterWith( String aFilter );
 
         BucketDescriptor<D> get();

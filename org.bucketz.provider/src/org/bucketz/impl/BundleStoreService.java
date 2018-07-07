@@ -11,9 +11,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.bucketz.Bucket;
-import org.bucketz.BucketDescriptor;
 import org.bucketz.BucketIO;
-import org.bucketz.BucketStore;
 import org.bucketz.Bucketz;
 import org.bucketz.Bucketz.Type;
 import org.bucketz.UncheckedBucketException;
@@ -21,6 +19,8 @@ import org.bucketz.lib.BucketContextualizer;
 import org.bucketz.lib.BucketName;
 import org.bucketz.lib.BucketNameParser;
 import org.bucketz.lib.BucketPathConverter;
+import org.bucketz.store.BucketDescriptor;
+import org.bucketz.store.BucketStore;
 import org.bucketz.store.BundleStore;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;

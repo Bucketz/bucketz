@@ -1,12 +1,12 @@
 package org.bucketz.lib;
 
-import org.bucketz.BucketStore;
+import org.bucketz.Bucket;
 import org.bucketz.UncheckedBucketException;
 
 @FunctionalInterface
 public interface BucketNameParser
 {
-    BucketName parse( String aBucketName, BucketStore.Packaging aPackaging )
+    BucketName parse( String aBucketName, Bucket.Packaging aPackaging )
         throws UncheckedBucketException;
 
     static BucketNameParser newParser()
@@ -18,7 +18,7 @@ public interface BucketNameParser
         implements BucketNameParser
     {
         @Override
-        public BucketName parse( String aBucketName, BucketStore.Packaging aPackaging )
+        public BucketName parse( String aBucketName, Bucket.Packaging aPackaging )
             throws UncheckedBucketException
         {
             if (aBucketName == null || aBucketName.isEmpty())
@@ -64,7 +64,7 @@ public interface BucketNameParser
             else
             {
                 bp.simpleName = bn;
-                bp.format = BucketStore.Format.JSON.name();
+                bp.format = Bucket.Format.JSON.name();
             }
 
             if (!bp.innerPath.isEmpty() && !bp.innerPath.endsWith( "/" ))

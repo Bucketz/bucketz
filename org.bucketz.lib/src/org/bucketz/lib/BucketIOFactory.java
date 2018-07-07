@@ -6,10 +6,10 @@ import java.util.function.Function;
 
 import org.apache.felix.serializer.Serializer;
 import org.apache.felix.serializer.Writer;
-import org.bucketz.BucketDescriptor;
+import org.bucketz.Bucket;
 import org.bucketz.BucketIO;
-import org.bucketz.BucketStore;
 import org.bucketz.UncheckedBucketException;
+import org.bucketz.store.BucketDescriptor;
 import org.osgi.dto.DTO;
 import org.osgi.service.log.LogService;
 
@@ -306,7 +306,7 @@ public class BucketIOFactory<D>
         final String bucketName = new StringBuilder()
                 .append( aggregateDescriptor.brn() )
                 .append( "." )
-                .append( BucketStore.Format.TSV.name().toLowerCase() )
+                .append( Bucket.Format.TSV.name().toLowerCase() )
                 .toString();
 
         try
@@ -321,12 +321,12 @@ public class BucketIOFactory<D>
 
         try
         {
-            final BucketStore.Format format = BucketStore.Format.valueOf( tsvConfig.bucketName.format );
-            if (format != BucketStore.Format.TSV)
+            final Bucket.Format format = Bucket.Format.valueOf( tsvConfig.bucketName.format );
+            if (format != Bucket.Format.TSV)
                 errors.add( "" );
 
-            final BucketStore.Packaging packaging = BucketStore.Packaging.valueOf( tsvConfig.bucketName.packaging );
-            if (packaging != BucketStore.Packaging.MULTI)
+            final Bucket.Packaging packaging = Bucket.Packaging.valueOf( tsvConfig.bucketName.packaging );
+            if (packaging != Bucket.Packaging.MULTI)
                 errors.add( String.format( "TSV format is configured, but packging is %s", packaging.name() ) );
 
             if (tsvConfig.columns == null || tsvConfig.columns.length <= 0)
@@ -360,7 +360,7 @@ public class BucketIOFactory<D>
         final String bucketName = new StringBuilder()
                 .append( aggregateDescriptor.brn() )
                 .append( "." )
-                .append( BucketStore.Format.JSON.name().toLowerCase() )
+                .append( Bucket.Format.JSON.name().toLowerCase() )
                 .toString();
         try
         {
@@ -373,10 +373,10 @@ public class BucketIOFactory<D>
 
         try
         {
-            if (aggregateDescriptor.format() != BucketStore.Format.JSON)
+            if (aggregateDescriptor.format() != Bucket.Format.JSON)
                 errors.add( String.format( "Expected JSON format, but was %s", aggregateDescriptor.format() ) );
 
-            if (aggregateDescriptor.packaging() != BucketStore.Packaging.MULTI)
+            if (aggregateDescriptor.packaging() != Bucket.Packaging.MULTI)
                 errors.add( String.format( "Expected MULTI packaging, but was %s", aggregateDescriptor.packaging() ) );
 
             if (!aggregateDescriptor.containerName().isPresent())

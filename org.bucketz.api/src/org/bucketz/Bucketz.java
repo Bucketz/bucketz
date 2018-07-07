@@ -2,7 +2,6 @@ package org.bucketz;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
-import java.util.List;
 
 import org.osgi.namespace.implementation.ImplementationNamespace;
 
@@ -57,8 +56,6 @@ import aQute.bnd.annotation.headers.RequireCapability;
  */
 public interface Bucketz
 {
-    List<BucketStore<?>> stores();
-
     static final String NAMESPACE = ImplementationNamespace.IMPLEMENTATION_NAMESPACE;
     static final String CAP = "bucketz";
     static final String CONFIG = "bucketz.config";

@@ -10,8 +10,8 @@ import org.apache.felix.schematizer.Schema;
 import org.apache.felix.schematizer.Schematizer;
 import org.apache.felix.schematizer.StandardSchematizer;
 import org.apache.felix.serializer.Serializer;
-import org.bucketz.BucketDescriptor;
 import org.bucketz.Codec;
+import org.bucketz.store.BucketDescriptor;
 import org.osgi.util.converter.Converter;
 
 public class DefaultTsvConverter<D>

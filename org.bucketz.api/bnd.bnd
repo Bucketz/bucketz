@@ -8,6 +8,7 @@ Bundle-Description: \
 
 Export-Package: \
 	org.bucketz,\
+	org.bucketz.plugin,\
 	org.bucketz.store
 
 Require-Capability: \

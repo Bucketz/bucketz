@@ -1,43 +1,42 @@
 package org.bucketz.impl;
 
-import java.util.Dictionary;
-import java.util.Hashtable;
-import java.util.Map;
-import java.util.Set;
-
-import org.bucketz.BucketDescriptor;
-import org.bucketz.BucketDescriptor.Single;
 import org.bucketz.BucketIO;
-import org.bucketz.BucketStore;
-import org.bucketz.BucketStore.Configuration;
-import org.bucketz.BucketStoreProvider;
 import org.bucketz.Bucketz;
+import org.bucketz.UncheckedBucketException;
+import org.bucketz.lib.BucketStoreFactoryImpl;
+import org.bucketz.plugin.BucketStoreProvider;
+import org.bucketz.store.BucketDescriptor;
+import org.bucketz.store.BucketStore;
 import org.bucketz.store.BundleStore;
+import org.bucketz.store.BucketDescriptor.Single;
+import org.bucketz.store.BucketStore.Configuration;
 import org.osgi.service.component.ComponentConstants;
 import org.osgi.service.component.ComponentFactory;
-import org.osgi.service.component.ComponentInstance;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.util.converter.Converters;
 
 @Component(
-        immediate = true)
+        name = BucketStoreProvider.BUNDLE_PROVIDER_PID,
+        factory = BucketStoreProvider.FACTORY)
 public class BundleStoreProviderService
     implements BucketStoreProvider
 {
     @Reference(target="(" + ComponentConstants.COMPONENT_FACTORY + "=" + BundleStore.PID + ")")
     private ComponentFactory cf;
 
+    private BucketStoreFactoryImpl implementation;
+
     @Activate
     void activate()
     {
-        toString();
+        implementation = new BucketStoreFactoryImpl(cf);
     }
 
     void deactivate()
     {
-        
+        implementation.dispose();
+        implementation = null;
     }
 
     @Override
@@ -45,22 +44,9 @@ public class BundleStoreProviderService
             BucketStore.Configuration usingConfiguration, 
             BucketDescriptor<D> aDescriptor,
             BucketIO<D> aBucketIO )
-            throws Exception
+            throws UncheckedBucketException
     {
-        final Dictionary<String, Object> properties = new Hashtable<>();
-        // Do in two steps due to erasure.
-        @SuppressWarnings( "unchecked" )
-        final Set<Map.Entry<String, Object>> set = Converters.standardConverter()
-                .convert( usingConfiguration )
-                .to( Map.class )
-                .entrySet();
-        set.forEach( e -> properties.put( e.getKey(), e.getValue() ) );
-        properties.put( "descriptor", aDescriptor );
-        properties.put( "io", aBucketIO );
-        final ComponentInstance component = cf.newInstance( properties );
-        @SuppressWarnings( "unchecked" )
-        final BucketStore<D> store = (BucketStore<D>)component.getInstance();
-        return store;
+        return implementation.newStore( usingConfiguration, aDescriptor, aBucketIO );
     }
 
     @Override
@@ -68,16 +54,16 @@ public class BundleStoreProviderService
             Configuration usingConfiguration, 
             Single<D> aDescriptor,
             org.bucketz.BucketIO.Single<D> aBucketIO )
-            throws Exception
+            throws UncheckedBucketException
     {
-        return newStore( usingConfiguration, aDescriptor, aBucketIO );
+        return implementation.newSingleObjectStore( usingConfiguration, aDescriptor, aBucketIO );
     }
 
     @Override
     public <D> void release( BucketStore<D> aStore )
-            throws Exception
+            throws UncheckedBucketException
     {
-        // TODO
+        implementation.release( aStore );
     }
 
     @Override

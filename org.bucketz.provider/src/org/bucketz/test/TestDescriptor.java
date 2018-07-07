@@ -3,7 +3,7 @@ package org.bucketz.test;
 import java.util.Optional;
 import java.util.function.Function;
 
-import org.bucketz.BucketDescriptor;
+import org.bucketz.store.BucketDescriptor;
 
 public class TestDescriptor
     implements BucketDescriptor<TestDTO>

@@ -9,7 +9,7 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
-import org.bucketz.BucketDescriptor;
+import org.bucketz.store.BucketDescriptor;
 import org.bucketz.store.FileStore;
 import org.bucketz.store.SingleObjectBucketStore;
 import org.osgi.framework.BundleContext;

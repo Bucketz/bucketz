@@ -1,7 +1,5 @@
 package org.bucketz.store;
 
-import org.bucketz.BucketStore;
-
 public interface FileStore<D>
     extends BucketStore<D>, Writable<D>
 {

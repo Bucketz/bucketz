@@ -4,9 +4,9 @@ import java.util.Comparator;
 import java.util.Optional;
 import java.util.function.Function;
 
-import org.bucketz.BucketDescriptor;
-import org.bucketz.BucketStore;
+import org.bucketz.Bucket;
 import org.bucketz.UncheckedBucketException;
+import org.bucketz.store.BucketDescriptor;
 
 public class BucketDescriptorBuilderService<D>
     implements BucketDescriptor.Builder<D>
@@ -81,7 +81,7 @@ public class BucketDescriptorBuilderService<D>
     }
 
     @Override
-    public BucketDescriptor.Builder<D> formatAs( BucketStore.Format aFormat )
+    public BucketDescriptor.Builder<D> formatAs( Bucket.Format aFormat )
     {
         assertNotUsed();
         data.format = aFormat;
@@ -89,7 +89,7 @@ public class BucketDescriptorBuilderService<D>
     }
 
     @Override
-    public BucketDescriptor.Builder<D> packageAs( BucketStore.Packaging aPackaging )
+    public BucketDescriptor.Builder<D> packageAs( Bucket.Packaging aPackaging )
     {
         assertNotUsed();
         data.packaging = aPackaging;
@@ -141,8 +141,8 @@ public class BucketDescriptorBuilderService<D>
         private String version;
         private Function<D, String> idExtractor;
         private Comparator<D> comparator;
-        private BucketStore.Format format;
-        private BucketStore.Packaging packaging;
+        private Bucket.Format format;
+        private Bucket.Packaging packaging;
         private String filter;
         private String brn;
         private String containerName;        
@@ -157,8 +157,8 @@ public class BucketDescriptorBuilderService<D>
         private final String version;
         private final Function<D, String> idExtractor;
         private final Comparator<D> comparator;
-        private final BucketStore.Format format;
-        private final BucketStore.Packaging packaging;
+        private final Bucket.Format format;
+        private final Bucket.Packaging packaging;
         private final String filter;
         private final String brn;
         private final String containerName;        
@@ -218,7 +218,7 @@ public class BucketDescriptorBuilderService<D>
         }
 
         @Override
-        public BucketStore.Format format()
+        public Bucket.Format format()
         {
             if (format != null)
                 return format;
@@ -227,7 +227,7 @@ public class BucketDescriptorBuilderService<D>
         }
 
         @Override
-        public BucketStore.Packaging packaging()
+        public Bucket.Packaging packaging()
         {
             if (packaging != null)
                 return packaging;

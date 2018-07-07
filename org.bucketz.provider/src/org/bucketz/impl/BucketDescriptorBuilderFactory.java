@@ -1,7 +1,7 @@
 package org.bucketz.impl;
 
-import org.bucketz.BucketDescriptor;
 import org.bucketz.UncheckedBucketException;
+import org.bucketz.store.BucketDescriptor;
 import org.osgi.service.component.annotations.Component;
 
 @Component

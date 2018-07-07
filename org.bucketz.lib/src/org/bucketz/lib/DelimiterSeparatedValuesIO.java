@@ -14,11 +14,11 @@ import java.util.stream.Stream;
 
 import org.apache.felix.serializer.Serializer;
 import org.bucketz.Bucket;
-import org.bucketz.BucketDescriptor;
 import org.bucketz.BucketIO;
-import org.bucketz.BucketStore;
 import org.bucketz.Codec;
 import org.bucketz.UncheckedBucketException;
+import org.bucketz.store.BucketDescriptor;
+import org.bucketz.store.BucketStore;
 
 /**
  * All Entities are in the same Bucket, but stores in the form of a Delimiter-Separated-Values
@@ -48,8 +48,8 @@ public class DelimiterSeparatedValuesIO<D>
     private String innerPath;
     private String simpleName;
     /* TSV is the default */
-    private String format = BucketStore.Format.TSV.name();
-    private BucketStore.Packaging packaging;
+    private String format = Bucket.Format.TSV.name();
+    private Bucket.Packaging packaging;
     private boolean doSort;
     private Comparator<D> comparator;
 

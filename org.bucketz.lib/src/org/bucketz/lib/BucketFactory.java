@@ -11,10 +11,8 @@ import java.util.stream.Collectors;
 
 import org.bucketz.Bucket;
 import org.bucketz.BucketPath;
-import org.bucketz.BucketStore;
-import org.bucketz.BucketStore.Format;
-import org.bucketz.BucketStore.Packaging;
 import org.bucketz.UncheckedBucketException;
+import org.bucketz.store.BucketStore;
 
 public class BucketFactory
 {
@@ -44,8 +42,8 @@ public class BucketFactory
         @Override public BucketPath innerPath() { return toBucketPath( context.innerPath ); }
         @Override public BucketPath outerPath() { return toBucketPath( context.outerPath ); }
         @Override public String simpleName() { return context.simpleName; }
-        @Override public Format format() { return Format.valueOf( context.format ); }
-        @Override public Packaging packaging() { return Packaging.valueOf( context.packaging ); }
+        @Override public Bucket.Format format() { return Format.valueOf( context.format ); }
+        @Override public Bucket.Packaging packaging() { return Packaging.valueOf( context.packaging ); }
         @Override public String toString() { return fqn(); }
         @Override public Optional<String> content() { return Optional.ofNullable( content ); }
         @Override public URI location()

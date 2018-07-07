@@ -1,7 +1,7 @@
 package org.bucketz.lib;
 
-import org.bucketz.BucketDescriptor;
-import org.bucketz.BucketStore;
+import org.bucketz.store.BucketDescriptor;
+import org.bucketz.store.BucketStore;
 
 @FunctionalInterface
 public interface BucketPathConverter

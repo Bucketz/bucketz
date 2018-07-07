@@ -3,7 +3,7 @@ package org.bucketz.lib;
 import java.net.URI;
 
 import org.bucketz.Bucket;
-import org.bucketz.BucketStore;
+import org.bucketz.store.BucketStore;
 
 @FunctionalInterface
 public interface BucketContextualizer

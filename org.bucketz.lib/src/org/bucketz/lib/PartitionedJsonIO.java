@@ -16,11 +16,11 @@ import org.apache.felix.schematizer.StandardSchematizer;
 import org.apache.felix.serializer.Serializer;
 import org.apache.felix.serializer.Writer;
 import org.bucketz.Bucket;
-import org.bucketz.BucketDescriptor;
 import org.bucketz.BucketIO;
-import org.bucketz.BucketStore;
 import org.bucketz.Codec;
 import org.bucketz.UncheckedBucketException;
+import org.bucketz.store.BucketDescriptor;
+import org.bucketz.store.BucketStore;
 import org.osgi.util.converter.Converter;
 
 /**
@@ -44,7 +44,7 @@ public class PartitionedJsonIO<D>
 
     private String confinement;
     private String version;
-    private BucketStore.Packaging packaging;
+    private Bucket.Packaging packaging;
     private Set<Pattern> bucketFilters = new HashSet<>();
 
     private final Class<D> dtoClass;

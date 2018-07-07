@@ -1,8 +1,8 @@
 package org.bucketz.impl;
 
-import org.bucketz.BucketStore;
-import org.bucketz.BucketStoreFactory;
 import org.bucketz.Bucketz.Type;
+import org.bucketz.store.BucketStore;
+import org.bucketz.store.BucketStoreFactory;
 import org.bucketz.UncheckedBucketException;
 import org.osgi.dto.DTO;
 import org.osgi.service.component.annotations.Component;

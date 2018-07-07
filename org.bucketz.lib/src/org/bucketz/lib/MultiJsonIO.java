@@ -15,11 +15,11 @@ import org.apache.felix.schematizer.StandardSchematizer;
 import org.apache.felix.serializer.Serializer;
 import org.apache.felix.serializer.Writer;
 import org.bucketz.Bucket;
-import org.bucketz.BucketDescriptor;
 import org.bucketz.BucketIO;
-import org.bucketz.BucketStore;
 import org.bucketz.Codec;
 import org.bucketz.UncheckedBucketException;
+import org.bucketz.store.BucketDescriptor;
+import org.bucketz.store.BucketStore;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.service.log.LogService;
 import org.osgi.util.converter.Converter;
@@ -48,7 +48,7 @@ public class MultiJsonIO<D>
     private String innerPath;
     private String simpleName;
     private String format;
-    private BucketStore.Packaging packaging;
+    private Bucket.Packaging packaging;
     private boolean doSort;
     private Comparator<D> comparator;
 
@@ -85,7 +85,7 @@ public class MultiJsonIO<D>
         final String bucketName = new StringBuilder()
                 .append( aDescriptor.brn() )
                 .append( "." )
-                .append( BucketStore.Format.JSON.name().toLowerCase() )
+                .append( Bucket.Format.JSON.name().toLowerCase() )
                 .toString();
         try
         {

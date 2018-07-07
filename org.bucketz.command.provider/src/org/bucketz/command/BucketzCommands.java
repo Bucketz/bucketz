@@ -5,8 +5,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.apache.felix.service.command.Descriptor;
-import org.bucketz.BucketStore;
 import org.bucketz.Bucketz;
+import org.bucketz.store.BucketStore;
+import org.bucketz.store.BucketStores;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -21,13 +22,13 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class BucketzCommands
 {
-    @Reference private Bucketz bucketz;
+    @Reference private BucketStores stores;
 
     @Descriptor( "List all the currently-active BucketStores" )
     public List<String> list()
         throws Exception
     {
-        final List<String> storeNames = bucketz.stores().stream()
+        final List<String> storeNames = stores.list().stream()
                 .map( store -> store.name() )
                 .collect( Collectors.toList() );
 
@@ -45,7 +46,7 @@ public class BucketzCommands
             String storeName )
         throws Exception
     {
-        final BucketStore<?> store = bucketz.stores().stream()
+        final BucketStore<?> store = stores.list().stream()
                 .filter( bs -> storeName.equals( bs.name() ) )
                 .findFirst()
                 .orElseThrow( () -> new Exception( String.format( "No BucketStore found with name: %s", storeName ) ) );
