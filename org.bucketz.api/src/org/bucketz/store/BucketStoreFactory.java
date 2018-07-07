@@ -8,6 +8,9 @@ public interface BucketStoreFactory
 {
     static final String PID = "org.bucketz.store.factory";
 
+    Bucketz.Type type();
+    Bucketz.Provider provider();
+
     <D>BucketStore<D> newStore(
             BucketStore.Configuration usingConfiguration, 
             BucketDescriptor<D> aDescriptor,
@@ -35,10 +38,5 @@ public interface BucketStoreFactory
         ConfigurationBuilder useDataFromBundle( long aBundleId );
 
         BucketStore.Configuration get();
-    }
-
-    static interface Available
-    {
-        static final String PID = BucketStoreFactory.PID + ".available";
     }
 }

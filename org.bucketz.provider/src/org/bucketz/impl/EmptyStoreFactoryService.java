@@ -4,11 +4,11 @@ import org.bucketz.BucketIO;
 import org.bucketz.Bucketz;
 import org.bucketz.UncheckedBucketException;
 import org.bucketz.lib.BucketStoreFactoryImpl;
-import org.bucketz.plugin.BucketStoreProvider;
 import org.bucketz.store.BucketDescriptor;
 import org.bucketz.store.BucketStore;
 import org.bucketz.store.BucketDescriptor.Single;
 import org.bucketz.store.BucketStore.Configuration;
+import org.bucketz.store.BucketStoreFactory;
 import org.bucketz.store.EmptyStore;
 import org.osgi.service.component.ComponentConstants;
 import org.osgi.service.component.ComponentFactory;
@@ -17,11 +17,15 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 @Component(
-        name = BucketStoreProvider.EMPTY_PROVIDER_PID,
-        factory = BucketStoreProvider.FACTORY)
-public class EmptyStoreProviderService
-    implements BucketStoreProvider
+        name = EmptyStoreFactoryService.COMPONENT_NAME,
+        property = {
+                Bucketz.Parameters.BUCKET_TYPE + "=" + Bucketz.TypeConstants.EMPTY
+        })
+public class EmptyStoreFactoryService
+    implements BucketStoreFactory
 {
+    public static final String COMPONENT_NAME = PID + ".empty";
+
     @Reference(target="(" + ComponentConstants.COMPONENT_FACTORY + "=" + EmptyStore.PID + ")")
     private ComponentFactory cf;
 

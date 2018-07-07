@@ -5,7 +5,6 @@ encoding/.project=UTF-8
 encoding//.settings/org.eclipse.jdt.core.prefs=UTF-8
 encoding//src/org/bucketz/Bucketz.java=UTF-8
 encoding//src/org/bucketz/package-info.java=UTF-8
-encoding//src/org/bucketz/plugin/package-info.java=UTF-8
 encoding//src/org/bucketz/store/BucketStore.java=UTF-8
 encoding//src/org/bucketz/store/package-info.java=UTF-8
 encoding//test/.gitignore=UTF-8

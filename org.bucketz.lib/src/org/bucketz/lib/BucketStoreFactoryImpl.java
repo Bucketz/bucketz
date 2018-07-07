@@ -41,6 +41,18 @@ public class BucketStoreFactoryImpl
     }
 
     @Override
+    public Bucketz.Type type()
+    {
+        return Bucketz.Type.BUNDLE;
+    }
+
+    @Override
+    public Bucketz.Provider provider()
+    {
+        return Bucketz.Provider.BUCKETZ;
+    }
+
+    @Override
     public <D> BucketStore<D> newStore( 
             BucketStore.Configuration usingConfiguration, 
             BucketDescriptor<D> aDescriptor,

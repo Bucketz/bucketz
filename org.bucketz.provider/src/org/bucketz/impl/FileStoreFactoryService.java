@@ -4,10 +4,10 @@ import org.bucketz.BucketIO;
 import org.bucketz.Bucketz;
 import org.bucketz.UncheckedBucketException;
 import org.bucketz.lib.BucketStoreFactoryImpl;
-import org.bucketz.plugin.BucketStoreProvider;
 import org.bucketz.store.BucketDescriptor;
 import org.bucketz.store.BucketStore;
-import org.bucketz.store.BundleStore;
+import org.bucketz.store.BucketStoreFactory;
+import org.bucketz.store.FileStore;
 import org.bucketz.store.BucketDescriptor.Single;
 import org.bucketz.store.BucketStore.Configuration;
 import org.osgi.service.component.ComponentConstants;
@@ -17,12 +17,16 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 @Component(
-        name = BucketStoreProvider.BUNDLE_PROVIDER_PID,
-        factory = BucketStoreProvider.FACTORY)
-public class BundleStoreProviderService
-    implements BucketStoreProvider
+        name = FileStoreFactoryService.COMPONENT_NAME,
+        property = {
+                Bucketz.Parameters.BUCKET_TYPE + "=" + Bucketz.TypeConstants.FILE
+        })
+public class FileStoreFactoryService
+    implements BucketStoreFactory
 {
-    @Reference(target="(" + ComponentConstants.COMPONENT_FACTORY + "=" + BundleStore.PID + ")")
+    public static final String COMPONENT_NAME = PID + ".file";
+
+    @Reference(target="(" + ComponentConstants.COMPONENT_FACTORY + "=" + FileStore.PID + ")")
     private ComponentFactory cf;
 
     private BucketStoreFactoryImpl implementation;
@@ -69,7 +73,7 @@ public class BundleStoreProviderService
     @Override
     public Bucketz.Type type()
     {
-        return Bucketz.Type.BUNDLE;
+        return Bucketz.Type.FILE;
     }
 
     @Override

@@ -15,9 +15,8 @@ import org.osgi.service.log.LogService;
 @Component(immediate=true)
 public class TestService
 {
-    @Reference private BucketStoreFactory factory;
-    @Reference(target="(" + Bucketz.Parameters.BUCKET_TYPE + "=FILE)")
-    private BucketStoreFactory.Available availability;
+    @Reference(target="(" + Bucketz.Parameters.BUCKET_TYPE + "=" + Bucketz.TypeConstants.FILE + ")")
+    private BucketStoreFactory factory;
     @Reference private BucketStoreFactory.ConfigurationBuilder builder;
     @Reference private LogService logger;
     @Reference private Serializer serializer;
