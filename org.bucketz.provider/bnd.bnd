@@ -18,6 +18,9 @@ Private-Package: \
 	org.bucketz.export.impl,\
 	org.bucketz.test
 
+-includeresource: \
+	data=data
+
 -buildpath: \
 	osgi.enroute.base.api;version=2.0,\
 	org.bucketz.api;version=snapshot,\

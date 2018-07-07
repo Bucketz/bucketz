@@ -10,9 +10,9 @@ import aQute.bnd.annotation.headers.ProvideCapability;
 import aQute.bnd.annotation.headers.RequireCapability;
 
 /**
- * A BucketStore is a store in which DTOs are stored in partitions called "Buckets".
+ * A BucketStore is a data store in which DTOs are stored in partitions called "Buckets".
  * 
- * The BucketStore has a location, represented by a URL. It could be a filestore, a
+ * The BucketStore has a location, represented by a URI. It could be a backed by a file system, a
  * bundle, or someplace remote in the Cloud.
  * 
  * A BucketStore is divided into Buckets. Each Bucket holds one or more persisted DTOs.
@@ -59,10 +59,6 @@ public interface Bucketz
 {
     List<BucketStore<?>> stores();
 
-    //
-    // Annotations for CAP/REQs
-    //
-
     static final String NAMESPACE = ImplementationNamespace.IMPLEMENTATION_NAMESPACE;
     static final String CAP = "bucketz";
     static final String CONFIG = "bucketz.config";
@@ -73,12 +69,12 @@ public interface Bucketz
 
     static final class TypeConstants
     {
+        private TypeConstants() {}
+
         public static final String EMPTY = "empty";
         public static final String BUNDLE = "bundle";
         public static final String FILE = "file";
         public static final String CLOUD = "cloud";
-
-        private TypeConstants() {}
 
         public static final class Provider
         {
@@ -88,6 +84,18 @@ public interface Bucketz
             private Provider() {}
         }
     }
+
+    static final class Parameters
+    {
+        private Parameters() {}
+
+        public static final String DESCRIPTOR = "descriptor";
+        public static final String IO = "io";
+    }
+
+    //
+    // Annotations for CAP/REQs
+    //
 
     @RequireCapability(
             ns = NAMESPACE,
@@ -113,5 +121,32 @@ public interface Bucketz
     {
         String type();
         String provider() default TypeConstants.Provider.BUCKETZ;
+    }
+
+    static class Commands
+    {
+        private Commands() {}
+
+        static final String CAP = "bucketz.commands";
+
+        //
+        // Annotations for CAP/REQs
+        //
+
+        @RequireCapability(
+                ns = NAMESPACE,
+                filter = "(&"
+                            + "(" + NAMESPACE + "=" + CAP + ")"
+                            + "${frange;" + VERSION + "}"
+                         + ")"
+        )
+        @Retention(RetentionPolicy.CLASS)
+        public static @interface Require {}
+
+        @ProvideCapability(
+                ns = NAMESPACE, 
+                name = CAP,
+                version = VERSION )
+        public static @interface Provide {}        
     }
 }

@@ -15,6 +15,7 @@ import org.bucketz.BucketDescriptor;
 import org.bucketz.BucketIO;
 import org.bucketz.BucketStore;
 import org.bucketz.Bucketz;
+import org.bucketz.Bucketz.Type;
 import org.bucketz.UncheckedBucketException;
 import org.bucketz.lib.BucketContextualizer;
 import org.bucketz.lib.BucketName;
@@ -77,8 +78,6 @@ public class BundleStoreService<D>
 
         descriptor = (BucketDescriptor<D>)properties.get( "descriptor" );
         io = (BucketIO<D>)properties.get( "io" );
-
-        System.err.println( String.format( "---> BundleStore: name=%s", name ) );
     }
 
     void deactivate()
@@ -141,6 +140,12 @@ public class BundleStoreService<D>
     public String outerPath()
     {
         return outerPath;
+    }
+
+    @Override
+    public Type type()
+    {
+        return Bucketz.Type.BUNDLE;
     }
 
     @Override

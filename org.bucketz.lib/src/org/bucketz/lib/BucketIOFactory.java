@@ -9,7 +9,6 @@ import org.apache.felix.serializer.Writer;
 import org.bucketz.BucketDescriptor;
 import org.bucketz.BucketIO;
 import org.bucketz.BucketStore;
-import org.bucketz.SingleObjectBucketDescriptor;
 import org.bucketz.UncheckedBucketException;
 import org.osgi.dto.DTO;
 import org.osgi.service.log.LogService;
@@ -154,7 +153,7 @@ public class BucketIOFactory<D>
     private boolean preprocess;
 
     private BucketDescriptor<D> aggregateDescriptor;
-    private SingleObjectBucketDescriptor<D> singleObjectDescriptor;
+    private BucketDescriptor.Single<D> singleObjectDescriptor;
 
     private final List<String> errors = new ArrayList<>();
 
@@ -191,12 +190,6 @@ public class BucketIOFactory<D>
     public BucketIOFactory<D> configureWith( BucketDescriptor<D> anAggregateDescriptor )
     {
         aggregateDescriptor = anAggregateDescriptor;
-        return this;
-    }
-    
-    public BucketIOFactory<D> configureWith( SingleObjectBucketDescriptor<D> aSingleObjectDescriptor )
-    {
-        singleObjectDescriptor = aSingleObjectDescriptor;
         return this;
     }
 

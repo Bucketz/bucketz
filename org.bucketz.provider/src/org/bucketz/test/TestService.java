@@ -37,10 +37,6 @@ public class TestService
                 .get();
 
         final String name = descriptor.name();
-//                new StringBuilder()
-//                .append( descriptor.name().substring( 0, descriptor.name().lastIndexOf( "-" ) ) )
-//                .append( "-BundleStore" )
-//                .toString();
 
         final BucketStore.Configuration config = builder
                 .usingType( Bucketz.Type.BUNDLE )

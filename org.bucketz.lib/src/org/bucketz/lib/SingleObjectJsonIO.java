@@ -12,10 +12,10 @@ import org.apache.felix.schematizer.StandardSchematizer;
 import org.apache.felix.serializer.Serializer;
 import org.apache.felix.serializer.Writer;
 import org.bucketz.Bucket;
+import org.bucketz.BucketDescriptor;
 import org.bucketz.BucketIO;
 import org.bucketz.BucketStore;
 import org.bucketz.Codec;
-import org.bucketz.SingleObjectBucketDescriptor;
 import org.bucketz.UncheckedBucketException;
 import org.osgi.util.converter.Converter;
 
@@ -54,7 +54,7 @@ public class SingleObjectJsonIO<D>
         return this;
     }
 
-    public SingleObjectJsonIO<D> configureWith( SingleObjectBucketDescriptor<D> aDescriptor )
+    public SingleObjectJsonIO<D> configureWith( BucketDescriptor.Single<D> aDescriptor )
     {
         version = aDescriptor.version();
         packaging = aDescriptor.packaging();
@@ -89,7 +89,7 @@ public class SingleObjectJsonIO<D>
 
     @SuppressWarnings( "rawtypes" )
     @Override
-    public Stream<D> read( Bucket bucket )
+    public Stream<D> debucketize( Bucket bucket )
         throws UncheckedBucketException
     {
         final List<String> errors = validateConfig();
@@ -120,7 +120,7 @@ public class SingleObjectJsonIO<D>
     }
 
     @Override
-    public List<Bucket> write( Stream<D> stream, String url )
+    public List<Bucket> bucketize( Stream<D> stream, String url )
         throws UncheckedBucketException
     {
         final List<String> errors = validateConfig();
@@ -164,20 +164,6 @@ public class SingleObjectJsonIO<D>
     public Decoder<D> decoder()
     {
         return codec.decoder();
-    }
-
-    @Override
-    public Stream<D> debucketize( Bucket bucket )
-            throws UncheckedBucketException
-    {
-        return read( bucket );
-    }
-
-    @Override
-    public List<Bucket> bucketize( Stream<D> anEntityStream, String aUrl )
-            throws Exception
-    {
-        return write( anEntityStream, aUrl );
     }
 
     private List<String> validateConfig()

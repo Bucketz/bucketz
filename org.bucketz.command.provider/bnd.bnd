@@ -1,0 +1,18 @@
+base.version:		1.0.0.${tstamp}
+Bundle-Version:		${build.version}
+-releaserepo:		${repo}
+
+Bundle-Name:		Bucketz Provider
+Bundle-Description: \
+  Provides shell commands for interacting with Bucketz.
+
+Private-Package: \
+	org.bucketz.command
+
+-buildpath: \
+	osgi.enroute.base.api;version=2.0,\
+	org.bucketz.api;version=snapshot,\
+	org.bucketz.lib;version=snapshot;packages=*,\
+	org.apache.felix.converter,\
+	org.apache.felix.gogo.runtime,\
+	org.apache.felix.serializer

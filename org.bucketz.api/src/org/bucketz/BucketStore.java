@@ -55,6 +55,11 @@ public interface BucketStore<D>
     public String outerPath();
 
     /**
+     * The type of BucketStore represented by this instance.
+     */
+    Bucketz.Type type();
+
+    /**
      * List of all Buckets within the BucketStore. The values returned are the fully-qualified names 
      * of the Buckets.
      */

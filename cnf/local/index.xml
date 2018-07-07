@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<repository increment="1530922167000" name="Local" xmlns="http://www.osgi.org/xmlns/repository/v1.0.0">
+<repository increment="1530926418000" name="Local" xmlns="http://www.osgi.org/xmlns/repository/v1.0.0">
   <resource>
     <capability namespace="osgi.identity">
       <attribute name="osgi.identity" value="org.bucketz.api"/>
@@ -7,9 +7,9 @@
       <attribute name="version" type="Version" value="1.0.0"/>
     </capability>
     <capability namespace="osgi.content">
-      <attribute name="osgi.content" value="4ec4b21f054c4596a150e25033c81c8cba9b23e98f07fdfb0e86cb0047b0be9d"/>
+      <attribute name="osgi.content" value="e4dc793d6bcfc378bb760fd2382550fe6a85d4baefa5839517589bd5c35bd189"/>
       <attribute name="url" value="org.bucketz.api/org.bucketz.api-1.0.0.jar"/>
-      <attribute name="size" type="Long" value="42789"/>
+      <attribute name="size" type="Long" value="44462"/>
       <attribute name="mime" value="application/vnd.osgi.bundle"/>
     </capability>
     <capability namespace="osgi.wiring.bundle">
@@ -53,14 +53,73 @@
   </resource>
   <resource>
     <capability namespace="osgi.identity">
+      <attribute name="osgi.identity" value="org.bucketz.command.provider"/>
+      <attribute name="type" value="osgi.bundle"/>
+      <attribute name="version" type="Version" value="1.0.0"/>
+    </capability>
+    <capability namespace="osgi.content">
+      <attribute name="osgi.content" value="821a72d18ea4aaee6b90f811156bcdc94c7f0ea2d3cfdf5a619753a5f15a8614"/>
+      <attribute name="url" value="org.bucketz.command.provider/org.bucketz.command.provider-1.0.0.jar"/>
+      <attribute name="size" type="Long" value="5746"/>
+      <attribute name="mime" value="application/vnd.osgi.bundle"/>
+    </capability>
+    <capability namespace="osgi.wiring.bundle">
+      <attribute name="osgi.wiring.bundle" value="org.bucketz.command.provider"/>
+      <attribute name="bundle-version" type="Version" value="1.0.0"/>
+    </capability>
+    <capability namespace="osgi.wiring.host">
+      <attribute name="osgi.wiring.host" value="org.bucketz.command.provider"/>
+      <attribute name="bundle-version" type="Version" value="1.0.0"/>
+    </capability>
+    <capability namespace="osgi.service">
+      <attribute name="objectClass" type="List&lt;String&gt;" value="org.bucketz.command.BucketzCommands"/>
+    </capability>
+    <capability namespace="osgi.implementation">
+      <attribute name="version" type="Version" value="1.0.0"/>
+      <attribute name="osgi.implementation" value="bucketz.commands"/>
+    </capability>
+    <capability namespace="osgi.service">
+      <attribute name="objectClass" type="List&lt;String&gt;" value="org.bucketz.command.BucketzCommands"/>
+      <attribute name="osgi.command.function" type="List&lt;String&gt;" value="info,list"/>
+      <attribute name="osgi.command.scope" value="bucketz"/>
+      <directive name="uses" value="org.bucketz.command"/>
+    </capability>
+    <requirement namespace="osgi.wiring.package">
+      <attribute name="status" value="provisional"/>
+      <directive name="filter" value="(&amp;(osgi.wiring.package=org.apache.felix.service.command)(version&gt;=0.10.0)(!(version&gt;=1.0.0)))"/>
+    </requirement>
+    <requirement namespace="osgi.wiring.package">
+      <directive name="filter" value="(&amp;(osgi.wiring.package=org.bucketz)(version&gt;=1.0.0)(!(version&gt;=2.0.0)))"/>
+    </requirement>
+    <requirement namespace="osgi.extender">
+      <directive name="filter" value="(&amp;(osgi.extender=osgi.component)(version&gt;=1.3.0)(!(version&gt;=2.0.0)))"/>
+    </requirement>
+    <requirement namespace="osgi.service">
+      <directive name="filter" value="(objectClass=org.bucketz.Bucketz)"/>
+      <directive name="effective" value="active"/>
+    </requirement>
+    <requirement namespace="osgi.ee">
+      <directive name="filter" value="(&amp;(osgi.ee=JavaSE)(version=1.8))"/>
+    </requirement>
+    <requirement namespace="osgi.service">
+      <directive name="filter" value="(objectClass=org.bucketz.Bucketz)"/>
+      <directive name="effective" value="active"/>
+    </requirement>
+    <requirement namespace="osgi.extender">
+      <directive name="filter" value="(&amp;(osgi.extender=osgi.component)(version&gt;=1.3.0)(!(version&gt;=2.0.0)))"/>
+      <directive name="effective" value="active"/>
+    </requirement>
+  </resource>
+  <resource>
+    <capability namespace="osgi.identity">
       <attribute name="osgi.identity" value="org.bucketz.lib"/>
       <attribute name="type" value="osgi.bundle"/>
       <attribute name="version" type="Version" value="1.0.0"/>
     </capability>
     <capability namespace="osgi.content">
-      <attribute name="osgi.content" value="e85e409fcb1c8a3362ef0a88e88f40c8e679a92413fbe29c3b0829187b2709da"/>
+      <attribute name="osgi.content" value="1533c713646e68028d693e147c52e9abd98829d8ba52ea0049a6e892891e2873"/>
       <attribute name="url" value="org.bucketz.lib/org.bucketz.lib-1.0.0.jar"/>
-      <attribute name="size" type="Long" value="82313"/>
+      <attribute name="size" type="Long" value="82315"/>
       <attribute name="mime" value="application/vnd.osgi.bundle"/>
     </capability>
     <capability namespace="osgi.wiring.bundle">
@@ -115,9 +174,9 @@
       <attribute name="version" type="Version" value="1.0.0"/>
     </capability>
     <capability namespace="osgi.content">
-      <attribute name="osgi.content" value="ac7be2bddb1983fe2664e5061d491e759eb9eed9c69358e29c2fa2273a8efee3"/>
+      <attribute name="osgi.content" value="3f271c542fcf2401364d7209a40e2ea8b8165fda95ece5dde555d98f77ccd7a2"/>
       <attribute name="url" value="org.bucketz.provider/org.bucketz.provider-1.0.0.jar"/>
-      <attribute name="size" type="Long" value="154319"/>
+      <attribute name="size" type="Long" value="158694"/>
       <attribute name="mime" value="application/vnd.osgi.bundle"/>
     </capability>
     <capability namespace="osgi.wiring.bundle">
@@ -154,6 +213,9 @@
     <capability namespace="osgi.service">
       <attribute name="objectClass" type="List&lt;String&gt;" value="org.bucketz.BucketStoreProvider"/>
     </capability>
+    <capability namespace="osgi.service">
+      <attribute name="objectClass" type="List&lt;String&gt;" value="org.bucketz.Bucketz"/>
+    </capability>
     <capability namespace="osgi.implementation">
       <attribute name="type" value="bundle"/>
       <attribute name="provider" value="bucketz"/>
@@ -165,6 +227,10 @@
     </capability>
     <capability namespace="osgi.service">
       <attribute name="objectClass" type="List&lt;String&gt;" value="org.bucketz.BucketDescriptor$Builder$Factory"/>
+      <directive name="uses" value="org.bucketz"/>
+    </capability>
+    <capability namespace="osgi.service">
+      <attribute name="objectClass" type="List&lt;String&gt;" value="org.bucketz.Bucketz"/>
       <directive name="uses" value="org.bucketz"/>
     </capability>
     <capability namespace="osgi.service">
@@ -222,6 +288,12 @@
       <directive name="effective" value="active"/>
     </requirement>
     <requirement namespace="osgi.service">
+      <directive name="filter" value="(objectClass=org.bucketz.BucketStore)"/>
+      <directive name="effective" value="active"/>
+      <directive name="resolution" value="optional"/>
+      <directive name="cardinality" value="multiple"/>
+    </requirement>
+    <requirement namespace="osgi.service">
       <directive name="filter" value="(objectClass=org.bucketz.BucketStoreFactory$ConfigurationBuilder)"/>
       <directive name="effective" value="active"/>
     </requirement>
@@ -239,6 +311,12 @@
     </requirement>
     <requirement namespace="osgi.ee">
       <directive name="filter" value="(&amp;(osgi.ee=JavaSE)(version=1.8))"/>
+    </requirement>
+    <requirement namespace="osgi.service">
+      <directive name="filter" value="(objectClass=org.bucketz.BucketStore)"/>
+      <directive name="resolution" value="optional"/>
+      <directive name="cardinality" value="multiple"/>
+      <directive name="effective" value="active"/>
     </requirement>
     <requirement namespace="osgi.service">
       <directive name="filter" value="(objectClass=org.osgi.service.component.ComponentFactory)"/>

@@ -116,6 +116,25 @@ public interface BucketDescriptor<D>
 //        String filter();
 //    }
 
+    static interface Single<D>
+        extends BucketDescriptor<D>
+    {
+        default Optional<String> containerName()
+        {
+            return Optional.empty();
+        }
+
+        default BucketStore.Format format()
+        {
+            return BucketStore.Format.JSON;
+        }
+
+        default BucketStore.Packaging packaging()
+        {
+            return BucketStore.Packaging.SINGLE;
+        }        
+    }
+
     public interface Builder<D>
     {
         static interface Factory

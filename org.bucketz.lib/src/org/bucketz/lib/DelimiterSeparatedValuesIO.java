@@ -142,20 +142,6 @@ public class DelimiterSeparatedValuesIO<D>
 
     @Override
     public Stream<D> debucketize( Bucket bucket )
-            throws UncheckedBucketException
-    {
-        return read( bucket );
-    }
-
-    @Override
-    public List<Bucket> bucketize( Stream<D> anEntityStream, String aUrl )
-            throws Exception
-    {
-        return write( anEntityStream, aUrl );
-    }
-
-    @Override
-    public Stream<D> read( Bucket bucket )
         throws UncheckedBucketException
     {
         errors.addAll( validateConfig() );
@@ -239,7 +225,7 @@ public class DelimiterSeparatedValuesIO<D>
     }
 
     @Override
-    public List<Bucket> write( Stream<D> stream, String url )
+    public List<Bucket> bucketize( Stream<D> stream, String url )
         throws UncheckedBucketException
     {
         final List<String> errors = validateConfig();

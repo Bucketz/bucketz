@@ -6,8 +6,10 @@ import java.util.Map;
 import java.util.Set;
 
 import org.bucketz.BucketDescriptor;
+import org.bucketz.BucketDescriptor.Single;
 import org.bucketz.BucketIO;
 import org.bucketz.BucketStore;
+import org.bucketz.BucketStore.Configuration;
 import org.bucketz.BucketStoreProvider;
 import org.bucketz.Bucketz;
 import org.bucketz.store.BundleStore;
@@ -62,9 +64,20 @@ public class BundleStoreProviderService
     }
 
     @Override
+    public <D> BucketStore<D> newSingleObjectStore(
+            Configuration usingConfiguration, 
+            Single<D> aDescriptor,
+            org.bucketz.BucketIO.Single<D> aBucketIO )
+            throws Exception
+    {
+        return newStore( usingConfiguration, aDescriptor, aBucketIO );
+    }
+
+    @Override
     public <D> void release( BucketStore<D> aStore )
             throws Exception
     {
+        // TODO
     }
 
     @Override

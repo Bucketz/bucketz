@@ -112,7 +112,7 @@ public class MultiJsonIO<D>
 
     @SuppressWarnings( { "rawtypes", "unchecked" } )
     @Override
-    public Stream<D> read( Bucket bucket )
+    public Stream<D> debucketize( Bucket bucket )
         throws UncheckedBucketException
     {
         final List<String> errors = validateConfig();
@@ -190,7 +190,7 @@ public class MultiJsonIO<D>
     }
 
     @Override
-    public List<Bucket> write( Stream<D> stream, String url )
+    public List<Bucket> bucketize( Stream<D> stream, String url )
         throws UncheckedBucketException
     {
         final List<String> errors = validateConfig();
@@ -226,20 +226,6 @@ public class MultiJsonIO<D>
     public Decoder<D> decoder()
     {
         return codec.decoder();
-    }
-
-    @Override
-    public Stream<D> debucketize( Bucket bucket )
-            throws UncheckedBucketException
-    {
-        return read( bucket );
-    }
-
-    @Override
-    public List<Bucket> bucketize( Stream<D> anEntityStream, String aUrl )
-            throws Exception
-    {
-        return write( anEntityStream, aUrl );
     }
 
     private List<String> validateConfig()
