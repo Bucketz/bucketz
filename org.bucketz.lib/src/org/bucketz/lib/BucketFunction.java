@@ -1,7 +1,7 @@
 package org.bucketz.lib;
 
 @FunctionalInterface
-public interface BucketFunction<E>
+public interface BucketFunction<D>
 {
-    String toBucket( E entity );
+    String toBucket( D dto );
 }

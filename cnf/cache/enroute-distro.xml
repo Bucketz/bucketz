@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-  <repository xmlns="http://www.osgi.org/xmlns/repository/v1.0.0" name="org.osgi:osgi.enroute.pom.distro:2.0.0" increment="1530770740964">
+  <repository xmlns="http://www.osgi.org/xmlns/repository/v1.0.0" name="org.osgi:osgi.enroute.pom.distro:2.0.0" increment="1530825517224">
     <resource>
       <capability namespace="osgi.identity">
         <attribute name="license" value="http://opensource.org/licenses/apache2.0.php; link=&quot;http://www.apache.org/licenses/LICENSE-2.0&quot;; description=&quot;Apache License, Version 2.0&quot;"/>
@@ -4505,180 +4505,6 @@
     </resource>
     <resource>
       <capability namespace="osgi.identity">
-        <attribute name="osgi.identity" value="osgi.compendium"/>
-        <attribute name="copyright" value="Copyright (c) OSGi Alliance (2000, 2007). All Rights Reserved."/>
-        <attribute name="documentation" value="http://www.osgi.org/"/>
-        <attribute name="description" value="OSGi Service Platform Release 4 Compendium Interfaces and Classes."/>
-        <attribute name="type" value="osgi.bundle"/>
-        <attribute name="version" value="4.1.0.build-200702212030" type="Version"/>
-      </capability>
-      <capability namespace="osgi.wiring.host">
-        <attribute name="bundle-version" value="4.1.0.build-200702212030" type="Version"/>
-        <attribute name="osgi.wiring.host" value="osgi.compendium"/>
-      </capability>
-      <capability namespace="osgi.wiring.package">
-        <attribute name="version" value="0.0.0" type="Version"/>
-        <attribute name="osgi.wiring.package" value="info.dmtree"/>
-        <attribute name="specification-version" value="1.0"/>
-      </capability>
-      <capability namespace="osgi.wiring.package">
-        <attribute name="version" value="0.0.0" type="Version"/>
-        <attribute name="osgi.wiring.package" value="info.dmtree.notification"/>
-        <attribute name="specification-version" value="1.0"/>
-      </capability>
-      <capability namespace="osgi.wiring.package">
-        <attribute name="version" value="0.0.0" type="Version"/>
-        <attribute name="osgi.wiring.package" value="info.dmtree.notification.spi"/>
-        <attribute name="specification-version" value="1.0"/>
-      </capability>
-      <capability namespace="osgi.wiring.package">
-        <attribute name="version" value="0.0.0" type="Version"/>
-        <attribute name="osgi.wiring.package" value="info.dmtree.registry"/>
-        <attribute name="specification-version" value="1.0"/>
-      </capability>
-      <capability namespace="osgi.wiring.package">
-        <attribute name="version" value="0.0.0" type="Version"/>
-        <attribute name="osgi.wiring.package" value="info.dmtree.security"/>
-        <attribute name="specification-version" value="1.0"/>
-      </capability>
-      <capability namespace="osgi.wiring.package">
-        <attribute name="version" value="0.0.0" type="Version"/>
-        <attribute name="osgi.wiring.package" value="info.dmtree.spi"/>
-        <attribute name="specification-version" value="1.0"/>
-      </capability>
-      <capability namespace="osgi.wiring.package">
-        <attribute name="version" value="0.0.0" type="Version"/>
-        <attribute name="osgi.wiring.package" value="org.osgi.application"/>
-        <attribute name="specification-version" value="1.0"/>
-      </capability>
-      <capability namespace="osgi.wiring.package">
-        <attribute name="version" value="0.0.0" type="Version"/>
-        <attribute name="osgi.wiring.package" value="org.osgi.service.application"/>
-        <attribute name="specification-version" value="1.0"/>
-      </capability>
-      <capability namespace="osgi.wiring.package">
-        <attribute name="version" value="0.0.0" type="Version"/>
-        <attribute name="osgi.wiring.package" value="org.osgi.service.cm"/>
-        <attribute name="specification-version" value="1.2"/>
-      </capability>
-      <capability namespace="osgi.wiring.package">
-        <attribute name="version" value="0.0.0" type="Version"/>
-        <attribute name="osgi.wiring.package" value="org.osgi.service.component"/>
-        <attribute name="specification-version" value="1.0"/>
-      </capability>
-      <capability namespace="osgi.wiring.package">
-        <attribute name="version" value="0.0.0" type="Version"/>
-        <attribute name="osgi.wiring.package" value="org.osgi.service.deploymentadmin"/>
-        <attribute name="specification-version" value="1.0"/>
-      </capability>
-      <capability namespace="osgi.wiring.package">
-        <attribute name="version" value="0.0.0" type="Version"/>
-        <attribute name="osgi.wiring.package" value="org.osgi.service.deploymentadmin.spi"/>
-        <attribute name="specification-version" value="1.0"/>
-      </capability>
-      <capability namespace="osgi.wiring.package">
-        <attribute name="version" value="0.0.0" type="Version"/>
-        <attribute name="osgi.wiring.package" value="org.osgi.service.device"/>
-        <attribute name="specification-version" value="1.1"/>
-      </capability>
-      <capability namespace="osgi.wiring.package">
-        <attribute name="version" value="0.0.0" type="Version"/>
-        <attribute name="osgi.wiring.package" value="org.osgi.service.event"/>
-        <attribute name="specification-version" value="1.1"/>
-      </capability>
-      <capability namespace="osgi.wiring.package">
-        <attribute name="version" value="0.0.0" type="Version"/>
-        <attribute name="osgi.wiring.package" value="org.osgi.service.http"/>
-        <attribute name="specification-version" value="1.2"/>
-      </capability>
-      <capability namespace="osgi.wiring.package">
-        <attribute name="version" value="0.0.0" type="Version"/>
-        <attribute name="osgi.wiring.package" value="org.osgi.service.io"/>
-        <attribute name="specification-version" value="1.0"/>
-      </capability>
-      <capability namespace="osgi.wiring.package">
-        <attribute name="version" value="0.0.0" type="Version"/>
-        <attribute name="osgi.wiring.package" value="org.osgi.service.log"/>
-        <attribute name="specification-version" value="1.3"/>
-      </capability>
-      <capability namespace="osgi.wiring.package">
-        <attribute name="version" value="0.0.0" type="Version"/>
-        <attribute name="osgi.wiring.package" value="org.osgi.service.metatype"/>
-        <attribute name="specification-version" value="1.1"/>
-      </capability>
-      <capability namespace="osgi.wiring.package">
-        <attribute name="version" value="0.0.0" type="Version"/>
-        <attribute name="osgi.wiring.package" value="org.osgi.service.monitor"/>
-        <attribute name="specification-version" value="1.0"/>
-      </capability>
-      <capability namespace="osgi.wiring.package">
-        <attribute name="version" value="0.0.0" type="Version"/>
-        <attribute name="osgi.wiring.package" value="org.osgi.service.prefs"/>
-        <attribute name="specification-version" value="1.1"/>
-      </capability>
-      <capability namespace="osgi.wiring.package">
-        <attribute name="version" value="0.0.0" type="Version"/>
-        <attribute name="osgi.wiring.package" value="org.osgi.service.provisioning"/>
-        <attribute name="specification-version" value="1.1"/>
-      </capability>
-      <capability namespace="osgi.wiring.package">
-        <attribute name="version" value="0.0.0" type="Version"/>
-        <attribute name="osgi.wiring.package" value="org.osgi.service.upnp"/>
-        <attribute name="specification-version" value="1.1"/>
-      </capability>
-      <capability namespace="osgi.wiring.package">
-        <attribute name="version" value="0.0.0" type="Version"/>
-        <attribute name="osgi.wiring.package" value="org.osgi.service.useradmin"/>
-        <attribute name="specification-version" value="1.1"/>
-      </capability>
-      <capability namespace="osgi.wiring.package">
-        <attribute name="version" value="0.0.0" type="Version"/>
-        <attribute name="osgi.wiring.package" value="org.osgi.service.wireadmin"/>
-        <attribute name="specification-version" value="1.0"/>
-      </capability>
-      <capability namespace="osgi.wiring.package">
-        <attribute name="version" value="0.0.0" type="Version"/>
-        <attribute name="osgi.wiring.package" value="org.osgi.util.gsm"/>
-        <attribute name="specification-version" value="1.0"/>
-      </capability>
-      <capability namespace="osgi.wiring.package">
-        <attribute name="version" value="0.0.0" type="Version"/>
-        <attribute name="osgi.wiring.package" value="org.osgi.util.measurement"/>
-        <attribute name="specification-version" value="1.0"/>
-      </capability>
-      <capability namespace="osgi.wiring.package">
-        <attribute name="version" value="0.0.0" type="Version"/>
-        <attribute name="osgi.wiring.package" value="org.osgi.util.mobile"/>
-        <attribute name="specification-version" value="1.0"/>
-      </capability>
-      <capability namespace="osgi.wiring.package">
-        <attribute name="version" value="0.0.0" type="Version"/>
-        <attribute name="osgi.wiring.package" value="org.osgi.util.position"/>
-        <attribute name="specification-version" value="1.0"/>
-      </capability>
-      <capability namespace="osgi.wiring.package">
-        <attribute name="version" value="0.0.0" type="Version"/>
-        <attribute name="osgi.wiring.package" value="org.osgi.util.tracker"/>
-        <attribute name="specification-version" value="1.3.3"/>
-      </capability>
-      <capability namespace="osgi.wiring.package">
-        <attribute name="version" value="0.0.0" type="Version"/>
-        <attribute name="osgi.wiring.package" value="org.osgi.util.xml"/>
-        <attribute name="specification-version" value="1.0"/>
-      </capability>
-      <capability namespace="osgi.content">
-        <attribute name="size" value="514214" type="Long"/>
-        <attribute name="url" value="file:/Users/dleangen/eclipse/java-mars/Eclipse.app/Contents/MacOS/enroute-distro/org/osgi/org.osgi.compendium/4.1.0/org.osgi.compendium-4.1.0.jar"/>
-        <attribute name="mime" value="vnd.osgi.bundle"/>
-        <attribute name="osgi.content" value="6AF2F4E80093B4D8DE6221412C46B1D9917CFE1E458F43E97A86DF1E04F22EDC"/>
-      </capability>
-      <capability namespace="bnd.info">
-        <attribute name="name" value="org.osgi:org.osgi.compendium:4.1.0"/>
-        <attribute name="from" value="org.osgi:org.osgi.compendium:4.1.0"/>
-      </capability>
-    </resource>
-    <resource>
-      <capability namespace="osgi.identity">
         <attribute name="license" value="Apache-2.0; description=&quot;Apache License, Version 2.0&quot;; link=&quot;http://www.apache.org/licenses/LICENSE-2.0&quot;"/>
         <attribute name="osgi.identity" value="biz.aQute.junit"/>
         <attribute name="copyright" value="Copyright (c) aQute SARL (2000, 2016) and others. All Rights Reserved."/>
@@ -4952,6 +4778,180 @@
       <requirement namespace="osgi.ee">
         <directive name="filter" value="(&amp;(osgi.ee=JavaSE)(version=1.6))"/>
       </requirement>
+    </resource>
+    <resource>
+      <capability namespace="osgi.identity">
+        <attribute name="osgi.identity" value="osgi.compendium"/>
+        <attribute name="copyright" value="Copyright (c) OSGi Alliance (2000, 2007). All Rights Reserved."/>
+        <attribute name="documentation" value="http://www.osgi.org/"/>
+        <attribute name="description" value="OSGi Service Platform Release 4 Compendium Interfaces and Classes."/>
+        <attribute name="type" value="osgi.bundle"/>
+        <attribute name="version" value="4.1.0.build-200702212030" type="Version"/>
+      </capability>
+      <capability namespace="osgi.wiring.host">
+        <attribute name="bundle-version" value="4.1.0.build-200702212030" type="Version"/>
+        <attribute name="osgi.wiring.host" value="osgi.compendium"/>
+      </capability>
+      <capability namespace="osgi.wiring.package">
+        <attribute name="version" value="0.0.0" type="Version"/>
+        <attribute name="osgi.wiring.package" value="info.dmtree"/>
+        <attribute name="specification-version" value="1.0"/>
+      </capability>
+      <capability namespace="osgi.wiring.package">
+        <attribute name="version" value="0.0.0" type="Version"/>
+        <attribute name="osgi.wiring.package" value="info.dmtree.notification"/>
+        <attribute name="specification-version" value="1.0"/>
+      </capability>
+      <capability namespace="osgi.wiring.package">
+        <attribute name="version" value="0.0.0" type="Version"/>
+        <attribute name="osgi.wiring.package" value="info.dmtree.notification.spi"/>
+        <attribute name="specification-version" value="1.0"/>
+      </capability>
+      <capability namespace="osgi.wiring.package">
+        <attribute name="version" value="0.0.0" type="Version"/>
+        <attribute name="osgi.wiring.package" value="info.dmtree.registry"/>
+        <attribute name="specification-version" value="1.0"/>
+      </capability>
+      <capability namespace="osgi.wiring.package">
+        <attribute name="version" value="0.0.0" type="Version"/>
+        <attribute name="osgi.wiring.package" value="info.dmtree.security"/>
+        <attribute name="specification-version" value="1.0"/>
+      </capability>
+      <capability namespace="osgi.wiring.package">
+        <attribute name="version" value="0.0.0" type="Version"/>
+        <attribute name="osgi.wiring.package" value="info.dmtree.spi"/>
+        <attribute name="specification-version" value="1.0"/>
+      </capability>
+      <capability namespace="osgi.wiring.package">
+        <attribute name="version" value="0.0.0" type="Version"/>
+        <attribute name="osgi.wiring.package" value="org.osgi.application"/>
+        <attribute name="specification-version" value="1.0"/>
+      </capability>
+      <capability namespace="osgi.wiring.package">
+        <attribute name="version" value="0.0.0" type="Version"/>
+        <attribute name="osgi.wiring.package" value="org.osgi.service.application"/>
+        <attribute name="specification-version" value="1.0"/>
+      </capability>
+      <capability namespace="osgi.wiring.package">
+        <attribute name="version" value="0.0.0" type="Version"/>
+        <attribute name="osgi.wiring.package" value="org.osgi.service.cm"/>
+        <attribute name="specification-version" value="1.2"/>
+      </capability>
+      <capability namespace="osgi.wiring.package">
+        <attribute name="version" value="0.0.0" type="Version"/>
+        <attribute name="osgi.wiring.package" value="org.osgi.service.component"/>
+        <attribute name="specification-version" value="1.0"/>
+      </capability>
+      <capability namespace="osgi.wiring.package">
+        <attribute name="version" value="0.0.0" type="Version"/>
+        <attribute name="osgi.wiring.package" value="org.osgi.service.deploymentadmin"/>
+        <attribute name="specification-version" value="1.0"/>
+      </capability>
+      <capability namespace="osgi.wiring.package">
+        <attribute name="version" value="0.0.0" type="Version"/>
+        <attribute name="osgi.wiring.package" value="org.osgi.service.deploymentadmin.spi"/>
+        <attribute name="specification-version" value="1.0"/>
+      </capability>
+      <capability namespace="osgi.wiring.package">
+        <attribute name="version" value="0.0.0" type="Version"/>
+        <attribute name="osgi.wiring.package" value="org.osgi.service.device"/>
+        <attribute name="specification-version" value="1.1"/>
+      </capability>
+      <capability namespace="osgi.wiring.package">
+        <attribute name="version" value="0.0.0" type="Version"/>
+        <attribute name="osgi.wiring.package" value="org.osgi.service.event"/>
+        <attribute name="specification-version" value="1.1"/>
+      </capability>
+      <capability namespace="osgi.wiring.package">
+        <attribute name="version" value="0.0.0" type="Version"/>
+        <attribute name="osgi.wiring.package" value="org.osgi.service.http"/>
+        <attribute name="specification-version" value="1.2"/>
+      </capability>
+      <capability namespace="osgi.wiring.package">
+        <attribute name="version" value="0.0.0" type="Version"/>
+        <attribute name="osgi.wiring.package" value="org.osgi.service.io"/>
+        <attribute name="specification-version" value="1.0"/>
+      </capability>
+      <capability namespace="osgi.wiring.package">
+        <attribute name="version" value="0.0.0" type="Version"/>
+        <attribute name="osgi.wiring.package" value="org.osgi.service.log"/>
+        <attribute name="specification-version" value="1.3"/>
+      </capability>
+      <capability namespace="osgi.wiring.package">
+        <attribute name="version" value="0.0.0" type="Version"/>
+        <attribute name="osgi.wiring.package" value="org.osgi.service.metatype"/>
+        <attribute name="specification-version" value="1.1"/>
+      </capability>
+      <capability namespace="osgi.wiring.package">
+        <attribute name="version" value="0.0.0" type="Version"/>
+        <attribute name="osgi.wiring.package" value="org.osgi.service.monitor"/>
+        <attribute name="specification-version" value="1.0"/>
+      </capability>
+      <capability namespace="osgi.wiring.package">
+        <attribute name="version" value="0.0.0" type="Version"/>
+        <attribute name="osgi.wiring.package" value="org.osgi.service.prefs"/>
+        <attribute name="specification-version" value="1.1"/>
+      </capability>
+      <capability namespace="osgi.wiring.package">
+        <attribute name="version" value="0.0.0" type="Version"/>
+        <attribute name="osgi.wiring.package" value="org.osgi.service.provisioning"/>
+        <attribute name="specification-version" value="1.1"/>
+      </capability>
+      <capability namespace="osgi.wiring.package">
+        <attribute name="version" value="0.0.0" type="Version"/>
+        <attribute name="osgi.wiring.package" value="org.osgi.service.upnp"/>
+        <attribute name="specification-version" value="1.1"/>
+      </capability>
+      <capability namespace="osgi.wiring.package">
+        <attribute name="version" value="0.0.0" type="Version"/>
+        <attribute name="osgi.wiring.package" value="org.osgi.service.useradmin"/>
+        <attribute name="specification-version" value="1.1"/>
+      </capability>
+      <capability namespace="osgi.wiring.package">
+        <attribute name="version" value="0.0.0" type="Version"/>
+        <attribute name="osgi.wiring.package" value="org.osgi.service.wireadmin"/>
+        <attribute name="specification-version" value="1.0"/>
+      </capability>
+      <capability namespace="osgi.wiring.package">
+        <attribute name="version" value="0.0.0" type="Version"/>
+        <attribute name="osgi.wiring.package" value="org.osgi.util.gsm"/>
+        <attribute name="specification-version" value="1.0"/>
+      </capability>
+      <capability namespace="osgi.wiring.package">
+        <attribute name="version" value="0.0.0" type="Version"/>
+        <attribute name="osgi.wiring.package" value="org.osgi.util.measurement"/>
+        <attribute name="specification-version" value="1.0"/>
+      </capability>
+      <capability namespace="osgi.wiring.package">
+        <attribute name="version" value="0.0.0" type="Version"/>
+        <attribute name="osgi.wiring.package" value="org.osgi.util.mobile"/>
+        <attribute name="specification-version" value="1.0"/>
+      </capability>
+      <capability namespace="osgi.wiring.package">
+        <attribute name="version" value="0.0.0" type="Version"/>
+        <attribute name="osgi.wiring.package" value="org.osgi.util.position"/>
+        <attribute name="specification-version" value="1.0"/>
+      </capability>
+      <capability namespace="osgi.wiring.package">
+        <attribute name="version" value="0.0.0" type="Version"/>
+        <attribute name="osgi.wiring.package" value="org.osgi.util.tracker"/>
+        <attribute name="specification-version" value="1.3.3"/>
+      </capability>
+      <capability namespace="osgi.wiring.package">
+        <attribute name="version" value="0.0.0" type="Version"/>
+        <attribute name="osgi.wiring.package" value="org.osgi.util.xml"/>
+        <attribute name="specification-version" value="1.0"/>
+      </capability>
+      <capability namespace="osgi.content">
+        <attribute name="size" value="514214" type="Long"/>
+        <attribute name="url" value="file:/Users/dleangen/eclipse/java-mars/Eclipse.app/Contents/MacOS/enroute-distro/org/osgi/org.osgi.compendium/4.1.0/org.osgi.compendium-4.1.0.jar"/>
+        <attribute name="mime" value="vnd.osgi.bundle"/>
+        <attribute name="osgi.content" value="6AF2F4E80093B4D8DE6221412C46B1D9917CFE1E458F43E97A86DF1E04F22EDC"/>
+      </capability>
+      <capability namespace="bnd.info">
+        <attribute name="name" value="org.osgi:org.osgi.compendium:4.1.0"/>
+        <attribute name="from" value="org.osgi:org.osgi.compendium:4.1.0"/>
+      </capability>
     </resource>
     <resource>
       <capability namespace="osgi.identity">
@@ -12212,70 +12212,6 @@
     </resource>
     <resource>
       <capability namespace="osgi.identity">
-        <attribute name="license" value="http://www.apache.org/licenses/LICENSE-2.0.txt"/>
-        <attribute name="osgi.identity" value="org.apache.felix.gogo.runtime"/>
-        <attribute name="documentation" value="http://www.apache.org/"/>
-        <attribute name="description" value="Apache Felix Gogo Subproject"/>
-        <attribute name="type" value="osgi.bundle"/>
-        <attribute name="version" value="0.10.0" type="Version"/>
-      </capability>
-      <capability namespace="osgi.wiring.bundle">
-        <attribute name="bundle-version" value="0.10.0" type="Version"/>
-        <attribute name="osgi.wiring.bundle" value="org.apache.felix.gogo.runtime"/>
-      </capability>
-      <capability namespace="osgi.wiring.host">
-        <attribute name="bundle-version" value="0.10.0" type="Version"/>
-        <attribute name="osgi.wiring.host" value="org.apache.felix.gogo.runtime"/>
-      </capability>
-      <capability namespace="osgi.wiring.package">
-        <directive name="mandatory" value="status"/>
-        <attribute name="version" value="0.10.0" type="Version"/>
-        <attribute name="osgi.wiring.package" value="org.apache.felix.service.command"/>
-        <attribute name="status" value="provisional"/>
-      </capability>
-      <capability namespace="osgi.wiring.package">
-        <directive name="uses" value="org.apache.felix.service.command"/>
-        <attribute name="version" value="0.10.0" type="Version"/>
-        <attribute name="osgi.wiring.package" value="org.apache.felix.gogo.api"/>
-      </capability>
-      <capability namespace="osgi.wiring.package">
-        <directive name="mandatory" value="status"/>
-        <attribute name="version" value="0.10.0" type="Version"/>
-        <attribute name="osgi.wiring.package" value="org.apache.felix.service.threadio"/>
-        <attribute name="status" value="provisional"/>
-      </capability>
-      <capability namespace="osgi.content">
-        <attribute name="size" value="66965" type="Long"/>
-        <attribute name="url" value="file:/Users/dleangen/eclipse/java-mars/Eclipse.app/Contents/MacOS/enroute-distro/org/apache/felix/org.apache.felix.gogo.runtime/0.10.0/org.apache.felix.gogo.runtime-0.10.0.jar"/>
-        <attribute name="mime" value="vnd.osgi.bundle"/>
-        <attribute name="osgi.content" value="15E94961AE2D0046278686965FE6A34AD43D8D18719F5BC2304E725CDB57A379"/>
-      </capability>
-      <capability namespace="bnd.info">
-        <attribute name="name" value="org.apache.felix:org.apache.felix.gogo.runtime:0.10.0"/>
-        <attribute name="from" value="org.apache.felix:org.apache.felix.gogo.runtime:0.10.0"/>
-      </capability>
-      <requirement namespace="osgi.wiring.package">
-        <directive name="filter" value="(&amp;(osgi.wiring.package=org.apache.felix.gogo.api)(version&gt;=0.10.0))"/>
-      </requirement>
-      <requirement namespace="osgi.wiring.package">
-        <directive name="filter" value="(&amp;(osgi.wiring.package=org.apache.felix.service.command)(version&gt;=0.10.0))"/>
-      </requirement>
-      <requirement namespace="osgi.wiring.package">
-        <directive name="filter" value="(&amp;(osgi.wiring.package=org.apache.felix.service.threadio)(version&gt;=0.10.0))"/>
-      </requirement>
-      <requirement namespace="osgi.wiring.package">
-        <directive name="filter" value="(&amp;(osgi.wiring.package=org.osgi.framework))"/>
-      </requirement>
-      <requirement namespace="osgi.wiring.package">
-        <directive name="filter" value="(&amp;(osgi.wiring.package=org.osgi.service.event))"/>
-        <directive name="resolution" value="optional"/>
-      </requirement>
-      <requirement namespace="osgi.wiring.package">
-        <directive name="filter" value="(&amp;(osgi.wiring.package=org.osgi.util.tracker))"/>
-      </requirement>
-    </resource>
-    <resource>
-      <capability namespace="osgi.identity">
         <attribute name="license" value="http://opensource.org/licenses/apache2.0.php; link=&quot;http://www.apache.org/licenses/LICENSE-2.0&quot;; description=&quot;Apache License, Version 2.0&quot;"/>
         <attribute name="osgi.identity" value="osgi.core"/>
         <attribute name="copyright" value="Copyright (c) OSGi Alliance (2000, 2014). All Rights Reserved."/>
@@ -12404,6 +12340,70 @@
       <requirement namespace="osgi.wiring.package">
         <directive name="filter" value="(&amp;(osgi.wiring.package=javax.security.auth.x500))"/>
         <directive name="resolution" value="optional"/>
+      </requirement>
+    </resource>
+    <resource>
+      <capability namespace="osgi.identity">
+        <attribute name="license" value="http://www.apache.org/licenses/LICENSE-2.0.txt"/>
+        <attribute name="osgi.identity" value="org.apache.felix.gogo.runtime"/>
+        <attribute name="documentation" value="http://www.apache.org/"/>
+        <attribute name="description" value="Apache Felix Gogo Subproject"/>
+        <attribute name="type" value="osgi.bundle"/>
+        <attribute name="version" value="0.10.0" type="Version"/>
+      </capability>
+      <capability namespace="osgi.wiring.bundle">
+        <attribute name="bundle-version" value="0.10.0" type="Version"/>
+        <attribute name="osgi.wiring.bundle" value="org.apache.felix.gogo.runtime"/>
+      </capability>
+      <capability namespace="osgi.wiring.host">
+        <attribute name="bundle-version" value="0.10.0" type="Version"/>
+        <attribute name="osgi.wiring.host" value="org.apache.felix.gogo.runtime"/>
+      </capability>
+      <capability namespace="osgi.wiring.package">
+        <directive name="mandatory" value="status"/>
+        <attribute name="version" value="0.10.0" type="Version"/>
+        <attribute name="osgi.wiring.package" value="org.apache.felix.service.command"/>
+        <attribute name="status" value="provisional"/>
+      </capability>
+      <capability namespace="osgi.wiring.package">
+        <directive name="uses" value="org.apache.felix.service.command"/>
+        <attribute name="version" value="0.10.0" type="Version"/>
+        <attribute name="osgi.wiring.package" value="org.apache.felix.gogo.api"/>
+      </capability>
+      <capability namespace="osgi.wiring.package">
+        <directive name="mandatory" value="status"/>
+        <attribute name="version" value="0.10.0" type="Version"/>
+        <attribute name="osgi.wiring.package" value="org.apache.felix.service.threadio"/>
+        <attribute name="status" value="provisional"/>
+      </capability>
+      <capability namespace="osgi.content">
+        <attribute name="size" value="66965" type="Long"/>
+        <attribute name="url" value="file:/Users/dleangen/eclipse/java-mars/Eclipse.app/Contents/MacOS/enroute-distro/org/apache/felix/org.apache.felix.gogo.runtime/0.10.0/org.apache.felix.gogo.runtime-0.10.0.jar"/>
+        <attribute name="mime" value="vnd.osgi.bundle"/>
+        <attribute name="osgi.content" value="15E94961AE2D0046278686965FE6A34AD43D8D18719F5BC2304E725CDB57A379"/>
+      </capability>
+      <capability namespace="bnd.info">
+        <attribute name="name" value="org.apache.felix:org.apache.felix.gogo.runtime:0.10.0"/>
+        <attribute name="from" value="org.apache.felix:org.apache.felix.gogo.runtime:0.10.0"/>
+      </capability>
+      <requirement namespace="osgi.wiring.package">
+        <directive name="filter" value="(&amp;(osgi.wiring.package=org.apache.felix.gogo.api)(version&gt;=0.10.0))"/>
+      </requirement>
+      <requirement namespace="osgi.wiring.package">
+        <directive name="filter" value="(&amp;(osgi.wiring.package=org.apache.felix.service.command)(version&gt;=0.10.0))"/>
+      </requirement>
+      <requirement namespace="osgi.wiring.package">
+        <directive name="filter" value="(&amp;(osgi.wiring.package=org.apache.felix.service.threadio)(version&gt;=0.10.0))"/>
+      </requirement>
+      <requirement namespace="osgi.wiring.package">
+        <directive name="filter" value="(&amp;(osgi.wiring.package=org.osgi.framework))"/>
+      </requirement>
+      <requirement namespace="osgi.wiring.package">
+        <directive name="filter" value="(&amp;(osgi.wiring.package=org.osgi.service.event))"/>
+        <directive name="resolution" value="optional"/>
+      </requirement>
+      <requirement namespace="osgi.wiring.package">
+        <directive name="filter" value="(&amp;(osgi.wiring.package=org.osgi.util.tracker))"/>
       </requirement>
     </resource>
     <resource>

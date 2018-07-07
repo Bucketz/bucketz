@@ -16,8 +16,10 @@ import org.apache.felix.serializer.Serializer;
 import org.apache.felix.serializer.Writer;
 import org.bucketz.Bucket;
 import org.bucketz.BucketDescriptor;
+import org.bucketz.BucketIO;
 import org.bucketz.BucketStore;
 import org.bucketz.Codec;
+import org.bucketz.UncheckedBucketException;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.service.log.LogService;
 import org.osgi.util.converter.Converter;
@@ -28,17 +30,17 @@ import org.osgi.util.converter.Converter;
  * 
  * There is one and only one Bucket, which has a known name.
  */
-public class MultiJsonIO<E>
-    implements BucketIO<E>
+public class MultiJsonIO<D>
+    implements BucketIO<D>
 {
     private Serializer serializer;
     private org.apache.felix.serializer.Writer writer;
     private LogService logger;
-    private Codec<E> codec;
-    private Function<E, E> preprocessor;
+    private Codec<D> codec;
+    private Function<D, D> preprocessor;
     private boolean preprocess;
 
-    private Class<E> dtoClass;
+    private Class<D> dtoClass;
 
     private String arrayName = "data";
     private String confinement;
@@ -48,32 +50,32 @@ public class MultiJsonIO<E>
     private String format;
     private BucketStore.Packaging packaging;
     private boolean doSort;
-    private Comparator<E> comparator;
+    private Comparator<D> comparator;
 
-    MultiJsonIO( Class<E> aDTOClass )
+    MultiJsonIO( Class<D> aDTOClass )
     {
         dtoClass = aDTOClass;
     }
 
-    public MultiJsonIO<E> setSerializer( Serializer aSerializer )
+    public MultiJsonIO<D> setSerializer( Serializer aSerializer )
     {
         return setSerializer( aSerializer, null );
     }
 
-    public MultiJsonIO<E> setSerializer( Serializer aSerializer, Writer aWriter )
+    public MultiJsonIO<D> setSerializer( Serializer aSerializer, Writer aWriter )
     {
         serializer = aSerializer;
         writer = aWriter;
         return this;
     }
 
-    public MultiJsonIO<E> setLogService( LogService aLogService )
+    public MultiJsonIO<D> setLogService( LogService aLogService )
     {
         logger = aLogService;
         return this;
     }
 
-    public MultiJsonIO<E> configureWith( BucketDescriptor<E> aDescriptor )
+    public MultiJsonIO<D> configureWith( BucketDescriptor<D> aDescriptor )
     {
         packaging = aDescriptor.packaging();
         arrayName = aDescriptor.containerName().orElseGet( null );
@@ -101,7 +103,7 @@ public class MultiJsonIO<E>
         return this;
     }
 
-    public MultiJsonIO<E> preprocess( Function<E, E> aPreprocessor )
+    public MultiJsonIO<D> preprocess( Function<D, D> aPreprocessor )
     {
         preprocess = true;
         preprocessor = aPreprocessor;
@@ -110,12 +112,12 @@ public class MultiJsonIO<E>
 
     @SuppressWarnings( { "rawtypes", "unchecked" } )
     @Override
-    public Stream<E> read( Bucket bucket )
-        throws IOException
+    public Stream<D> read( Bucket bucket )
+        throws UncheckedBucketException
     {
         final List<String> errors = validateConfig();
         if( !errors.isEmpty() )
-            throw new IOException( errors.get( 0 ) );
+            throw new UncheckedBucketException( errors.get( 0 ) );
 
         final URI bucketUri = bucket.asUri();
 
@@ -136,21 +138,17 @@ public class MultiJsonIO<E>
                         + "Must be formatted as an object with a single value name '" + arrayName + "' "
                                 + "containing an array of the desired object type." );
 
-            final List<E> list = (List<E>)arrayObject;
+            final List<D> list = (List<D>)arrayObject;
 
             final Converter converter = new StandardSchematizer()
                     .schematize( arrayName, dtoClass )
                     .converterFor( arrayName );
 
-            Stream<E> s = list.stream()
+            Stream<D> s = list.stream()
                     .map( o -> converter.convert( o ).to( dtoClass ) )
                     .map( o -> preprocess ? preprocessor.apply( o ) : o );
 
             return s;
-        }
-        catch( IOException e )
-        {
-            throw e;
         }
         catch ( Exception e )
         {
@@ -161,7 +159,7 @@ public class MultiJsonIO<E>
             }
             else
             {
-                throw new IOException( String.format( "Could not parse data for bucket: %s.", bucket.fqn() ), e );
+                throw new UncheckedBucketException( String.format( "Could not parse data for bucket: %s.", bucket.fqn() ), e );
             }
         }
     }
@@ -192,18 +190,18 @@ public class MultiJsonIO<E>
     }
 
     @Override
-    public List<Bucket> write( Stream<E> stream, String url )
-        throws IOException
+    public List<Bucket> write( Stream<D> stream, String url )
+        throws UncheckedBucketException
     {
         final List<String> errors = validateConfig();
         if( !errors.isEmpty() )
-            throw new IOException( errors.get( 0 ) );
+            throw new UncheckedBucketException( errors.get( 0 ) );
 
         try
         {
             final List<Bucket> buckets = new ArrayList<>();
-            final Map<String, List<E>> output = new LinkedHashMap<>();
-            final List<E> allItems = ( doSort ) ?
+            final Map<String, List<D>> output = new LinkedHashMap<>();
+            final List<D> allItems = ( doSort ) ?
                     stream.sorted( comparator ).collect( Collectors.toList() ) :
                     stream.collect( Collectors.toList() );
             output.put( arrayName, allItems );
@@ -214,20 +212,34 @@ public class MultiJsonIO<E>
         }
         catch ( Exception e )
         {
-            throw new IOException( e );
+            throw new UncheckedBucketException( e );
         }
     }
 
     @Override
-    public Coder<E> coder()
+    public Coder<D> coder()
     {
         return codec.coder();
     }
 
     @Override
-    public Decoder<E> decoder()
+    public Decoder<D> decoder()
     {
         return codec.decoder();
+    }
+
+    @Override
+    public Stream<D> debucketize( Bucket bucket )
+            throws UncheckedBucketException
+    {
+        return read( bucket );
+    }
+
+    @Override
+    public List<Bucket> bucketize( Stream<D> anEntityStream, String aUrl )
+            throws Exception
+    {
+        return write( anEntityStream, aUrl );
     }
 
     private List<String> validateConfig()
@@ -264,13 +276,11 @@ public class MultiJsonIO<E>
         dto.context.packaging = packaging.name();
         dto.content = content;
         dto.location = url;
-        // TODO
-        dto.descriminant = null;
         final Bucket b = BucketFactory.newBucket( dto );
         return b;
     }
 
-    private String toString( String arrayName, Map<String,List<E>> output )
+    private String toString( String arrayName, Map<String,List<D>> output )
     {
         if( writer == null )
             return serializer.serialize( output )

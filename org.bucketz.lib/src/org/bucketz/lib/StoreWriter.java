@@ -8,7 +8,7 @@ import org.osgi.util.promise.Promise;
  * Writes all the data managed by a given DataStore to disk, which is a necessary step when
  * exporting data.
  */
-public interface StoreWriter<E>
+public interface StoreWriter<D>
 {
     Promise<URI> write();
 }

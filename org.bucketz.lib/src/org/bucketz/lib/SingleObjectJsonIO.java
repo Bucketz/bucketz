@@ -1,6 +1,5 @@
 package org.bucketz.lib;
 
-import java.io.IOException;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,21 +12,23 @@ import org.apache.felix.schematizer.StandardSchematizer;
 import org.apache.felix.serializer.Serializer;
 import org.apache.felix.serializer.Writer;
 import org.bucketz.Bucket;
+import org.bucketz.BucketIO;
 import org.bucketz.BucketStore;
 import org.bucketz.Codec;
 import org.bucketz.SingleObjectBucketDescriptor;
+import org.bucketz.UncheckedBucketException;
 import org.osgi.util.converter.Converter;
 
-public class SingleObjectJsonIO<E>
-    implements BucketIO<E>
+public class SingleObjectJsonIO<D>
+    implements BucketIO<D>
 {
     private Serializer serializer;
     private Writer writer;
-    private Function<E, E> preprocessor;
-    private Codec<E> codec;
+    private Function<D, D> preprocessor;
+    private Codec<D> codec;
     private boolean preprocess;
 
-    private final Class<E> dtoClass;
+    private final Class<D> dtoClass;
 
     private String version;
     private String innerPath;
@@ -36,24 +37,24 @@ public class SingleObjectJsonIO<E>
 
     private BucketStore.Packaging packaging;
 
-    SingleObjectJsonIO( Class<E> aDTOClass )
+    SingleObjectJsonIO( Class<D> aDTOClass )
     {
         dtoClass = aDTOClass;
     }
 
-    public SingleObjectJsonIO<E> setSerializer( Serializer aSerializer )
+    public SingleObjectJsonIO<D> setSerializer( Serializer aSerializer )
     {
         return setSerializer( serializer, null );
     }
 
-    public SingleObjectJsonIO<E> setSerializer( Serializer aSerializer, Writer aWriter )
+    public SingleObjectJsonIO<D> setSerializer( Serializer aSerializer, Writer aWriter )
     {
         serializer = aSerializer;
         writer = aWriter;
         return this;
     }
 
-    public SingleObjectJsonIO<E> configureWith( SingleObjectBucketDescriptor<E> aDescriptor )
+    public SingleObjectJsonIO<D> configureWith( SingleObjectBucketDescriptor<D> aDescriptor )
     {
         version = aDescriptor.version();
         packaging = aDescriptor.packaging();
@@ -61,7 +62,7 @@ public class SingleObjectJsonIO<E>
         return this;
     }
 
-    public SingleObjectJsonIO<E> setBucketName( String aBucketName )
+    public SingleObjectJsonIO<D> setBucketName( String aBucketName )
     {
         try
         {
@@ -79,7 +80,7 @@ public class SingleObjectJsonIO<E>
         return this;
     }
 
-    public SingleObjectJsonIO<E> preprocess( Function<E, E> aPreprocessor )
+    public SingleObjectJsonIO<D> preprocess( Function<D, D> aPreprocessor )
     {
         preprocess = true;
         preprocessor = aPreprocessor;
@@ -88,12 +89,12 @@ public class SingleObjectJsonIO<E>
 
     @SuppressWarnings( "rawtypes" )
     @Override
-    public Stream<E> read( Bucket bucket )
-        throws IOException
+    public Stream<D> read( Bucket bucket )
+        throws UncheckedBucketException
     {
         final List<String> errors = validateConfig();
         if( !errors.isEmpty() )
-            throw new IOException( errors.get( 0 ) );
+            throw new UncheckedBucketException( errors.get( 0 ) );
 
         final URI bucketUri = bucket.asUri();
         try
@@ -107,33 +108,29 @@ public class SingleObjectJsonIO<E>
                     .schematize( objectName, dtoClass )
                     .converterFor( objectName );
 
-            final E entity = converter.convert( m ).to( dtoClass );
-            final E processedEntity = preprocess ? preprocessor.apply( entity ) : entity;
+            final D entity = converter.convert( m ).to( dtoClass );
+            final D processedEntity = preprocess ? preprocessor.apply( entity ) : entity;
 
             return Stream.of( processedEntity );
         }
-        catch (IOException e )
-        {
-            throw e;
-        }
         catch ( Exception e )
         {
-            throw new IOException( e );
+            throw new UncheckedBucketException( e );
         }
     }
 
     @Override
-    public List<Bucket> write( Stream<E> stream, String url )
-        throws IOException
+    public List<Bucket> write( Stream<D> stream, String url )
+        throws UncheckedBucketException
     {
         final List<String> errors = validateConfig();
 
         if( !errors.isEmpty() )
-            throw new IOException( errors.get( 0 ) );
+            throw new UncheckedBucketException( errors.get( 0 ) );
 
         try
         {
-            final E singleEntity = stream
+            final D singleEntity = stream
                     .collect( Collectors.toList() )
                     .get( 0 );
 
@@ -153,20 +150,34 @@ public class SingleObjectJsonIO<E>
         }
         catch ( Exception e )
         {
-            throw new IOException( e );
+            throw new UncheckedBucketException( e );
         }
     }
 
     @Override
-    public Coder<E> coder()
+    public Coder<D> coder()
     {
         return codec.coder();
     }
 
     @Override
-    public Decoder<E> decoder()
+    public Decoder<D> decoder()
     {
         return codec.decoder();
+    }
+
+    @Override
+    public Stream<D> debucketize( Bucket bucket )
+            throws UncheckedBucketException
+    {
+        return read( bucket );
+    }
+
+    @Override
+    public List<Bucket> bucketize( Stream<D> anEntityStream, String aUrl )
+            throws Exception
+    {
+        return write( anEntityStream, aUrl );
     }
 
     private List<String> validateConfig()
@@ -201,7 +212,6 @@ public class SingleObjectJsonIO<E>
         dto.context.packaging = packaging.name();
         dto.content = content;
         dto.location = location;
-        dto.descriminant = null; //TODO
         final Bucket b = BucketFactory.newBucket( dto );
         return b;
     }

@@ -14,6 +14,7 @@ import org.bucketz.BucketPath;
 import org.bucketz.BucketStore;
 import org.bucketz.BucketStore.Format;
 import org.bucketz.BucketStore.Packaging;
+import org.bucketz.UncheckedBucketException;
 
 public class BucketFactory
 {
@@ -38,7 +39,6 @@ public class BucketFactory
             context = newContext;
             content = dto.content;
             location = dto.location;
-            descriminant = dto.descriminant;
         }
 
         @Override public BucketPath innerPath() { return toBucketPath( context.innerPath ); }
@@ -48,7 +48,6 @@ public class BucketFactory
         @Override public Packaging packaging() { return Packaging.valueOf( context.packaging ); }
         @Override public String toString() { return fqn(); }
         @Override public Optional<String> content() { return Optional.ofNullable( content ); }
-        @Override public Optional<String> descriminant() { return Optional.ofNullable( descriminant ); }
         @Override public URI location()
         {
             try
@@ -57,14 +56,14 @@ public class BucketFactory
             }
             catch (URISyntaxException e)
             {
-                throw new IllegalStateException( e );
+                throw new UncheckedBucketException( e );
             }
         }
         @Override public String fullPath()
         {
             return new StringBuilder()
                     .append( outerPath() )
-                    .append( innerPath() )
+                    .append( innerPath().parts().isEmpty() ? "" : innerPath() )
                     .toString();
         }
         @Override public String fullName()
@@ -85,7 +84,7 @@ public class BucketFactory
                     .toString();
         }
         @Override public URI asUri()
-            throws IllegalStateException
+            throws UncheckedBucketException
         {
             try
             {
@@ -99,14 +98,14 @@ public class BucketFactory
             }
             catch ( URISyntaxException e )
             {
-                throw new IllegalStateException( e );
+                throw new UncheckedBucketException( e );
             }
         }
 
         private BucketPath toBucketPath( String aPath )
         {
             final List<String> parts;
-            if (aPath == null)
+            if (aPath == null || aPath.isEmpty())
             {
                 parts = Collections.emptyList();
             }
@@ -134,7 +133,13 @@ public class BucketFactory
         public List<String> parts()
         {
             return parts.stream().collect( Collectors.toList() );
-        }        
+        }
+
+        @Override
+        public String toString()        
+        {
+            return parts().stream().collect( Collectors.joining( "/", "", "/" ) );
+        }
     }
 }
 

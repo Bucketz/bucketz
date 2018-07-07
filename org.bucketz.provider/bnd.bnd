@@ -10,10 +10,32 @@ Export-Package: \
 	org.bucketz,\
 	org.bucketz.store
 
+Conditional-Package: \
+	org.bucketz.lib*
+
 Private-Package: \
 	org.bucketz.impl,\
-	org.bucketz.export.impl
+	org.bucketz.export.impl,\
+	org.bucketz.test
 
 -buildpath: \
 	osgi.enroute.base.api;version=2.0,\
-	org.bucketz.api;version=snapshot
+	org.bucketz.api;version=snapshot,\
+	org.bucketz.lib;version=snapshot;packages=*,\
+	org.apache.felix.converter,\
+	org.apache.felix.serializer
+
+-runrequires: \
+	osgi.identity;filter:='(osgi.identity=org.bucketz.provider)'
+
+-runbundles: \
+	org.apache.felix.configadmin;version='[1.8.8,1.8.9)',\
+	org.apache.felix.converter;version='[0.3.0,0.3.1)',\
+	org.apache.felix.log;version='[1.0.1,1.0.2)',\
+	org.apache.felix.scr;version='[2.0.2,2.0.3)',\
+	org.bucketz.provider;version=snapshot,\
+	org.eclipse.equinox.metatype;version='[1.4.100,1.4.101)',\
+	org.osgi.service.metatype;version='[1.3.0,1.3.1)',\
+	osgi.promise;version='[6.0.0,6.0.1)',\
+	org.apache.felix.schematizer;version='[0.3.0,0.3.1)',\
+	org.apache.felix.serializer;version='[0.3.0,0.3.1)'

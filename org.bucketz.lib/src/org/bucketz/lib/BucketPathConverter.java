@@ -12,7 +12,7 @@ public interface BucketPathConverter
      * @param BaseUrl The common base URL for all Buckets
      * @param Path The BucketPath relative to the BaseURL
      */
-    BucketStore.BucketContextDTO convert( BucketDescriptor<?> aDescriptor, BucketName aPath );
+    BucketStore.BucketContextDTO convert( BucketDescriptor<?> aDescriptor, String outerPath, BucketName aPath );
 
     static Converter newConverter()
     {
@@ -23,13 +23,14 @@ public interface BucketPathConverter
         implements BucketPathConverter
     {
         @Override
-        public BucketStore.BucketContextDTO convert( BucketDescriptor<?> aDescriptor, BucketName aPath )
+        public BucketStore.BucketContextDTO convert( BucketDescriptor<?> aDescriptor, String anOuterPath, BucketName aPath )
         {
             final BucketStore.BucketContextDTO dto = new BucketStore.BucketContextDTO();
             dto.innerPath = aPath.innerPath;
             dto.simpleName = aPath.simpleName;
             dto.format = aPath.format;
             dto.packaging = aPath.packaging;
+            dto.outerPath = anOuterPath;
             return dto;
         }        
     }

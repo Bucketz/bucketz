@@ -94,7 +94,6 @@ public interface BucketStore<D>
         public String location;
         public BucketContextDTO context;
         public String content;
-        public String descriminant;
     }
 
     /**
@@ -146,7 +145,10 @@ public interface BucketStore<D>
 
     static @interface Configuration
     {
-        String type() default Bucketz.Type.FILE;
+        String type() default Bucketz.TypeConstants.FILE;
         String location() default "~/data";
+        String name();
+        long bundleId();
+        String outerPath();
     }
 }

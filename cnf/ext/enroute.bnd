@@ -29,6 +29,18 @@ osgirepo:				osgi-distro
 obrrepo:				${nexus.location}/obr
 
 
+# For experimental development
+# Keeps track of transient dependencies as well, which is very useful.
+# However, it is not curated for deployment.
+-plugin.5.Development:  \
+	aQute.bnd.repository.maven.pom.provider.BndPomRepository; \
+		snapshotUrls=${nexus.repo}-public/; \
+		releaseUrls=${nexus.repo}-public/; \
+		pom=${build}/development.xml; \
+		name="Development"; \
+		location=${build}/cache/development.xml
+
+
 # For patches required for deploying
 -plugin.7.Patches:  \
     aQute.bnd.repository.maven.provider.MavenBndRepository; \

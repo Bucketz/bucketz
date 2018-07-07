@@ -15,10 +15,10 @@ public interface SingleObjectBucketDescriptor<D>
     extends BucketDescriptor<D>
 {
     D read( Bucket bucket )
-            throws Exception;
+            throws UncheckedBucketException;
 
     Bucket write( D anEntity, String aUrl )
-            throws Exception;
+            throws UncheckedBucketException;
 
     default Optional<String> containerName()
     {
@@ -36,7 +36,7 @@ public interface SingleObjectBucketDescriptor<D>
     }
 
     default Bucketizer<D> bucketizer()
-        throws Exception
+        throws UncheckedBucketException
     {
         return (s,url) -> {
             final D singleEntity = s.findAny().orElse( null );
@@ -50,7 +50,7 @@ public interface SingleObjectBucketDescriptor<D>
     }
 
     default Debucketizer<D> debucketizer()
-        throws Exception
+        throws UncheckedBucketException
     {
         return b -> {
             if (b == null)

@@ -9,5 +9,5 @@ import java.util.stream.Stream;
 public interface Debucketizer<D>
 {
     Stream<D> debucketize( Bucket bucket )
-            throws Exception;
+            throws UncheckedBucketException;
 }

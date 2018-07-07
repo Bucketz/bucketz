@@ -21,7 +21,7 @@ import org.osgi.service.log.LogService;
 import org.osgi.util.promise.Deferred;
 import org.osgi.util.promise.Promise;
 
-public class ThrowawayFileStoreFactory<E>
+public class ThrowawayFileStoreFactory<D>
 {
     private final String fileStorePid;
     private final String singleObjectBucketStorePid;
@@ -52,52 +52,52 @@ public class ThrowawayFileStoreFactory<E>
         return new ThrowawayFileStoreFactory<>( aFileStorePid, aSingleObjectBucketStorePid );
     }
 
-    public ThrowawayFileStoreFactory<E> setConfigurationAdmin( ConfigurationAdmin aConfigurationAdmin )
+    public ThrowawayFileStoreFactory<D> setConfigurationAdmin( ConfigurationAdmin aConfigurationAdmin )
     {
         cm = aConfigurationAdmin;
         return this;
     }
 
-    public ThrowawayFileStoreFactory<E> setLogService( LogService aLogService )
+    public ThrowawayFileStoreFactory<D> setLogService( LogService aLogService )
     {
         logger = aLogService;
         return this;
     }
 
-    public ThrowawayFileStoreFactory<E> locatedAt( String aLocation )
+    public ThrowawayFileStoreFactory<D> locatedAt( String aLocation )
     {
         location = aLocation;
         return this;
     }
 
-    public ThrowawayFileStoreFactory<E> setPid( String aPid )
+    public ThrowawayFileStoreFactory<D> setPid( String aPid )
     {
         pid = aPid;
         return this;
     }
 
-    public ThrowawayFileStoreFactory<E> setVersion( String aVersion )
+    public ThrowawayFileStoreFactory<D> setVersion( String aVersion )
     {
         version = aVersion;
         return this;
     }
 
-    public ThrowawayFileStoreFactory<E> asSingleObject( String aSingleBucketName )
+    public ThrowawayFileStoreFactory<D> asSingleObject( String aSingleBucketName )
     {
         isSingleObject = true;
         singleBucketName = aSingleBucketName;
         return this;
     }
 
-    public ThrowawayFileStoreFactory<E> debug()
+    public ThrowawayFileStoreFactory<D> debug()
     {
         debug = true;
         return this;
     }
 
-    public Promise<FileStore<E>> get()
+    public Promise<FileStore<D>> get()
     {
-        final Deferred<FileStore<E>> deferred = new Deferred<>();
+        final Deferred<FileStore<D>> deferred = new Deferred<>();
 
         try
         {
@@ -153,9 +153,9 @@ public class ThrowawayFileStoreFactory<E>
         return deferred.getPromise();
     }
 
-    private Promise<FileStore<E>> waitForInstance( String aTarget )
+    private Promise<FileStore<D>> waitForInstance( String aTarget )
     {
-        final Deferred<FileStore<E>> deferred = new Deferred<>();
+        final Deferred<FileStore<D>> deferred = new Deferred<>();
 
         try
         {
@@ -208,7 +208,7 @@ public class ThrowawayFileStoreFactory<E>
                 throw new Exception( String.format( "Expected FileStore, but got %s.", service.getClass() ) );
 
             @SuppressWarnings( "unchecked" )
-            final FileStore<E> fileStore = (FileStore<E>)service;
+            final FileStore<D> fileStore = (FileStore<D>)service;
             deferred.resolve( fileStore );
         }
         catch ( Exception e )

@@ -49,16 +49,10 @@ public interface Bucket
      * The URI of the Bucket. Constructed by removing the ":packaging" part of the FQN
      * and converting to a URI.
      * 
-     * @throws IllegalStateException if the Bucket is not properly configured and the URI
+     * @throws UncheckedBucketException if the Bucket is not properly configured and the URI
      *            cannot be constructed.
      */
-    URI asUri()
-        throws IllegalStateException;
-
-    /**
-     * Used for what??? XXX TODO
-     */
-    Optional<String> descriminant();
+    URI asUri();
 
     /**
      * Same as fqn();

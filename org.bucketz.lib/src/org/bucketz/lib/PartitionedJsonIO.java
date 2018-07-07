@@ -1,6 +1,5 @@
 package org.bucketz.lib;
 
-import java.io.IOException;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -18,8 +17,10 @@ import org.apache.felix.serializer.Serializer;
 import org.apache.felix.serializer.Writer;
 import org.bucketz.Bucket;
 import org.bucketz.BucketDescriptor;
+import org.bucketz.BucketIO;
 import org.bucketz.BucketStore;
 import org.bucketz.Codec;
+import org.bucketz.UncheckedBucketException;
 import org.osgi.util.converter.Converter;
 
 /**
@@ -31,14 +32,14 @@ import org.osgi.util.converter.Converter;
  * determines whether or not the file is part of the AR. When writing, the 
  * BucketFuction will transform the entity into a Bucket name.
  */
-public class PartitionedJsonIO<E>
-    implements BucketIO<E>
+public class PartitionedJsonIO<D>
+    implements BucketIO<D>
 {
     private Serializer serializer;
     private Writer writer;
-    private Codec<E> codec;
+    private Codec<D> codec;
 
-    private Function<E, E> preprocessor;
+    private Function<D, D> preprocessor;
     private boolean preprocess;
 
     private String confinement;
@@ -46,29 +47,29 @@ public class PartitionedJsonIO<E>
     private BucketStore.Packaging packaging;
     private Set<Pattern> bucketFilters = new HashSet<>();
 
-    private final Class<E> dtoClass;
+    private final Class<D> dtoClass;
 
-    private BucketFunction<E> bucketFunction;
+    private BucketFunction<D> bucketFunction;
 
-    PartitionedJsonIO( Class<E> aDTOClass )
+    PartitionedJsonIO( Class<D> aDTOClass )
     {
         dtoClass = aDTOClass;
     }
 
-    public PartitionedJsonIO<E> setSerializer( Serializer aSerializer )
+    public PartitionedJsonIO<D> setSerializer( Serializer aSerializer )
     {
         serializer = aSerializer;
         return this;
     }
 
-    public PartitionedJsonIO<E> setSerializer( Serializer aSerializer, Writer aWriter )
+    public PartitionedJsonIO<D> setSerializer( Serializer aSerializer, Writer aWriter )
     {
         serializer = aSerializer;
         writer = aWriter;
         return this;
     }
 
-    public PartitionedJsonIO<E> configureWith( BucketDescriptor<E> aDescriptor )
+    public PartitionedJsonIO<D> configureWith( BucketDescriptor<D> aDescriptor )
     {
         version = aDescriptor.version();
         packaging = aDescriptor.packaging();
@@ -76,20 +77,20 @@ public class PartitionedJsonIO<E>
         return this;
     }
 
-    public PartitionedJsonIO<E> addBucketFilter( String aFilter )
+    public PartitionedJsonIO<D> addBucketFilter( String aFilter )
     {
         final Pattern p = Pattern.compile( aFilter );
         bucketFilters.add( p );
         return this;
     }
 
-    public PartitionedJsonIO<E> setBucketFunction( BucketFunction<E> aBucketFunction )
+    public PartitionedJsonIO<D> setBucketFunction( BucketFunction<D> aBucketFunction )
     {
         bucketFunction = aBucketFunction;
         return this;
     }
 
-    public PartitionedJsonIO<E> preprocess( Function<E, E> aPreprocessor )
+    public PartitionedJsonIO<D> preprocess( Function<D, D> aPreprocessor )
     {
         preprocess = true;
         preprocessor = aPreprocessor;
@@ -97,12 +98,12 @@ public class PartitionedJsonIO<E>
     }
 
     @Override
-    public List<Bucket> write( Stream<E> stream, String url )
-        throws IOException
+    public List<Bucket> write( Stream<D> stream, String url )
+        throws UncheckedBucketException
     {
         final List<String> errors = validateConfig();
         if( !errors.isEmpty() )
-            throw new IOException( errors.get( 0 ) );
+            throw new UncheckedBucketException( errors.get( 0 ) );
 
         try
         {
@@ -118,11 +119,11 @@ public class PartitionedJsonIO<E>
         }
         catch ( Exception e )
         {
-            throw new IOException( e );
+            throw new UncheckedBucketException( e );
         }
     }
 
-    private String serialize( E entity )
+    private String serialize( D entity )
     {
         return (writer != null ) ?
                 serializer
@@ -138,12 +139,12 @@ public class PartitionedJsonIO<E>
 
     @Override
     @SuppressWarnings( "rawtypes" )
-    public Stream<E> read( Bucket bucket )
-        throws IOException
+    public Stream<D> read( Bucket bucket )
+        throws UncheckedBucketException
     {
         final List<String> errors = validateConfig();
         if( !errors.isEmpty() )
-            throw new IOException( errors.get( 0 ) );
+            throw new UncheckedBucketException( errors.get( 0 ) );
 
         final URI bucketUri = bucket.asUri();
 
@@ -163,34 +164,44 @@ public class PartitionedJsonIO<E>
                     .schematize( objectName, dtoClass )
                     .converterFor( objectName );
 
-            E entity = converter.convert( m ).to( dtoClass );
+            D entity = converter.convert( m ).to( dtoClass );
             if( preprocess )
                 entity = preprocessor.apply( entity );
 
-            Stream<E> s = Stream.of( entity );
+            Stream<D> s = Stream.of( entity );
 
             return s;
         }
-        catch ( IOException e )
-        {
-            throw e;
-        }
         catch ( Exception e )
         {
-            throw new IOException( e );
+            throw new UncheckedBucketException( e );
         }
     }
 
     @Override
-    public Coder<E> coder()
+    public Coder<D> coder()
     {
         return codec.coder();
     }
 
     @Override
-    public Decoder<E> decoder()
+    public Decoder<D> decoder()
     {
         return codec.decoder();
+    }
+
+    @Override
+    public Stream<D> debucketize( Bucket bucket )
+            throws UncheckedBucketException
+    {
+        return read( bucket );
+    }
+
+    @Override
+    public List<Bucket> bucketize( Stream<D> anEntityStream, String aUrl )
+            throws Exception
+    {
+        return write( anEntityStream, aUrl );
     }
 
     private List<String> validateConfig()
@@ -239,7 +250,6 @@ public class PartitionedJsonIO<E>
             dto.context = bucketContext;
             dto.content = e.getValue();
             dto.location = url;
-            dto.descriminant = ""; // TODO
             final Bucket b = BucketFactory.newBucket( dto );
             return b;
         };

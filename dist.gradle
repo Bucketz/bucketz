@@ -1,0 +1,91 @@
+def buildProject = project
+
+/* Configure the rootProject */
+configure(rootProject) {
+  defaultTasks = [':build']
+  buildDir = buildProject.buildDir
+
+  task build {
+    dependsOn ":${buildProject.name}:build"
+    dependsOn ":${buildProject.name}:checkNeeded"
+    dependsOn ":${buildProject.name}:releaseNeeded"
+    dependsOn ":${buildProject.name}:index"
+    description "Assembles, tests and releases the ${buildProject.name} project."
+    group 'build'
+  }
+}
+
+/* Stage the index file in the local release repository */
+def releaserepo = file(bnd('local', 'ERR: Could not locate local release repository'))
+
+/* Release the index file to the OBR repostiory */
+def obr = bnd('obrrepo', 'ERR: Could not locate OBR repository')
+
+/* Index file */
+def indexFile = new File(releaserepo, 'obr-index.xml')
+
+/* Workspace Name (TODO: Is there a better way to do this??) */
+def workspaceName = bnd('workspace.name', 'unknown')
+
+/* The base URL of the repository to where releases are made */
+String releaseBase = bnd('releaserepo', 'ERROR')
+
+/* The group ID of the workspace */
+def groupId = bnd('workspace.group','ERROR')/*.replaceAll('\\.','/')*/
+
+/* The version to release */
+def releaseVersion = bnd('build.version', '99.99.99')
+
+task('index') {
+  description 'Index the release repository.'
+  dependsOn 'releaseNeeded'
+  group 'release'
+
+  /* Bundles to index. */
+  def bundles = fileTree(releaserepo) {
+    include '**/*.jar'
+    exclude '**/*-latest.jar'
+    exclude '**/*-sources.jar'
+    exclude '**/*-javadoc.jar'
+  }
+
+  inputs.files bundles
+  outputs.files indexFile
+
+  doLast {
+    def repoindexJar = bnd.project.getBundle('org.osgi.impl.bundle.repoindex.cli', 'latest', null, ['strategy':'highest']).getFile()
+    def bundlesToIndex = bundles*.absolutePath.sort()
+
+//    def fileUrl = releaseBase + groupId + '/%p%v/%f'
+    def mvnUrl = 'mvn:' + groupId + '/%p%v'
+
+    javaexec {
+      main = '-jar' // first arg must be the jar
+      args repoindexJar
+      args '--pretty'
+      args '-r', indexFile
+      args '-d', releaserepo
+      args '-t', mvnUrl
+      args '-n', 'bnd'
+      args bundlesToIndex
+    }.assertNormalExitValue()
+    logger.info 'Generated index {}.', indexFile
+  }
+}
+
+task('releaseIndex', type:Exec) {
+  description 'Release the OBR Index File.'
+  dependsOn 'index'
+  group 'release'
+
+  executable 'curl'
+  args "-v", "-u", USER + ":" + PASSWORD, "--upload-file", indexFile, "$obr/$workspaceName/index-${releaseVersion}.xml"
+}
+
+clean {
+  doLast {
+    project.delete(releaserepo)
+    project.mkdir(releaserepo)
+  }
+}
+

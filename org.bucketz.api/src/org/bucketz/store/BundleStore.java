@@ -9,16 +9,8 @@ package org.bucketz.store;
  */
 import org.bucketz.BucketStore;
 
-public interface BundleStore<E>
-    extends BucketStore<E>
+public interface BundleStore<D>
+    extends BucketStore<D>
 {
     static final String PID = "org.bucketz.bundle";
-
-    static @interface Configuration
-    {
-        String name();
-        long bundleId();
-        String location();
-        String outerPath();
-    }
 }

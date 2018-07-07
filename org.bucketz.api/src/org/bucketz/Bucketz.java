@@ -68,18 +68,21 @@ public interface Bucketz
     static final String CONFIG = "bucketz.config";
     static final String VERSION = "1.0.0";
 
-    static final class Type
+    static enum Type { EMPTY, BUNDLE, FILE, CLOUD }
+    static enum Provider { BUCKETZ, FIREBASE }
+
+    static final class TypeConstants
     {
         public static final String EMPTY = "empty";
         public static final String BUNDLE = "bundle";
         public static final String FILE = "file";
         public static final String CLOUD = "cloud";
 
-        private Type() {}
+        private TypeConstants() {}
 
         public static final class Provider
         {
-            public static final String EXPEDITION = "eXpedition";
+            public static final String BUCKETZ = "bucketz";
             public static final String FIREBASE = "Firebase";
 
             private Provider() {}
@@ -99,7 +102,7 @@ public interface Bucketz
     public static @interface Require
     {
         String type();
-        String provider() default Type.Provider.EXPEDITION;
+        String provider() default TypeConstants.Provider.BUCKETZ;
     }
 
     @ProvideCapability(
@@ -109,6 +112,6 @@ public interface Bucketz
     public static @interface Provide
     {
         String type();
-        String provider() default Type.Provider.EXPEDITION;
+        String provider() default TypeConstants.Provider.BUCKETZ;
     }
 }

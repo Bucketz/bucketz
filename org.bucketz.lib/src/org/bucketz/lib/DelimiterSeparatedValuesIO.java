@@ -15,8 +15,10 @@ import java.util.stream.Stream;
 import org.apache.felix.serializer.Serializer;
 import org.bucketz.Bucket;
 import org.bucketz.BucketDescriptor;
+import org.bucketz.BucketIO;
 import org.bucketz.BucketStore;
 import org.bucketz.Codec;
+import org.bucketz.UncheckedBucketException;
 
 /**
  * All Entities are in the same Bucket, but stores in the form of a Delimiter-Separated-Values
@@ -25,17 +27,17 @@ import org.bucketz.Codec;
  * 
  * There is one and only one Bucket, which may have an inner path.
  */
-public class DelimiterSeparatedValuesIO<E>
-    implements BucketIO<E>
+public class DelimiterSeparatedValuesIO<D>
+    implements BucketIO<D>
 {
     public static final String NULL = "##NULL##";
     public static final String DELIMITER = "##D##";
 
     private Serializer serializer;
-    private Codec<E> codec;
-    private Optional<Function<E, E>> preprocessor = Optional.empty();
+    private Codec<D> codec;
+    private Optional<Function<D, D>> preprocessor = Optional.empty();
 
-    private BucketDescriptor<E> descriptor;
+    private BucketDescriptor<D> descriptor;
 
     /* Tabs are the default */
     private String delimiter = "\t";
@@ -49,19 +51,19 @@ public class DelimiterSeparatedValuesIO<E>
     private String format = BucketStore.Format.TSV.name();
     private BucketStore.Packaging packaging;
     private boolean doSort;
-    private Comparator<E> comparator;
+    private Comparator<D> comparator;
 
     final List<String> errors = new ArrayList<>();
 
-    DelimiterSeparatedValuesIO( Class<E> aDTOClass ) {}
+    DelimiterSeparatedValuesIO( Class<D> aDTOClass ) {}
 
-    public DelimiterSeparatedValuesIO<E> setSerializer( Serializer aSerializer )
+    public DelimiterSeparatedValuesIO<D> setSerializer( Serializer aSerializer )
     {
         serializer = aSerializer;
         return this;
     }
 
-    public DelimiterSeparatedValuesIO<E> configureWith( BucketDescriptor<E> aDescriptor )
+    public DelimiterSeparatedValuesIO<D> configureWith( BucketDescriptor<D> aDescriptor )
     {
         version = aDescriptor.version();
         packaging = aDescriptor.packaging();
@@ -88,31 +90,31 @@ public class DelimiterSeparatedValuesIO<E>
         return this;
     }
 
-    public DelimiterSeparatedValuesIO<E> preprocess( Function<E, E> aPreprocessor )
+    public DelimiterSeparatedValuesIO<D> preprocess( Function<D, D> aPreprocessor )
     {
         preprocessor = Optional.ofNullable( aPreprocessor );
         return this;
     }
 
-    public DelimiterSeparatedValuesIO<E> useTabDelimiters()
+    public DelimiterSeparatedValuesIO<D> useTabDelimiters()
     {
         delimiter = "\t";
         return this;
     }
 
-    public DelimiterSeparatedValuesIO<E> includeHeaders()
+    public DelimiterSeparatedValuesIO<D> includeHeaders()
     {
         includeHeaders = true;
         return this;
     }
 
-    public DelimiterSeparatedValuesIO<E> setColumns( String... aColumnList )
+    public DelimiterSeparatedValuesIO<D> setColumns( String... aColumnList )
     {
         columns = aColumnList;
         return this;
     }
 
-    private Codec<E> codec()
+    private Codec<D> codec()
     {
         if (codec == null)
             codec = new DefaultTsvConverter<>( 
@@ -127,24 +129,38 @@ public class DelimiterSeparatedValuesIO<E>
     }
 
     @Override
-    public Codec.Coder<E> coder()
+    public Codec.Coder<D> coder()
     {
         return codec().coder();
     }
 
     @Override
-    public Codec.Decoder<E> decoder()
+    public Codec.Decoder<D> decoder()
     {
         return codec().decoder();
     }
 
     @Override
-    public Stream<E> read( Bucket bucket )
-        throws IOException
+    public Stream<D> debucketize( Bucket bucket )
+            throws UncheckedBucketException
+    {
+        return read( bucket );
+    }
+
+    @Override
+    public List<Bucket> bucketize( Stream<D> anEntityStream, String aUrl )
+            throws Exception
+    {
+        return write( anEntityStream, aUrl );
+    }
+
+    @Override
+    public Stream<D> read( Bucket bucket )
+        throws UncheckedBucketException
     {
         errors.addAll( validateConfig() );
         if( !errors.isEmpty() )
-            throw new IOException( errors.get( 0 ) );
+            throw new UncheckedBucketException( errors.get( 0 ) );
 
         final URI bucketUri = bucket.asUri();
 
@@ -162,11 +178,11 @@ public class DelimiterSeparatedValuesIO<E>
             if( includeHeaders && line != null )
                 line = reader.readLine();
 
-            final List<E> lineObjects = new ArrayList<>();
+            final List<D> lineObjects = new ArrayList<>();
 
             while( line != null )
             {
-                E processedLineObject;
+                D processedLineObject;
                 try
                 {
                     processedLineObject = codec().decoder().decode( line );
@@ -179,16 +195,12 @@ public class DelimiterSeparatedValuesIO<E>
                 line = reader.readLine();
             }
 
-            final Stream<E> s = lineObjects.stream();
+            final Stream<D> s = lineObjects.stream();
             return s;
-        }
-        catch (IOException e)
-        {
-            throw e;
         }
         catch ( Exception e )
         {
-            throw new IOException( e );
+            throw new UncheckedBucketException( e );
         }
     }
 
@@ -227,20 +239,20 @@ public class DelimiterSeparatedValuesIO<E>
     }
 
     @Override
-    public List<Bucket> write( Stream<E> stream, String url )
-        throws IOException
+    public List<Bucket> write( Stream<D> stream, String url )
+        throws UncheckedBucketException
     {
         final List<String> errors = validateConfig();
         if( !errors.isEmpty() )
-            throw new IOException( errors.get( 0 ) );
+            throw new UncheckedBucketException( errors.get( 0 ) );
 
         try
         {
-            final List<E> allItems = ( doSort ) ?
+            final List<D> allItems = ( doSort ) ?
                     stream.sorted( comparator ).collect( Collectors.toList() ) :
                     stream.collect( Collectors.toList() );
             final List<String> lines = new ArrayList<>();
-            for (E item : allItems)
+            for (D item : allItems)
             {
                 final String string = codec().coder().encode( item );
                 lines.add( string );
@@ -257,13 +269,9 @@ public class DelimiterSeparatedValuesIO<E>
 
             return bucketList;
         }
-        catch (IOException e)
-        {
-            throw e;
-        }
         catch ( Exception e )
         {
-            throw new IOException( e );
+            throw new UncheckedBucketException( e );
         }
     }
 

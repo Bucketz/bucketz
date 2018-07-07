@@ -1,27 +1,28 @@
 package org.bucketz.lib;
 
 import org.bucketz.BucketStore;
+import org.bucketz.UncheckedBucketException;
 
 @FunctionalInterface
 public interface BucketNameParser
 {
     BucketName parse( String aBucketName, BucketStore.Packaging aPackaging )
-        throws Exception;
+        throws UncheckedBucketException;
 
     static BucketNameParser newParser()
     {
         return new Parser();
     }
 
-    public static class Parser
+    static class Parser
         implements BucketNameParser
     {
         @Override
         public BucketName parse( String aBucketName, BucketStore.Packaging aPackaging )
-            throws Exception
+            throws UncheckedBucketException
         {
             if (aBucketName == null || aBucketName.isEmpty())
-                throw new Exception( "Bucket name cannot be null or empty" );
+                throw new UncheckedBucketException( "Bucket name cannot be null or empty" );
 
             String[] parts;
             String bn = aBucketName;
@@ -30,7 +31,7 @@ public interface BucketNameParser
             {
                 parts = bn.split( ":" );
                 if (parts.length != 2)
-                    throw new Exception( String.format( "Could not parse Bucket name %s", aBucketName ) );
+                    throw new UncheckedBucketException( String.format( "Could not parse Bucket name %s", aBucketName ) );
 
                 bn = parts[0];
                 bp.packaging = parts[1].toUpperCase();
@@ -55,7 +56,7 @@ public interface BucketNameParser
             {
                 parts = bn.split( "\\." );
                 if (parts.length != 2)
-                    throw new Exception( String.format( "Could not parse Bucket name %s", aBucketName ) );
+                    throw new UncheckedBucketException( String.format( "Could not parse Bucket name %s", aBucketName ) );
 
                 bp.simpleName = parts[0];
                 bp.format = parts[1].toUpperCase();

@@ -13,13 +13,13 @@ public interface Codec<D>
     static interface Coder<D>
     {
         String encode(D d)
-            throws Exception;
+            throws UncheckedBucketException;
     }
 
     @FunctionalInterface
     static interface Decoder<D>
     {
         D decode(String string)
-            throws Exception;
+            throws UncheckedBucketException;
     }
 }

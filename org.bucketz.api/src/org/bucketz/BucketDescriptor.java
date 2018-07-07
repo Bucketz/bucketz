@@ -1,10 +1,8 @@
 package org.bucketz;
 
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.Optional;
 import java.util.function.Function;
-import java.util.stream.Stream;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -89,11 +87,6 @@ public interface BucketDescriptor<D>
      */
     Optional<String> containerName();
 
-    /**
-     * For coding the serialized data into an object, and serializing the data.
-     */
-    Codec<D> codec();
-
     default BucketStore.Format format()
     {
         return BucketStore.Format.JSON;
@@ -109,15 +102,38 @@ public interface BucketDescriptor<D>
         return Optional.empty();
     }
 
-    default Bucketizer<D> bucketizer()
-        throws Exception
-    {
-        return (s,url) -> Collections.emptyList();
-    }
+    // TODO: It should be possible to simply annotate simple data types
+//    static @interface Describe
+//    {
+//        String name();
+//        String description();
+//        String version();
+//        String id();
+//        String brn();
+//        String containerName();
+//        String format();
+//        String packaging();
+//        String filter();
+//    }
 
-    default Debucketizer<D> debucketizer()
-        throws Exception
+    public interface Builder<D>
     {
-        return s -> Stream.empty();
+        static interface Factory
+        {
+            <D>Builder<D> newBuilder( Class<D> forDTOType );
+        }
+
+        Builder<D> setName( String aName );
+        Builder<D> describeAs( String aDescription );
+        Builder<D> setVersion( String aVersion );
+        Builder<D> extractIdUsing( Function<D, String> anIdExtractor );
+        Builder<D> compareWith( Comparator<D> aComparator );
+        Builder<D> representWith( String aBundleRepresentativeName );
+        Builder<D> containWith( String aContainerName );
+        Builder<D> formatAs( BucketStore.Format aFormat );
+        Builder<D> packageAs( BucketStore.Packaging packaging );
+        Builder<D> filterWith( String aFilter );
+
+        BucketDescriptor<D> get();
     }
 }

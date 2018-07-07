@@ -10,30 +10,39 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import org.bucketz.Bucket;
 import org.bucketz.BucketDescriptor;
+import org.bucketz.BucketIO;
 import org.bucketz.BucketStore;
 import org.bucketz.Bucketz;
+import org.bucketz.UncheckedBucketException;
+import org.bucketz.lib.BucketContextualizer;
+import org.bucketz.lib.BucketName;
+import org.bucketz.lib.BucketNameParser;
+import org.bucketz.lib.BucketPathConverter;
 import org.bucketz.store.BundleStore;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
-import org.osgi.service.component.ComponentContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.log.LogService;
 import org.osgi.util.promise.Deferred;
 import org.osgi.util.promise.Promise;
 
-@Bucketz.Provide(type=Bucketz.Type.BUNDLE)
+import aQute.bnd.annotation.headers.ProvideCapability;
+
+//Need to provide the capability for the resolver
+@ProvideCapability(
+        ns = "osgi.service",
+        value = "objectClass:List<String>=\"org.osgi.service.component.ComponentFactory\"" )
+@Bucketz.Provide(type=Bucketz.TypeConstants.BUNDLE)
 @Component(
         name = BundleStoreService.COMPONENT_NAME,
         service = {
                 BucketStore.class,
                 BundleStore.class },
-        configurationPolicy = ConfigurationPolicy.REQUIRE,
-        configurationPid = BundleStore.PID,
-        immediate = true
+        factory = BundleStore.PID
 )
 public class BundleStoreService<D>
     implements BundleStore<D>
@@ -47,11 +56,13 @@ public class BundleStoreService<D>
     private String outerPath;
 
     private BucketDescriptor<D> descriptor;
+    private BucketIO<D> io;
 
     @Reference private LogService logger;
 
+    @SuppressWarnings( "unchecked" )
     @Activate
-    void activate( ComponentContext componentContext, BundleStore.Configuration configuration, Map<String, Object> properties )
+    void activate( BundleStore.Configuration configuration, Map<String, Object> properties )
     {
         name = configuration.name();
         bundleId = configuration.bundleId();
@@ -63,6 +74,11 @@ public class BundleStoreService<D>
 
         if (!outerPath.isEmpty() && !outerPath.endsWith( "/" ))
             outerPath += "/";
+
+        descriptor = (BucketDescriptor<D>)properties.get( "descriptor" );
+        io = (BucketIO<D>)properties.get( "io" );
+
+        System.err.println( String.format( "---> BundleStore: name=%s", name ) );
     }
 
     void deactivate()
@@ -71,24 +87,6 @@ public class BundleStoreService<D>
         bundleId = -1;
         location = null;
         outerPath = null;
-    }
-
-    @Reference
-    void bindDescriptor( BucketDescriptor<D> aDescriptor )
-    {
-        descriptor = aDescriptor;
-        name = new StringBuilder()
-                .append( descriptor.name().substring( 0, descriptor.name().lastIndexOf( "-" ) ) )
-                .append( "-BundleStore" )
-                .toString();
-
-        System.err.println( String.format( "BundleStore --> bindDescriptor: name=%s", name ) );
-    }
-
-    void unbindDescriptor( BucketDescriptor<D> aDescriptor )
-    {
-        name = null;
-        descriptor = null;
     }
 
     @Override
@@ -101,16 +99,7 @@ public class BundleStoreService<D>
     public List<String> buckets()
     {
         final Bundle bundle = FrameworkUtil.getBundle( getClass() ).getBundleContext().getBundle( bundleId );
-        URI uri;
-        try
-        {
-            uri = uri();
-        }
-        catch ( URISyntaxException e )
-        {
-            // TODO log something
-            return Collections.emptyList();
-        }
+        final URI uri = uri();
 
         final String uriString = uri.toString();
         final String searchPath = new StringBuilder()
@@ -131,14 +120,21 @@ public class BundleStoreService<D>
 
     @Override
     public URI uri()
-        throws URISyntaxException
+        throws UncheckedBucketException
     {
         final Bundle bundle = FrameworkUtil.getBundle( getClass() ).getBundleContext().getBundle( bundleId );
         final URL url = bundle.getEntry( location );
         if (url == null)
-            throw new URISyntaxException( "", String.format( "Could not find entry at %s", location ) );
+            throw new UncheckedBucketException( String.format( "Could not find entry at %s", location ) );
 
-        return url.toURI();
+        try
+        {
+            return url.toURI();
+        }
+        catch ( URISyntaxException e )
+        {
+            throw new UncheckedBucketException( e );
+        }
     }
 
     @Override
@@ -154,30 +150,37 @@ public class BundleStoreService<D>
         new Thread(() -> {
             try
             {
-//                final BucketNameParser parser = BucketNameParser.newParser();
-//                final BucketPathConverter converter = BucketPathConverter.newConverter();
-//                final BucketContextualizer contextualizer = BucketContextualizer.newContextualizer();
-//
-//                final Stream<E> stream = buckets().stream()
-//                        .map( b -> parser.parse( b, descriptor.packaging() ) )
-//                        .filter( t -> t.isSuccess() )
-//                        .map( t -> t.get() )
-//                        .map( p -> converter.convert( descriptor, p ) )
-//                        .map( c -> contextualizer.contextualize( url(), c ) )
-//                        .map( b -> descriptor.debucketizer().debucketize( b ) )
-//                        .flatMap( t -> t.get() );
+                final BucketNameParser parser = BucketNameParser.newParser();
+                final BucketPathConverter converter = BucketPathConverter.newConverter();
+                final BucketContextualizer contextualizer = BucketContextualizer.newContextualizer();
 
-//                deferred.resolve( stream );
+                for( String bucketName : buckets() )
+                {
+                    final BucketName bn = parser.parse( bucketName, descriptor.packaging() );
+                    final BucketStore.BucketContextDTO ctx = converter.convert( descriptor, outerPath, bn );
+                    final Bucket bucket = contextualizer.contextualize( uri(), ctx );
+                    final List<D> e = io.debucketize( bucket )
+                            .collect( Collectors.toList() );
+                    e.toString();
+                }
+
+                final Stream<D> stream = buckets().stream()
+                        .map( bn -> parser.parse( bn, descriptor.packaging() ) )
+                        .map( bn -> converter.convert( descriptor, outerPath, bn ) )
+                        .map( c -> contextualizer.contextualize( uri(), c ) )
+                        .flatMap( b -> io.debucketize( b ) );
+
+                deferred.resolve( stream );
             }
-            catch ( Throwable t )
+            catch ( Exception e )
             {
                 logger.log( 
                         FrameworkUtil.getBundle( getClass() ).getBundleContext().getServiceReference( getClass() ), 
                         LogService.LOG_ERROR, 
                         "An error occurred when reading from the FileStore", 
-                        t );
+                        e );
 
-                deferred.fail( t );
+                deferred.fail( e );
             }
         }).start();
 

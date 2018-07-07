@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<repository increment="1530922167000" name="Local" xmlns="http://www.osgi.org/xmlns/repository/v1.0.0">
+<repository increment="1530922171175" name="bnd" xmlns="http://www.osgi.org/xmlns/repository/v1.0.0">
   <resource>
     <capability namespace="osgi.identity">
       <attribute name="osgi.identity" value="org.bucketz.api"/>
@@ -8,7 +8,7 @@
     </capability>
     <capability namespace="osgi.content">
       <attribute name="osgi.content" value="4ec4b21f054c4596a150e25033c81c8cba9b23e98f07fdfb0e86cb0047b0be9d"/>
-      <attribute name="url" value="org.bucketz.api/org.bucketz.api-1.0.0.jar"/>
+      <attribute name="url" value="mvn:org.bucketz/org.bucketz.api/1.0.0"/>
       <attribute name="size" type="Long" value="42789"/>
       <attribute name="mime" value="application/vnd.osgi.bundle"/>
     </capability>
@@ -59,7 +59,7 @@
     </capability>
     <capability namespace="osgi.content">
       <attribute name="osgi.content" value="e85e409fcb1c8a3362ef0a88e88f40c8e679a92413fbe29c3b0829187b2709da"/>
-      <attribute name="url" value="org.bucketz.lib/org.bucketz.lib-1.0.0.jar"/>
+      <attribute name="url" value="mvn:org.bucketz/org.bucketz.lib/1.0.0"/>
       <attribute name="size" type="Long" value="82313"/>
       <attribute name="mime" value="application/vnd.osgi.bundle"/>
     </capability>
@@ -116,7 +116,7 @@
     </capability>
     <capability namespace="osgi.content">
       <attribute name="osgi.content" value="ac7be2bddb1983fe2664e5061d491e759eb9eed9c69358e29c2fa2273a8efee3"/>
-      <attribute name="url" value="org.bucketz.provider/org.bucketz.provider-1.0.0.jar"/>
+      <attribute name="url" value="mvn:org.bucketz/org.bucketz.provider/1.0.0"/>
       <attribute name="size" type="Long" value="154319"/>
       <attribute name="mime" value="application/vnd.osgi.bundle"/>
     </capability>

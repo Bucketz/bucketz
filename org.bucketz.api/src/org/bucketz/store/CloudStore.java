@@ -4,8 +4,8 @@ import org.bucketz.BucketStore;
 import org.osgi.annotation.versioning.ProviderType;
 
 @ProviderType
-public interface CloudStore<E>
-    extends BucketStore<E>, Writable<E>
+public interface CloudStore<D>
+    extends BucketStore<D>, Writable<D>
 {
     static final String PID = "org.bucketz.cloud";
 
