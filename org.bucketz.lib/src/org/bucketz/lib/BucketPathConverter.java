@@ -7,12 +7,9 @@ import org.bucketz.store.BucketStore;
 public interface BucketPathConverter
 {
     /**
-     * Given a base URL and a path, convert to a BucketContextDTO.
-     * 
-     * @param BaseUrl The common base URL for all Buckets
-     * @param Path The BucketPath relative to the BaseURL
+     * Given a base BucketDescriptor, an Outer Path, and a BucketName, convert to a BucketContextDTO.
      */
-    BucketStore.BucketContextDTO convert( BucketDescriptor<?> aDescriptor, String outerPath, BucketName aPath );
+    BucketStore.BucketContextDTO convert( BucketDescriptor<?> aDescriptor, String outerPath, BucketName aBucketName );
 
     static Converter newConverter()
     {
@@ -22,14 +19,13 @@ public interface BucketPathConverter
     static class Converter
         implements BucketPathConverter
     {
-        @Override
-        public BucketStore.BucketContextDTO convert( BucketDescriptor<?> aDescriptor, String anOuterPath, BucketName aPath )
+        public BucketStore.BucketContextDTO convert( BucketDescriptor<?> aDescriptor, String anOuterPath, BucketName aBucketName )
         {
             final BucketStore.BucketContextDTO dto = new BucketStore.BucketContextDTO();
-            dto.innerPath = aPath.innerPath;
-            dto.simpleName = aPath.simpleName;
-            dto.format = aPath.format;
-            dto.packaging = aPath.packaging;
+            dto.innerPath = aBucketName.innerPath;
+            dto.simpleName = aBucketName.simpleName;
+            dto.format = aBucketName.format;
+            dto.packaging = aBucketName.packaging;
             dto.outerPath = anOuterPath;
             return dto;
         }        

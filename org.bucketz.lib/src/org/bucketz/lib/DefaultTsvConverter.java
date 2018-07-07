@@ -45,7 +45,7 @@ public class DefaultTsvConverter<D>
     @Override
     public Coder<D> coder()
     {
-        return entity -> {
+        return dto -> {
             final String objectName = descriptor.type().getTypeName();
             final Schematizer schematizer = new StandardSchematizer().schematize( objectName, descriptor.type() );
             final Schema schema = schematizer.get( objectName );
@@ -54,7 +54,7 @@ public class DefaultTsvConverter<D>
             final StringBuilder line = new StringBuilder();
             for( int i = 0; i < columns.length; i++ )
             {
-                final Collection<?> collection = schema.valuesAt( columns[i], entity );
+                final Collection<?> collection = schema.valuesAt( columns[i], dto );
                 final Object obj;
                 if( collection != null && collection.size() == 1 )
                     obj = collection.iterator().next();

@@ -22,7 +22,7 @@ import org.bucketz.store.BucketStore;
 
 /**
  * All Entities are in the same Bucket, but stores in the form of a Delimiter-Separated-Values
- * form. Tabs are the default delimiter. Each line therefore represents a single Entity, each field 
+ * form. Tabs are the default delimiter. Each line therefore represents a single DTO, each field 
  * being separated by the delimiter (i.e. tab).
  * 
  * There is one and only one Bucket, which may have an inner path.

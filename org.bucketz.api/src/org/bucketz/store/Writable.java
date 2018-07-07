@@ -14,37 +14,37 @@ public interface Writable<D>
     void push( Increment<D> anIncrement, Supplier<Map<String, D>> repo )
         throws Exception;
 
-    static <E>Increment<E> newIncrement(  Increment.Type aType, E anEntity )
+    static <D>Increment<D> newIncrement(  Increment.Type aType, D aDTO )
     {
-        final IncrementDTO<E> dto = new IncrementDTO<>();
+        final IncrementDTO<D> dto = new IncrementDTO<>();
         dto.type = aType.name();
-        dto.value = anEntity;
-        final IncrementVo<E> vo = new IncrementVo<E>( dto, anEntity );
+        dto.value = aDTO;
+        final IncrementVo<D> vo = new IncrementVo<D>( dto, aDTO );
         return vo;
     }
 
-    public static interface Increment<E>
+    public static interface Increment<D>
     {
         public static enum Type { PUT, DELETE }
         Type type();
-        E value();
+        D value();
     }
 
-    public static class IncrementDTO<E>
+    public static class IncrementDTO<D>
         extends DTO
     {
         public String type;
-        public E value;
+        public D value;
     }
 
-    public static class IncrementVo<E>
-        extends IncrementDTO<E>
-        implements Increment<E>
+    public static class IncrementVo<D>
+        extends IncrementDTO<D>
+        implements Increment<D>
     {
-        public IncrementVo( Writable.IncrementDTO<E> dto, E anEntity )
+        public IncrementVo( Writable.IncrementDTO<D> dto, D aDTO )
         {
             type = dto.type;
-            value = anEntity;
+            value = aDTO;
         }
 
         @Override
@@ -54,7 +54,7 @@ public interface Writable<D>
         }
 
         @Override
-        public E value()
+        public D value()
         {
             return value;
         }

@@ -268,14 +268,14 @@ package org.bucketz.impl;
 //    }
 //
 //    @Override
-//    public Promise<Confirmation> push( Stream<E> anEntityStream )
+//    public Promise<Confirmation> push( Stream<E> aDTOStream )
 //    {
 //        final Deferred<Confirmation> deferred = new Deferred<>();
 //        try
 //        {
 //            final List<BucketStore.Bucket> buckets = descriptor
 //                    .bucketizer()
-//                    .bucketize( anEntityStream, url() )
+//                    .bucketize( aDTOStream, url() )
 //                    .orElseThrow( () -> new Exception() );
 //
 //            for( BucketStore.Bucket bucket : buckets )
@@ -323,12 +323,12 @@ package org.bucketz.impl;
 ////    /**
 ////     * Assume TSV for now.
 ////     */
-////    private void exportTable( Path base, Supplier<Stream<E>> anEntitySupplier )
+////    private void exportTable( Path base, Supplier<Stream<E>> anDTOSupplier )
 ////            throws Exception
 ////    {
 ////        final List<Table> tables = descriptor
 ////                .tableizer()
-////                .tableize( anEntitySupplier.get() )
+////                .tableize( anDTOSupplier.get() )
 ////                .orElseThrow( () -> new Exception() );
 ////
 ////        for( int i = 0; i < tables.size(); i++ )

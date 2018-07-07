@@ -24,13 +24,13 @@ import org.bucketz.store.BucketStore;
 import org.osgi.util.converter.Converter;
 
 /**
- * The Partitioned packaging splits up each Entity into its own file.
- * There is exactly one Entity per file. The file structure may have some
+ * The Partitioned packaging splits up each DTO into its own file.
+ * There is exactly one DTO per file. The file structure may have some
  * organizational hierarchy, or it may be flat.
  * 
  * When reading, either the list of provided Bucket names or the BucketFilter 
  * determines whether or not the file is part of the AR. When writing, the 
- * BucketFuction will transform the entity into a Bucket name.
+ * BucketFuction will transform the DTO into a Bucket name.
  */
 public class PartitionedJsonIO<D>
     implements BucketIO<D>
@@ -123,16 +123,16 @@ public class PartitionedJsonIO<D>
         }
     }
 
-    private String serialize( D entity )
+    private String serialize( D dto )
     {
         return (writer != null ) ?
                 serializer
-                    .serialize( entity )
+                    .serialize( dto )
                     .writeWith( writer )
                     .sourceAsDTO()
                     .toString() :
                 serializer
-                    .serialize( entity )
+                    .serialize( dto )
                     .sourceAsDTO()
                     .toString();
     }
@@ -164,11 +164,11 @@ public class PartitionedJsonIO<D>
                     .schematize( objectName, dtoClass )
                     .converterFor( objectName );
 
-            D entity = converter.convert( m ).to( dtoClass );
+            D dto = converter.convert( m ).to( dtoClass );
             if( preprocess )
-                entity = preprocessor.apply( entity );
+                dto = preprocessor.apply( dto );
 
-            Stream<D> s = Stream.of( entity );
+            Stream<D> s = Stream.of( dto );
 
             return s;
         }

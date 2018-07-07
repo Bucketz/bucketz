@@ -3,10 +3,14 @@ package org.bucketz.lib;
 import org.bucketz.Bucket;
 import org.bucketz.UncheckedBucketException;
 
+/**
+ * Used in an implementation as a tool for parsing a String representation of a
+ * Bucket name into a BucketName object.
+ */
 @FunctionalInterface
 public interface BucketNameParser
 {
-    BucketName parse( String aBucketName, Bucket.Packaging aPackaging )
+    BucketName parse( String aBucketNameAsString, Bucket.Packaging aPackaging )
         throws UncheckedBucketException;
 
     static BucketNameParser newParser()
@@ -18,20 +22,20 @@ public interface BucketNameParser
         implements BucketNameParser
     {
         @Override
-        public BucketName parse( String aBucketName, Bucket.Packaging aPackaging )
+        public BucketName parse( String aBucketNameAsString, Bucket.Packaging aPackaging )
             throws UncheckedBucketException
         {
-            if (aBucketName == null || aBucketName.isEmpty())
+            if (aBucketNameAsString == null || aBucketNameAsString.isEmpty())
                 throw new UncheckedBucketException( "Bucket name cannot be null or empty" );
 
             String[] parts;
-            String bn = aBucketName;
+            String bn = aBucketNameAsString;
             final BucketName bp = new BucketName();
-            if (aBucketName.contains( ":" ))
+            if (aBucketNameAsString.contains( ":" ))
             {
                 parts = bn.split( ":" );
                 if (parts.length != 2)
-                    throw new UncheckedBucketException( String.format( "Could not parse Bucket name %s", aBucketName ) );
+                    throw new UncheckedBucketException( String.format( "Could not parse Bucket name %s", aBucketNameAsString ) );
 
                 bn = parts[0];
                 bp.packaging = parts[1].toUpperCase();
@@ -56,7 +60,7 @@ public interface BucketNameParser
             {
                 parts = bn.split( "\\." );
                 if (parts.length != 2)
-                    throw new UncheckedBucketException( String.format( "Could not parse Bucket name %s", aBucketName ) );
+                    throw new UncheckedBucketException( String.format( "Could not parse Bucket name %s", aBucketNameAsString ) );
 
                 bp.simpleName = parts[0];
                 bp.format = parts[1].toUpperCase();

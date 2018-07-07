@@ -108,10 +108,10 @@ public class SingleObjectJsonIO<D>
                     .schematize( objectName, dtoClass )
                     .converterFor( objectName );
 
-            final D entity = converter.convert( m ).to( dtoClass );
-            final D processedEntity = preprocess ? preprocessor.apply( entity ) : entity;
+            final D dto = converter.convert( m ).to( dtoClass );
+            final D processedDTO = preprocess ? preprocessor.apply( dto ) : dto;
 
-            return Stream.of( processedEntity );
+            return Stream.of( processedDTO );
         }
         catch ( Exception e )
         {
@@ -130,16 +130,16 @@ public class SingleObjectJsonIO<D>
 
         try
         {
-            final D singleEntity = stream
+            final D singleDTO = stream
                     .collect( Collectors.toList() )
                     .get( 0 );
 
             final String content = (writer != null ) ?
-                    serializer.serialize( singleEntity )
+                    serializer.serialize( singleDTO )
                         .writeWith( writer )
                         .sourceAsDTO()
                         .toString() :
-                    serializer.serialize( singleEntity )
+                    serializer.serialize( singleDTO )
                         .sourceAsDTO()
                         .toString();
 

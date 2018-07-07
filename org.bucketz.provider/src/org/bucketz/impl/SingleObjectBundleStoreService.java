@@ -187,15 +187,15 @@ package org.bucketz.impl;
 //                final BucketPathConverter converter = BucketPathConverter.newConverter();
 //                final BucketContextualizer contextualizer = BucketContextualizer.newContextualizer();
 //
-//                final Try<E> entity = parser.parse( bucket(), descriptor.packaging() )
+//                final Try<E> dto = parser.parse( bucket(), descriptor.packaging() )
 //                    .map( b -> converter.convert( descriptor, b ) )
 //                    .map( c -> contextualizer.contextualize( url(), c ) )
 //                    .flatMap( b -> descriptor.read( b ) );
 //
-//                if( entity.isFailure() )
-//                    deferred.fail( entity.getException() );
+//                if( dto.isFailure() )
+//                    deferred.fail( dto.getException() );
 //                else
-//                    deferred.resolve( Stream.of( entity.get() ) );
+//                    deferred.resolve( Stream.of( dto.get() ) );
 //            }
 //            catch ( Throwable t )
 //            {

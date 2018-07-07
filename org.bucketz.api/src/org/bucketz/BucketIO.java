@@ -16,17 +16,17 @@ public interface BucketIO<D>
         D debucketizeObject( Bucket bucket )
                 throws UncheckedBucketException;
 
-        Bucket bucketizeObject( D anEntity, String aUrl )
+        Bucket bucketizeObject( D aDTO, String aUrl )
                 throws UncheckedBucketException;
 
         default Bucketizer<D> bucketizer()
                 throws UncheckedBucketException
         {
             return (s,url) -> {
-                final D singleEntity = s.findAny().orElse( null );
-                if (singleEntity == null)
-                    throw new IllegalArgumentException( "No entity provided" );
-                final Bucket bucket = this.bucketizeObject( singleEntity, url );
+                final D singleDTO = s.findAny().orElse( null );
+                if (singleDTO == null)
+                    throw new IllegalArgumentException( "No DTO provided" );
+                final Bucket bucket = this.bucketizeObject( singleDTO, url );
                 final List<Bucket> list = new ArrayList<>();
                 list.add( bucket );
                 return list;
