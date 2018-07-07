@@ -9,4 +9,5 @@ import org.osgi.annotation.versioning.ProviderType;
 public interface EmptyStore<D>
     extends BucketStore<D>
 {
+    static final String PID = "org.bucketz.empty";
 }

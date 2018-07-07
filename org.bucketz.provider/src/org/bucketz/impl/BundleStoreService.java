@@ -76,8 +76,8 @@ public class BundleStoreService<D>
         if (!outerPath.isEmpty() && !outerPath.endsWith( "/" ))
             outerPath += "/";
 
-        descriptor = (BucketDescriptor<D>)properties.get( "descriptor" );
-        io = (BucketIO<D>)properties.get( "io" );
+        descriptor = (BucketDescriptor<D>)properties.get( Bucketz.Parameters.DESCRIPTOR );
+        io = (BucketIO<D>)properties.get( Bucketz.Parameters.IO );
     }
 
     void deactivate()

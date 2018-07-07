@@ -1,11 +1,11 @@
 package org.bucketz.store;
 
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.List;
 import java.util.stream.Stream;
 
 import org.bucketz.Bucketz;
+import org.bucketz.UncheckedBucketException;
 import org.osgi.dto.DTO;
 import org.osgi.util.promise.Promise;
 
@@ -46,7 +46,7 @@ public interface BucketStore<D>
      * include the outer path.
      */
     public URI uri()
-        throws URISyntaxException;
+        throws UncheckedBucketException;
 
     /**
      * The outer path is common to all Buckets in this store. Must end with a "/", and does not include
