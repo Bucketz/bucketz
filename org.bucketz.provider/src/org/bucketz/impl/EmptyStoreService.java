@@ -10,25 +10,27 @@ import java.util.stream.Stream;
 import org.bucketz.Bucketz;
 import org.bucketz.UncheckedBucketException;
 import org.bucketz.store.BucketStore;
-import org.bucketz.store.BundleStore;
 import org.bucketz.store.EmptyStore;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.log.LogService;
 import org.osgi.util.promise.Deferred;
 import org.osgi.util.promise.Promise;
 
-@Bucketz.Provide(type=Bucketz.TypeConstants.BUNDLE)
+import aQute.bnd.annotation.headers.ProvideCapability;
+
+//Need to provide the capability for the resolver
+@ProvideCapability(
+      ns = "osgi.service",
+      value = "objectClass:List<String>=\"org.osgi.service.component.ComponentFactory\"" )
+@Bucketz.Provide(type=Bucketz.TypeConstants.EMPTY)
 @Component(
-        name = EmptyStoreService.COMPONENT_NAME,
-        service = {
-                BucketStore.class,
-                EmptyStore.class },
-        configurationPolicy = ConfigurationPolicy.REQUIRE,
-        configurationPid = EmptyStore.PID,
-        immediate = true
+      name = EmptyStoreService.COMPONENT_NAME,
+      service = {
+              BucketStore.class,
+              EmptyStore.class },
+      factory = EmptyStore.PID
 )
 public class EmptyStoreService<D>
     implements EmptyStore<D>
@@ -43,7 +45,7 @@ public class EmptyStoreService<D>
     @Reference private LogService logger;
 
     @Activate
-    void activate( BundleStore.Configuration configuration, Map<String, Object> properties )
+    void activate( EmptyStore.Configuration configuration, Map<String, Object> properties )
     {
         name = configuration.name();
         location = configuration.location();

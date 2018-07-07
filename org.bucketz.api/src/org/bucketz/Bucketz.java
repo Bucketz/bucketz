@@ -88,6 +88,7 @@ public interface Bucketz
 
         public static final String DESCRIPTOR = "descriptor";
         public static final String IO = "io";
+        public static final String BUCKET_TYPE = "org.bucketz.type";
     }
 
     //

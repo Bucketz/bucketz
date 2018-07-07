@@ -4,17 +4,18 @@ import java.util.Map;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
 
+import org.bucketz.UncheckedBucketException;
 import org.osgi.dto.DTO;
 
 public interface Writable<D>
 {
     void push( Stream<D> anDataStream )
-        throws Exception;
+        throws UncheckedBucketException;
 
     void push( Increment<D> anIncrement, Supplier<Map<String, D>> repo )
-        throws Exception;
+        throws UncheckedBucketException;
 
-    static <D>Increment<D> newIncrement(  Increment.Type aType, D aDTO )
+    static <D>Increment<D> newIncrement( Increment.Type aType, D aDTO )
     {
         final IncrementDTO<D> dto = new IncrementDTO<>();
         dto.type = aType.name();

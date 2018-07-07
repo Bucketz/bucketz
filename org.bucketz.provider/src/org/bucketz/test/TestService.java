@@ -16,6 +16,8 @@ import org.osgi.service.log.LogService;
 public class TestService
 {
     @Reference private BucketStoreFactory factory;
+    @Reference(target="(" + Bucketz.Parameters.BUCKET_TYPE + "=FILE)")
+    private BucketStoreFactory.Available availability;
     @Reference private BucketStoreFactory.ConfigurationBuilder builder;
     @Reference private LogService logger;
     @Reference private Serializer serializer;

@@ -10,5 +10,5 @@ import java.util.stream.Stream;
 public interface Bucketizer<D>
 {
     List<Bucket> bucketize( Stream<D> aDTOStream, String aLocation )
-            throws Exception;
+            throws UncheckedBucketException;
 }

@@ -36,4 +36,9 @@ public interface BucketStoreFactory
 
         BucketStore.Configuration get();
     }
+
+    static interface Available
+    {
+        static final String PID = BucketStoreFactory.PID + ".available";
+    }
 }

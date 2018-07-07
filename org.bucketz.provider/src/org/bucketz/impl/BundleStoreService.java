@@ -10,13 +10,11 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import org.bucketz.Bucket;
 import org.bucketz.BucketIO;
 import org.bucketz.Bucketz;
 import org.bucketz.Bucketz.Type;
 import org.bucketz.UncheckedBucketException;
 import org.bucketz.lib.BucketContextualizer;
-import org.bucketz.lib.BucketName;
 import org.bucketz.lib.BucketNameParser;
 import org.bucketz.lib.BucketPathConverter;
 import org.bucketz.store.BucketDescriptor;
@@ -86,6 +84,8 @@ public class BundleStoreService<D>
         bundleId = -1;
         location = null;
         outerPath = null;
+        descriptor = null;
+        io = null;
     }
 
     @Override
@@ -159,15 +159,15 @@ public class BundleStoreService<D>
                 final BucketPathConverter converter = BucketPathConverter.newConverter();
                 final BucketContextualizer contextualizer = BucketContextualizer.newContextualizer();
 
-                for( String bucketName : buckets() )
-                {
-                    final BucketName bn = parser.parse( bucketName, descriptor.packaging() );
-                    final BucketStore.BucketContextDTO ctx = converter.convert( descriptor, outerPath, bn );
-                    final Bucket bucket = contextualizer.contextualize( uri(), ctx );
-                    final List<D> e = io.debucketize( bucket )
-                            .collect( Collectors.toList() );
-                    e.toString();
-                }
+//                for( String bucketName : buckets() )
+//                {
+//                    final BucketName bn = parser.parse( bucketName, descriptor.packaging() );
+//                    final BucketStore.BucketContextDTO ctx = converter.convert( descriptor, outerPath, bn );
+//                    final Bucket bucket = contextualizer.contextualize( uri(), ctx );
+//                    final List<D> e = io.debucketize( bucket )
+//                            .collect( Collectors.toList() );
+//                    e.toString();
+//                }
 
                 final Stream<D> stream = buckets().stream()
                         .map( bn -> parser.parse( bn, descriptor.packaging() ) )

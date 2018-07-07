@@ -1,5 +1,7 @@
 package org.bucketz.impl;
 
+import java.util.Dictionary;
+import java.util.Hashtable;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.bucketz.BucketIO;
@@ -11,7 +13,10 @@ import org.bucketz.store.BucketStore;
 import org.bucketz.store.BucketStoreFactory;
 import org.bucketz.store.BucketDescriptor.Single;
 import org.bucketz.store.BucketStore.Configuration;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.Constants;
 import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.component.ComponentConstants;
 import org.osgi.service.component.ComponentFactory;
 import org.osgi.service.component.ComponentInstance;
@@ -21,6 +26,12 @@ import org.osgi.service.component.annotations.ReferenceCardinality;
 import org.osgi.service.component.annotations.ReferencePolicy;
 import org.osgi.service.log.LogService;
 
+import aQute.bnd.annotation.headers.ProvideCapability;
+
+//Need to provide the capability for the resolver
+@ProvideCapability(
+      ns = "osgi.service",
+      value = "objectClass:List<String>=\"org.bucketz.store.BucketStoreFactory$Available\"" )
 @Component(immediate=true)
 public class BucketStoreFactoryService
     implements BucketStoreFactory
@@ -28,8 +39,10 @@ public class BucketStoreFactoryService
     private final ConcurrentHashMap<String, BucketStoreProvider> providers = new ConcurrentHashMap<>();
     private final ConcurrentHashMap<String, ComponentFactory> factories = new ConcurrentHashMap<>();
     private final ConcurrentHashMap<String, ComponentInstance> instances = new ConcurrentHashMap<>();
+    private final ConcurrentHashMap<String, ServiceRegistration<BucketStoreFactory.Available>> availabilities = new ConcurrentHashMap<>();
 
     @Reference private LogService logger;
+    @Reference private BucketStoreFactory.Available bundleStore;
 
     @Reference(
             cardinality = ReferenceCardinality.MULTIPLE,
@@ -53,6 +66,7 @@ public class BucketStoreFactoryService
         providers.put( typeOfFactory, provider );
         instances.put( typeOfFactory, component );
         factories.put( typeOfFactory, cf );
+        registerBucketStoreAvailable( provider.type() );
     }
 
     void unbindStoreProviderComponentFactory( ComponentFactory cf )
@@ -63,6 +77,8 @@ public class BucketStoreFactoryService
                 .map( e -> e.getKey() )
                 .findFirst()
                 .orElseThrow( () -> new Exception("Could not determine ComponentFactory type") );
+        final Bucketz.Type type = Bucketz.Type.valueOf( typeOfFactory );
+        unregisterBucketStoreAvailable( type );
         final ComponentInstance instance = instances.get( typeOfFactory );
         if (instance != null)
             instance.dispose();
@@ -135,5 +151,32 @@ public class BucketStoreFactoryService
 
         final BucketStoreProvider provider = providers.get( typeOfFactory );
         return provider;
+    }
+
+    private void registerBucketStoreAvailable( Bucketz.Type type )
+    {
+        final BundleContext context = FrameworkUtil.getBundle( getClass() ).getBundleContext();
+        final Dictionary<String, String> properties = new Hashtable<>();
+        properties.put( Constants.SERVICE_PID, BucketStoreFactory.Available.PID );
+        properties.put( Bucketz.Parameters.BUCKET_TYPE, type.name() );
+        final ServiceRegistration<BucketStoreFactory.Available> sr = context.registerService( 
+                BucketStoreFactory.Available.class, 
+                new _Available(),
+                properties );
+
+        availabilities.put( type.name(), sr );
+    }    
+
+    private void unregisterBucketStoreAvailable( Bucketz.Type type )
+    {
+        final ServiceRegistration<BucketStoreFactory.Available> sr = availabilities.get( type.name() );
+        availabilities.remove( type.name() );
+        sr.unregister();
+    }    
+
+    public static final class _Available
+        implements BucketStoreFactory.Available
+    {
+        
     }
 }
