@@ -2,6 +2,7 @@ package org.bucketz;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 public interface BucketIO<D>
@@ -44,5 +45,47 @@ public interface BucketIO<D>
                 return stream;
             };
         }
+    }
+
+    @FunctionalInterface
+    public interface BucketFunction<D>
+    {
+        String toBucket( D dto );
+    }
+
+    static enum Profile { MULTI_TSV, MULTI_JSON, PARTITIONED_JSON, SINGLE }
+
+    static interface ConfigurationProfile
+    {
+        Profile profile();
+    }
+
+    static interface Configuration
+    {
+        static interface Tsv
+            extends ConfigurationProfile
+        {
+            Optional<String[]> headers();
+            String[] columns();
+        }
+
+        static interface MultiJson
+            extends BucketIO.ConfigurationProfile
+        {
+            // Nothing for now!
+        }
+
+        static interface PartitionedJson<E>
+            extends ConfigurationProfile
+        {
+            String bucketFilter();
+            BucketFunction<E> bucketFunction();
+        }
+
+        static interface SingleObject
+            extends ConfigurationProfile
+        {
+            String bucketName();
+        }        
     }
 }

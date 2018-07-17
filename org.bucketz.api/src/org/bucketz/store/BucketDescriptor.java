@@ -7,29 +7,6 @@ import java.util.function.Function;
 import org.bucketz.Bucket;
 import org.osgi.annotation.versioning.ProviderType;
 
-/**
- * Notes about naming.
- * 
- * Due to the way Repositories and Stores are designed, many components get instantiated,
- * which need to be addressable by name. Without some convention, confusion will quickly set in.
- * Therefore, we use the following conventions:
- * 
- *  - An AggregateRoot will use a component.name based on the PID of the AggregateRoot
- *    and the Version of the schema: component.name = PID:VERSION.
- *    
- *  - Each supporting object for an AggregateRoot will have a component.name based on the PID and VERSION of the
- *    component.name of the AggregateRoot, appended with an appropriate type indicator:
- *      - PID-VERSION-Descriptor
- *      - PID-VERSION-Repository
- *      - PID-VERSION-Store
- *      - PID-VERSION-Index
- *    
- *  - Each instance of supporting object will have a name based on its Confinement component.name: 
- *      - Confinement-PID-VERSION-Descriptor
- *      - Confinement-PID-VERSION-Repository
- *      - Confinement-PID-VERSION-Store
- *      - Confinement-PID-VERSION-Index
- */
 @ProviderType
 public interface BucketDescriptor<D>
 {

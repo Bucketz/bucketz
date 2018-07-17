@@ -10,10 +10,6 @@ public interface CloudStore<D>
 
     /**
      * Used to indicate that the CloudStore backend is ready.
-     * If a service (usually an AggregateDescriptor) depends on the CloudStore, 
-     * it should not be started until the implementation is ready.
-     * 
-     * This is because it can depend (very indirectly) on URL Handlers.
      */
     static interface Ready {}
 

@@ -32,7 +32,7 @@ public class TestService
                 .setLogService( logger )
                 .setSerializer( serializer )
                 .configureWith( descriptor )
-                .useTabDelimited(
+                .useConfiguration(
                         BucketIOFactory.newTsvConfigFactory()
                         .setColumns( "id", "creds" )
                         .get() )

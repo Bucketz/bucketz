@@ -4,16 +4,14 @@ import java.util.Map;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
 
-import org.bucketz.UncheckedBucketException;
 import org.osgi.dto.DTO;
+import org.osgi.util.promise.Promise;
 
 public interface Writable<D>
 {
-    void push( Stream<D> anDataStream )
-        throws UncheckedBucketException;
+    Promise<Boolean> push( Stream<D> anDataStream );
 
-    void push( Increment<D> anIncrement, Supplier<Map<String, D>> repo )
-        throws UncheckedBucketException;
+    Promise<Boolean> push( Increment<D> anIncrement, Supplier<Map<String, D>> repo );
 
     static <D>Increment<D> newIncrement( Increment.Type aType, D aDTO )
     {

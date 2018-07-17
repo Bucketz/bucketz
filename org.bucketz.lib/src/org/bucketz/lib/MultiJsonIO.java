@@ -43,7 +43,6 @@ public class MultiJsonIO<D>
     private Class<D> dtoClass;
 
     private String arrayName = "data";
-    private String confinement;
     private String version;
     private String innerPath;
     private String simpleName;
@@ -77,6 +76,7 @@ public class MultiJsonIO<D>
 
     public MultiJsonIO<D> configureWith( BucketDescriptor<D> aDescriptor )
     {
+        version = aDescriptor.version();
         packaging = aDescriptor.packaging();
         arrayName = aDescriptor.containerName().orElseGet( null );
         comparator = aDescriptor.comparator().orElse( null );
@@ -235,8 +235,6 @@ public class MultiJsonIO<D>
             errors.add( "Serializer is not set" );
         if( doSort && comparator == null )
             errors.add( "Sort is configured, but comparator is invalid" );
-        if( confinement == null )
-            errors.add( "Confinement is not set" );
         if( version == null )
             errors.add( "Version is not set" );
         if( simpleName == null )

@@ -2,21 +2,20 @@ package org.bucketz.lib;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Function;
 
 import org.apache.felix.serializer.Serializer;
 import org.apache.felix.serializer.Writer;
 import org.bucketz.Bucket;
 import org.bucketz.BucketIO;
+import org.bucketz.BucketIO.BucketFunction;
 import org.bucketz.UncheckedBucketException;
 import org.bucketz.store.BucketDescriptor;
-import org.osgi.dto.DTO;
 import org.osgi.service.log.LogService;
 
 public class BucketIOFactory<D>
 {
-    private static enum Profile { MULTI_TSV, MULTI_JSON, PARTITIONED_JSON, SINGLE }
-
     public static <D>BucketIOFactory<D> newFactory( Class<D> dtoClass )
     {
         return new BucketIOFactory<>( dtoClass );
@@ -42,14 +41,31 @@ public class BucketIOFactory<D>
         return new SingleObjectConfigFactory();
     }
 
-    private Profile profile;
+    private BucketIO.Profile profile;
 
-    public static class TsvConfig extends DTO
+    public static class TsvConfig
+        implements BucketIO.Configuration.Tsv
     {
-        public BucketName bucketName;
-        public boolean includeHeaders;
         public String[] headers;
         public String[] columns;
+
+        @Override
+        public BucketIO.Profile profile()
+        {
+            return BucketIO.Profile.MULTI_TSV;
+        }
+
+        @Override
+        public Optional<String[]> headers()
+        {
+            return Optional.ofNullable( headers );
+        }
+
+        @Override
+        public String[] columns()
+        {
+            return columns;
+        }
     }
 
     public static class TsvConfigFactory
@@ -68,14 +84,21 @@ public class BucketIOFactory<D>
             return this;
         }
 
-        public TsvConfig get()
+        public BucketIO.Configuration.Tsv get()
         {
             return config;
         }
     }
 
-    public static class MultiJsonConfig extends DTO
+    public static class MultiJsonConfig
+        implements BucketIO.Configuration.MultiJson
     {
+        @Override
+        public BucketIO.Profile profile()
+        {
+            return BucketIO.Profile.MULTI_JSON;
+        }
+
         // Nothing for now!
     }
 
@@ -90,9 +113,28 @@ public class BucketIOFactory<D>
     }
 
     public static class PartitionedJsonConfig<E>
+        implements BucketIO.Configuration.PartitionedJson<E>
     {
         public String bucketFilter;
         public BucketFunction<E> bucketFunction;
+
+        @Override
+        public BucketIO.Profile profile()
+        {
+            return BucketIO.Profile.PARTITIONED_JSON;
+        }
+
+        @Override
+        public String bucketFilter()
+        {
+            return bucketFilter;
+        }
+
+        @Override
+        public BucketFunction<E> bucketFunction()
+        {
+            return bucketFunction;
+        }
     }
 
     public static class PartitionedJsonConfigFactory<E>
@@ -117,9 +159,22 @@ public class BucketIOFactory<D>
         }
     }
 
-    public static class SingleObjectConfig extends DTO
+    public static class SingleObjectConfig
+        implements BucketIO.Configuration.SingleObject
     {
         public String bucketName;
+
+        @Override
+        public BucketIO.Profile profile()
+        {
+            return BucketIO.Profile.SINGLE;
+        }
+
+        @Override
+        public String bucketName()
+        {
+            return bucketName;
+        }
     }
 
     public static class SingleObjectConfigFactory
@@ -138,11 +193,11 @@ public class BucketIOFactory<D>
         }
     }
 
-    private TsvConfig tsvConfig;
+    private BucketIO.Configuration.Tsv tsvConfig;
     @SuppressWarnings( "unused" ) // There are no values to configure at this time
-    private MultiJsonConfig multiJsonConfig;
-    private PartitionedJsonConfig<D> partitionedJsonConfig;
-    private SingleObjectConfig singleObjectConfig;
+    private BucketIO.Configuration.MultiJson multiJsonConfig;
+    private BucketIO.Configuration.PartitionedJson<D> partitionedJsonConfig;
+    private BucketIO.Configuration.SingleObject singleObjectConfig;
 
     private Serializer serializer;
     private Writer writer;
@@ -152,7 +207,7 @@ public class BucketIOFactory<D>
     private Function<D, D> preprocessor;
     private boolean preprocess;
 
-    private BucketDescriptor<D> aggregateDescriptor;
+    private BucketDescriptor<D> descriptor;
     private BucketDescriptor.Single<D> singleObjectDescriptor;
 
     private final List<String> errors = new ArrayList<>();
@@ -187,37 +242,61 @@ public class BucketIOFactory<D>
         return this;
     }
 
-    public BucketIOFactory<D> configureWith( BucketDescriptor<D> anAggregateDescriptor )
+    public BucketIOFactory<D> configureWith( BucketDescriptor<D> aDescriptor )
     {
-        aggregateDescriptor = anAggregateDescriptor;
+        descriptor = aDescriptor;
         return this;
     }
 
-    public BucketIOFactory<D> useTabDelimited( TsvConfig withConfiguration )
+    @SuppressWarnings( { "rawtypes", "unchecked" } )
+    public BucketIOFactory<D> useConfiguration( BucketIO.ConfigurationProfile withConfiguration )
+    {
+        final BucketIO.Profile configurationProfile = withConfiguration.profile();
+        switch( configurationProfile )
+        {
+            case MULTI_TSV :
+                return useConfiguration( (BucketIO.Configuration.Tsv)withConfiguration );
+
+            case MULTI_JSON :
+                return useConfiguration( (BucketIO.Configuration.MultiJson)withConfiguration );
+
+            case PARTITIONED_JSON :
+                return useConfiguration( (BucketIO.Configuration.PartitionedJson)withConfiguration );
+
+            case SINGLE :
+                return useConfiguration( (BucketIO.Configuration.SingleObject)withConfiguration );
+
+            default :
+                // Do nothing. Error will be caught later.
+                return this;
+        }
+    }
+
+    public BucketIOFactory<D> useConfiguration( BucketIO.Configuration.Tsv withConfiguration )
     {
         tsvConfig = withConfiguration;
-        profile = Profile.MULTI_TSV;
+        profile = BucketIO.Profile.MULTI_TSV;
         return this;
     }
 
-    public BucketIOFactory<D> useMultiJson( MultiJsonConfig withConfiguration )
+    public BucketIOFactory<D> useConfiguration( BucketIO.Configuration.MultiJson withConfiguration )
     {
         multiJsonConfig = withConfiguration;
-        profile = Profile.MULTI_JSON;
+        profile = BucketIO.Profile.MULTI_JSON;
         return this;
     }
 
-    public BucketIOFactory<D> usePartitionedJson( PartitionedJsonConfig<D> withConfiguration )
+    public BucketIOFactory<D> useConfiguration( BucketIO.Configuration.PartitionedJson<D> withConfiguration )
     {
         partitionedJsonConfig = withConfiguration;
-        profile = Profile.PARTITIONED_JSON;
+        profile = BucketIO.Profile.PARTITIONED_JSON;
         return this;
     }
 
-    public BucketIOFactory<D> useSingleObject( SingleObjectConfig withConfiguration )
+    public BucketIOFactory<D> useConfiguration( BucketIO.Configuration.SingleObject withConfiguration )
     {
         singleObjectConfig = withConfiguration;
-        profile = Profile.SINGLE;
+        profile = BucketIO.Profile.SINGLE;
         return this;
     }
 
@@ -229,28 +308,28 @@ public class BucketIOFactory<D>
             throw new UncheckedBucketException( errors.get( 0 ) );
 
         final BucketIO<D> io;
-        if (profile == Profile.MULTI_TSV)
+        if (profile == BucketIO.Profile.MULTI_TSV)
         {
             if (!validateTsvConfig().isEmpty() )
                 throw new UncheckedBucketException( validateTsvConfig().get( 0 ) );
 
             io = newTabSeparatedValuesIO();
         }
-        else if (profile == Profile.MULTI_JSON)
+        else if (profile == BucketIO.Profile.MULTI_JSON)
         {
             if (!validateMultiJsonConfig().isEmpty() )
                 throw new UncheckedBucketException( validateMultiJsonConfig().get( 0 ) );
 
             io = newMultiJsonIO();
         }
-        else if (profile == Profile.PARTITIONED_JSON)
+        else if (profile == BucketIO.Profile.PARTITIONED_JSON)
         {
             if (!validatePartitionedJsonConfig().isEmpty() )
                 throw new UncheckedBucketException( validatePartitionedJsonConfig().get( 0 ) );
 
             io = newPartitionedJsonIO();
         }
-        else if (profile == Profile.SINGLE)
+        else if (profile == BucketIO.Profile.SINGLE)
         {
             if (!validateSingleObjectJsonConfig().isEmpty() )
                 throw new UncheckedBucketException( validateSingleObjectJsonConfig().get( 0 ) );
@@ -269,15 +348,15 @@ public class BucketIOFactory<D>
 
         if( serializer == null )
             errors.add( "Serializer is not set" );
-        if (profile == Profile.SINGLE)
+        if (profile == BucketIO.Profile.SINGLE)
         {
             if (singleObjectDescriptor == null)
                 errors.add( "SingleObjectDescriptor is not set" );
         }
         else
         {
-            if(profile != Profile.SINGLE && aggregateDescriptor == null )
-                errors.add( "AggregateDescriptor is not set" );
+            if(profile != BucketIO.Profile.SINGLE && descriptor == null )
+                errors.add( "BucketDescriptor is not set" );
         }
 
         return errors;
@@ -287,11 +366,11 @@ public class BucketIOFactory<D>
     {
         final DelimiterSeparatedValuesIO<D> io = new DelimiterSeparatedValuesIO<>( dtoClass )
                 .setSerializer( serializer )
-                .configureWith( aggregateDescriptor )
-                .setColumns( tsvConfig.columns )
+                .configureWith( descriptor )
+                .setColumns( tsvConfig.columns() )
                 .useTabDelimiters();
 
-        if (tsvConfig.includeHeaders)
+        if (tsvConfig.headers().isPresent())
             io.includeHeaders();
         if (preprocess)
             io.preprocess( preprocessor );
@@ -303,33 +382,15 @@ public class BucketIOFactory<D>
     {
         final List<String> errors = new ArrayList<>();
 
-        final String bucketName = new StringBuilder()
-                .append( aggregateDescriptor.brn() )
-                .append( "." )
-                .append( Bucket.Format.TSV.name().toLowerCase() )
-                .toString();
-
         try
         {
-             tsvConfig.bucketName = BucketNameParser.newParser()
-                     .parse( bucketName, aggregateDescriptor.packaging() );
-        }
-        catch ( Exception e )
-        {
-            errors.add( e.getMessage() );
-        }
+            if (descriptor.format() != Bucket.Format.TSV)
+                errors.add( String.format( "Expected TSV format, but was %s", descriptor.format() ) );
 
-        try
-        {
-            final Bucket.Format format = Bucket.Format.valueOf( tsvConfig.bucketName.format );
-            if (format != Bucket.Format.TSV)
-                errors.add( "" );
+            if (descriptor.packaging() != Bucket.Packaging.MULTI)
+                errors.add( String.format( "Expected MULTI packaging, but was %s", descriptor.packaging() ) );
 
-            final Bucket.Packaging packaging = Bucket.Packaging.valueOf( tsvConfig.bucketName.packaging );
-            if (packaging != Bucket.Packaging.MULTI)
-                errors.add( String.format( "TSV format is configured, but packging is %s", packaging.name() ) );
-
-            if (tsvConfig.columns == null || tsvConfig.columns.length <= 0)
+            if (tsvConfig.columns() == null || tsvConfig.columns().length <= 0)
                 errors.add( "TSV format is configured, but no columns have been set" );
         }
         catch ( Exception e )
@@ -345,7 +406,7 @@ public class BucketIOFactory<D>
         final MultiJsonIO<D> io = new MultiJsonIO<>( dtoClass )
                 .setLogService( logger )
                 .setSerializer( serializer, writer )
-                .configureWith( aggregateDescriptor );
+                .configureWith( descriptor );
 
         if (preprocess)
             io.preprocess( preprocessor );
@@ -358,13 +419,13 @@ public class BucketIOFactory<D>
         final List<String> errors = new ArrayList<>();
 
         final String bucketName = new StringBuilder()
-                .append( aggregateDescriptor.brn() )
+                .append( descriptor.brn() )
                 .append( "." )
                 .append( Bucket.Format.JSON.name().toLowerCase() )
                 .toString();
         try
         {
-            BucketNameParser.newParser().parse( bucketName, aggregateDescriptor.packaging() );
+            BucketNameParser.newParser().parse( bucketName, descriptor.packaging() );
         }
         catch ( Exception e )
         {
@@ -373,13 +434,13 @@ public class BucketIOFactory<D>
 
         try
         {
-            if (aggregateDescriptor.format() != Bucket.Format.JSON)
-                errors.add( String.format( "Expected JSON format, but was %s", aggregateDescriptor.format() ) );
+            if (descriptor.format() != Bucket.Format.JSON)
+                errors.add( String.format( "Expected JSON format, but was %s", descriptor.format() ) );
 
-            if (aggregateDescriptor.packaging() != Bucket.Packaging.MULTI)
-                errors.add( String.format( "Expected MULTI packaging, but was %s", aggregateDescriptor.packaging() ) );
+            if (descriptor.packaging() != Bucket.Packaging.MULTI)
+                errors.add( String.format( "Expected MULTI packaging, but was %s", descriptor.packaging() ) );
 
-            if (!aggregateDescriptor.containerName().isPresent())
+            if (!descriptor.containerName().isPresent())
                 errors.add( "Missing container name. MULTI-packaging requires a container name." );
         }
         catch ( Exception e )
@@ -394,9 +455,9 @@ public class BucketIOFactory<D>
     {
         final PartitionedJsonIO<D> io = new PartitionedJsonIO<>( dtoClass )
                 .setSerializer( serializer, writer )
-                .configureWith( aggregateDescriptor )
-                .addBucketFilter( partitionedJsonConfig.bucketFilter )
-                .setBucketFunction( partitionedJsonConfig.bucketFunction );
+                .configureWith( descriptor )
+                .addBucketFilter( partitionedJsonConfig.bucketFilter() )
+                .setBucketFunction( partitionedJsonConfig.bucketFunction() );
 
         if (preprocess)
             io.preprocess( preprocessor );
@@ -410,7 +471,7 @@ public class BucketIOFactory<D>
 
         try
         {
-            if (partitionedJsonConfig.bucketFunction == null)
+            if (partitionedJsonConfig.bucketFunction() == null)
                 errors.add( "BucketFunction is null" );
         }
         catch ( Exception e )
@@ -426,7 +487,7 @@ public class BucketIOFactory<D>
         final SingleObjectJsonIO<D> io = new SingleObjectJsonIO<>( dtoClass )
                 .setSerializer( serializer, writer )
                 .configureWith( singleObjectDescriptor )
-                .setBucketName( singleObjectConfig.bucketName );
+                .setBucketName( singleObjectConfig.bucketName() );
 
         if (preprocess)
             io.preprocess( preprocessor );
@@ -440,7 +501,7 @@ public class BucketIOFactory<D>
 
         try
         {
-            if (singleObjectConfig.bucketName == null)
+            if (singleObjectConfig.bucketName() == null)
                 errors.add( "BucketFunction is null" );
         }
         catch ( Exception e )

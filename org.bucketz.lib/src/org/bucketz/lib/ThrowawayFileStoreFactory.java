@@ -126,8 +126,6 @@ public class ThrowawayFileStoreFactory<D>
             final Dictionary<String, Object> fileStoreConfigProperties = new Hashtable<>();
             fileStoreConfigProperties.put( "location", location );
             fileStoreConfigProperties.put( "version", version.toString() );
-            // TODO descriminant here??
-//            fileStoreConfigProperties.put( "confinement", confinement );
             fileStoreConfigProperties.put( "Descriptor.target", target );
             fileStoreConfigProperties.put( BucketDescriptor.TARGET_PID_PARAM, pid );
             fileStoreConfigProperties.put( BucketDescriptor.TARGET_VERSION_PARAM, version );
@@ -237,8 +235,6 @@ public class ThrowawayFileStoreFactory<D>
         return new StringBuilder()
                 .append( "(&" )
                     .append( "(" ).append( BucketDescriptor.TARGET_PID_PARAM ).append( "=" ).append( pid ).append( ")" )
-                    // TODO confinement
-//                    .append( "(confinement=" ).append( confinement ).append( ")" )
                     .append( "(" ).append( BucketDescriptor.TARGET_VERSION_PARAM ).append( "=" ).append( version.toString() ).append( ")" )
                     // Add a UUID to make this instance unique. It will be a throwaway service to be dismantled when done.
                     .append( uuidString )

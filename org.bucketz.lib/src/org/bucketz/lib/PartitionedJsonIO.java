@@ -42,7 +42,6 @@ public class PartitionedJsonIO<D>
     private Function<D, D> preprocessor;
     private boolean preprocess;
 
-    private String confinement;
     private String version;
     private Bucket.Packaging packaging;
     private Set<Pattern> bucketFilters = new HashSet<>();
@@ -195,8 +194,6 @@ public class PartitionedJsonIO<D>
         final List<String> errors = new ArrayList<>();
         if( serializer == null )
             errors.add( "Serializer is not set" );
-        if( confinement == null )
-            errors.add( "Confinement is not set" );
         if( version == null )
             errors.add( "Version is not set" );
         if( packaging == null )

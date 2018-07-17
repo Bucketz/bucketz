@@ -235,9 +235,10 @@ public class FileStoreService<D>
     }
 
     @Override
-    public void push( Stream<D> aDTOStream )
-        throws UncheckedBucketException
+    public Promise<Boolean> push( Stream<D> aDTOStream )
     {
+        final Deferred<Boolean> deferred = new Deferred<>();
+
         new Thread(() -> {
             try
             {
@@ -251,35 +252,48 @@ public class FileStoreService<D>
                     bucketFile.createNewFile();
                     writeToFile( bucket.content().get(), bucketFile );
                 }
-            }
-            catch ( Throwable t )
-            {
-                logger.log( 
-                        FrameworkUtil.getBundle( getClass() ).getBundleContext().getServiceReference( getClass() ), 
-                        LogService.LOG_ERROR, 
-                        "An error occurred when reading from the FileStore", 
-                        t );
 
+                deferred.resolve( true );
+            }
+            catch ( Exception e )
+            {
+                deferred.fail( e );
             }
         }).start();
+
+        return deferred.getPromise();
     }
 
     @Override
-    public void push( Increment<D> anIncrement, Supplier<Map<String, D>> repo )
-            throws UncheckedBucketException
+    public Promise<Boolean> push( Increment<D> anIncrement, Supplier<Map<String, D>> repo )
     {
-        final List<Bucket> bucketList = io.bucketize( Stream.of( anIncrement.value() ), uri().toString() );
-        if (bucketList.size() != 1)
-            throw new UncheckedBucketException( "An error occurred when attempting to process the Bucket" );
+        final Deferred<Boolean> deferred = new Deferred<>();
 
-        final Bucket bucket = bucketList.get( 0 );
-        if (!bucket.content().isPresent())
-            throw new UncheckedBucketException( "No content to write" );
+        new Thread(() -> {
+            try
+            {
+                final List<Bucket> bucketList = io.bucketize(
+                        Stream.of( anIncrement.value() ), uri().toString() );
+                if( bucketList.size() != 1 )
+                    throw new UncheckedBucketException(
+                            "An error occurred when attempting to process the Bucket" );
+                final Bucket bucket = bucketList.get( 0 );
+                if( !bucket.content().isPresent() )
+                    throw new UncheckedBucketException( "No content to write" );
+                if( Increment.Type.PUT == anIncrement.type() )
+                    put( bucket, anIncrement, repo );
+                else
+                    delete( bucket, anIncrement, repo );
 
-        if ( Increment.Type.PUT == anIncrement.type() )
-            put( bucket, anIncrement, repo );
-        else
-            delete( bucket, anIncrement, repo );
+                deferred.resolve( true );
+            }
+            catch ( Exception e )
+            {
+                deferred.fail( e );
+            }
+        }).start();
+
+        return deferred.getPromise();
     }
 
 //    /**
