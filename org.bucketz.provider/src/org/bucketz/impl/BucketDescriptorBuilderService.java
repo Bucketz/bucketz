@@ -108,7 +108,11 @@ public class BucketDescriptorBuilderService<D>
     public BucketDescriptor<D> get()
     {
         validate();
-        final DefaultBucketDescriptor<D> descriptor = new DefaultBucketDescriptor<>( data );
+        final DefaultBucketDescriptor<D> descriptor;
+        if (data.packaging == Bucket.Packaging.SINGLE)
+            descriptor = new DefaultSingleObjectBucketDescriptor<>( data );
+        else
+            descriptor = new DefaultBucketDescriptor<>( data );
         isUsed = true;
         return descriptor;
     }
@@ -123,7 +127,7 @@ public class BucketDescriptorBuilderService<D>
             throw new UncheckedBucketException( "DTO data type is missing" );
         if (data.idExtractor == null )
             throw new UncheckedBucketException( "IDExtractor is missing" );
-        if (data.brn == null || data.brn.isEmpty())
+        if (data.brn == null)
             throw new UncheckedBucketException( "BundleRepresentativeName is missing" );
     }
 
@@ -148,7 +152,7 @@ public class BucketDescriptorBuilderService<D>
         private String containerName;        
     }
 
-    public static final class DefaultBucketDescriptor<D>
+    public static class DefaultBucketDescriptor<D>
         implements BucketDescriptor<D>
     {
         private final String name;
@@ -255,5 +259,15 @@ public class BucketDescriptorBuilderService<D>
         {
             return Optional.ofNullable( containerName );
         }
+    }
+
+    public static class DefaultSingleObjectBucketDescriptor<D>
+        extends DefaultBucketDescriptor<D>
+        implements BucketDescriptor.Single<D>
+    {
+        public DefaultSingleObjectBucketDescriptor( DescriptorData<D> data )
+        {
+            super( data );
+        }        
     }
 }

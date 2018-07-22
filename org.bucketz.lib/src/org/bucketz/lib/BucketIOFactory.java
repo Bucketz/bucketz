@@ -244,7 +244,10 @@ public class BucketIOFactory<D>
 
     public BucketIOFactory<D> configureWith( BucketDescriptor<D> aDescriptor )
     {
-        descriptor = aDescriptor;
+        if (aDescriptor instanceof BucketDescriptor.Single)
+            singleObjectDescriptor = (BucketDescriptor.Single<D>)aDescriptor;
+        else
+            descriptor = aDescriptor;
         return this;
     }
 

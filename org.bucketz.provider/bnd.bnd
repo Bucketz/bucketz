@@ -15,7 +15,6 @@ Conditional-Package: \
 
 Private-Package: \
 	org.bucketz.impl,\
-	org.bucketz.export.impl,\
 	org.bucketz.test
 
 -includeresource: \

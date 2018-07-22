@@ -75,7 +75,7 @@ public class BucketStoreFactoryImpl
         if (instances.containsKey(store.name()))
         {
             component.dispose();
-            throw new UncheckedBucketException( "A BucketStore with the name '%s' is already registered." );
+            throw new UncheckedBucketException( String.format( "A BucketStore with the name '%s' is already registered.", store.name() ) );
         }
 
         instances.put( store.name(), component );

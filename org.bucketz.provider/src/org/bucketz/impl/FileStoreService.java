@@ -359,8 +359,8 @@ public class FileStoreService<D>
     {
         final String id = descriptor.idExtractor().apply( anIncrement.value() );
 
-        // If the bucket is PARTITIONED, then only the single bucket gets written
-        if (bucket.packaging() == Bucket.Packaging.PARTITIONED)
+        // If the bucket is PARTITIONED or is a SINGLE Bucket, then only the single bucket gets written
+        if (bucket.packaging() == Bucket.Packaging.PARTITIONED || bucket.packaging() == Bucket.Packaging.SINGLE)
         {
             writeSingleBucket( bucket );
         }
@@ -384,8 +384,8 @@ public class FileStoreService<D>
     {
         final String id = descriptor.idExtractor().apply( anIncrement.value() );
 
-        // If the bucket is PARTITIONED, then we just need to delete the file representing the Bucket
-        if (bucket.packaging() == Bucket.Packaging.PARTITIONED)
+        // If the bucket is PARTITIONED or SINGLE, then we just need to delete the file representing the Bucket
+        if (bucket.packaging() == Bucket.Packaging.PARTITIONED || bucket.packaging() == Bucket.Packaging.SINGLE)
         {
             deleteSingleBucket( bucket );
         }
