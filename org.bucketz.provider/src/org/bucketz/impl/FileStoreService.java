@@ -20,7 +20,6 @@ import org.bucketz.Bucket;
 import org.bucketz.BucketIO;
 import org.bucketz.Bucketz;
 import org.bucketz.UncheckedBucketException;
-import org.bucketz.UncheckedInterruptedException;
 import org.bucketz.lib.BucketContextualizer;
 import org.bucketz.lib.BucketNameParser;
 import org.bucketz.lib.BucketPathConverter;
@@ -107,9 +106,6 @@ public class FileStoreService<D>
     @Override
     public List<String> buckets()
     {
-        if (Thread.interrupted())
-            throw new UncheckedInterruptedException();
-
         try
         {
             final Path base = baseAndOuterPath();
@@ -214,7 +210,7 @@ public class FileStoreService<D>
             }
             catch ( Exception e )
             {
-                if (!(e instanceof UncheckedInterruptedException))
+                if (!Thread.interrupted())
                 {
                     logger.log( 
                             FrameworkUtil.getBundle( getClass() ).getBundleContext().getServiceReference( getClass() ), 

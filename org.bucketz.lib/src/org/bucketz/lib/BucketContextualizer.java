@@ -4,7 +4,6 @@ import java.net.URI;
 
 import org.bucketz.Bucket;
 import org.bucketz.UncheckedBucketException;
-import org.bucketz.UncheckedInterruptedException;
 import org.bucketz.store.BucketStore;
 
 /**
@@ -31,9 +30,6 @@ public interface BucketContextualizer
         public Bucket contextualize( URI aLocation, BucketStore.BucketContextDTO aBucketContext )
             throws UncheckedBucketException
         {
-            if (Thread.interrupted())
-                throw new UncheckedInterruptedException();
-
             final BucketStore.BucketDTO dto = new BucketStore.BucketDTO();
             dto.location = aLocation.toString();
             dto.context = aBucketContext;

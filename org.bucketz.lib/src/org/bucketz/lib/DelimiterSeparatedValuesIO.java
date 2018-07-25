@@ -17,7 +17,6 @@ import org.bucketz.Bucket;
 import org.bucketz.BucketIO;
 import org.bucketz.Codec;
 import org.bucketz.UncheckedBucketException;
-import org.bucketz.UncheckedInterruptedException;
 import org.bucketz.store.BucketDescriptor;
 import org.bucketz.store.BucketStore;
 
@@ -145,9 +144,6 @@ public class DelimiterSeparatedValuesIO<D>
     public Stream<D> debucketize( Bucket bucket )
         throws UncheckedBucketException
     {
-        if (Thread.interrupted())
-            throw new UncheckedInterruptedException();
-
         errors.addAll( validateConfig() );
         if( !errors.isEmpty() )
             throw new UncheckedBucketException( errors.get( 0 ) );
@@ -161,9 +157,6 @@ public class DelimiterSeparatedValuesIO<D>
 
         try
         {
-            if (Thread.interrupted())
-                throw new UncheckedInterruptedException();
-
             final InputStreamReader in = new InputStreamReader( bucketUri.toURL().openStream() );
             final LineNumberReader reader = new LineNumberReader( in );
 
@@ -175,9 +168,6 @@ public class DelimiterSeparatedValuesIO<D>
 
             while( line != null )
             {
-                if (Thread.interrupted())
-                    throw new UncheckedInterruptedException();
-
                 D processedLineObject;
                 try
                 {

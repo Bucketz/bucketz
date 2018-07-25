@@ -1,7 +1,6 @@
 package org.bucketz.lib;
 
 import org.bucketz.UncheckedBucketException;
-import org.bucketz.UncheckedInterruptedException;
 import org.bucketz.store.BucketDescriptor;
 import org.bucketz.store.BucketStore;
 
@@ -25,9 +24,6 @@ public interface BucketPathConverter
         public BucketStore.BucketContextDTO convert( BucketDescriptor<?> aDescriptor, String anOuterPath, BucketName aBucketName )
             throws UncheckedBucketException
         {
-            if (Thread.interrupted())
-                throw new UncheckedInterruptedException();
-
             final BucketStore.BucketContextDTO dto = new BucketStore.BucketContextDTO();
             dto.innerPath = aBucketName.innerPath;
             dto.simpleName = aBucketName.simpleName;

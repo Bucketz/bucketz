@@ -17,7 +17,6 @@ import org.bucketz.BucketIO;
 import org.bucketz.Bucketz;
 import org.bucketz.Bucketz.Type;
 import org.bucketz.UncheckedBucketException;
-import org.bucketz.UncheckedInterruptedException;
 import org.bucketz.lib.BucketContextualizer;
 import org.bucketz.lib.BucketNameParser;
 import org.bucketz.lib.BucketPathConverter;
@@ -107,9 +106,6 @@ public class BundleStoreService<D>
     @Override
     public List<String> buckets()
     {
-        if (Thread.interrupted())
-            throw new UncheckedInterruptedException();
-
         final Bundle bundle = FrameworkUtil.getBundle( getClass() ).getBundleContext().getBundle( bundleId );
         final URI uri = uri();
 
@@ -215,7 +211,7 @@ public class BundleStoreService<D>
                 }
                 catch ( Exception e )
                 {
-                    if (!(e instanceof UncheckedInterruptedException))
+                    if (!Thread.interrupted())
                     {
                         logger.log( 
                                 FrameworkUtil.getBundle( getClass() ).getBundleContext().getServiceReference( getClass() ), 

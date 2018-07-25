@@ -2,7 +2,6 @@ package org.bucketz.lib;
 
 import org.bucketz.Bucket;
 import org.bucketz.UncheckedBucketException;
-import org.bucketz.UncheckedInterruptedException;
 
 /**
  * Used in an implementation as a tool for parsing a String representation of a
@@ -26,9 +25,6 @@ public interface BucketNameParser
         public BucketName parse( String aBucketNameAsString, Bucket.Packaging aPackaging )
             throws UncheckedBucketException
         {
-            if (Thread.interrupted())
-                throw new UncheckedInterruptedException();
-
             if (aBucketNameAsString == null || aBucketNameAsString.isEmpty())
                 throw new UncheckedBucketException( "Bucket name cannot be null or empty" );
 

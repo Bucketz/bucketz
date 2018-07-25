@@ -18,7 +18,6 @@ import org.bucketz.Bucket;
 import org.bucketz.BucketIO;
 import org.bucketz.Codec;
 import org.bucketz.UncheckedBucketException;
-import org.bucketz.UncheckedInterruptedException;
 import org.bucketz.store.BucketDescriptor;
 import org.bucketz.store.BucketStore;
 import org.osgi.framework.FrameworkUtil;
@@ -116,9 +115,6 @@ public class MultiJsonIO<D>
     public Stream<D> debucketize( Bucket bucket )
         throws UncheckedBucketException
     {
-        if (Thread.interrupted())
-            throw new UncheckedInterruptedException();
-
         final List<String> errors = validateConfig();
         if( !errors.isEmpty() )
             throw new UncheckedBucketException( errors.get( 0 ) );
@@ -132,9 +128,6 @@ public class MultiJsonIO<D>
 
         try
         {
-            if (Thread.interrupted())
-                throw new UncheckedInterruptedException();
-
             final Map m = serializer
                     .deserialize( Map.class )
                     .from( new NullCapturingInputStream( bucketUri.toURL().openStream() ) );
@@ -147,15 +140,9 @@ public class MultiJsonIO<D>
 
             final List<D> list = (List<D>)arrayObject;
 
-            if (Thread.interrupted())
-                throw new UncheckedInterruptedException();
-
             final Converter converter = new StandardSchematizer()
                     .schematize( arrayName, dtoClass )
                     .converterFor( arrayName );
-
-            if (Thread.interrupted())
-                throw new UncheckedInterruptedException();
 
             Stream<D> s = list.stream()
                     .map( o -> converter.convert( o ).to( dtoClass ) )
