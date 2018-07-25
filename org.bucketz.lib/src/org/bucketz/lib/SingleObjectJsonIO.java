@@ -15,6 +15,7 @@ import org.bucketz.Bucket;
 import org.bucketz.BucketIO;
 import org.bucketz.Codec;
 import org.bucketz.UncheckedBucketException;
+import org.bucketz.UncheckedInterruptedException;
 import org.bucketz.store.BucketDescriptor;
 import org.bucketz.store.BucketStore;
 import org.osgi.util.converter.Converter;
@@ -92,6 +93,9 @@ public class SingleObjectJsonIO<D>
     public Stream<D> debucketize( Bucket bucket )
         throws UncheckedBucketException
     {
+        if (Thread.interrupted())
+            throw new UncheckedInterruptedException();
+
         final List<String> errors = validateConfig();
         if( !errors.isEmpty() )
             throw new UncheckedBucketException( errors.get( 0 ) );
@@ -99,14 +103,23 @@ public class SingleObjectJsonIO<D>
         final URI bucketUri = bucket.asUri();
         try
         {
+            if (Thread.interrupted())
+                throw new UncheckedInterruptedException();
+
             final Map m = serializer
                     .deserialize( Map.class )
                     .from( bucketUri.toURL().openStream() );
+
+            if (Thread.interrupted())
+                throw new UncheckedInterruptedException();
 
             final String objectName = dtoClass.getTypeName();
             final Converter converter = new StandardSchematizer()
                     .schematize( objectName, dtoClass )
                     .converterFor( objectName );
+
+            if (Thread.interrupted())
+                throw new UncheckedInterruptedException();
 
             final D dto = converter.convert( m ).to( dtoClass );
             final D processedDTO = preprocess ? preprocessor.apply( dto ) : dto;

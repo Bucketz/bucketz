@@ -70,6 +70,12 @@ public interface BucketStore<D>
      */
     Promise<Stream<D>> stream();
 
+//    /**
+//     * A Store is usually configured with an initial data set. However, the configuration
+//     * can take a bit time, so is usually processed asynchronously.
+//     */
+//    Promise<Boolean> isConfigured();
+
     default boolean isWritable()
     {
         return (this instanceof Writable);

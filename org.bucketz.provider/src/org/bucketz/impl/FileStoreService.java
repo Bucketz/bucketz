@@ -20,6 +20,7 @@ import org.bucketz.Bucket;
 import org.bucketz.BucketIO;
 import org.bucketz.Bucketz;
 import org.bucketz.UncheckedBucketException;
+import org.bucketz.UncheckedInterruptedException;
 import org.bucketz.lib.BucketContextualizer;
 import org.bucketz.lib.BucketNameParser;
 import org.bucketz.lib.BucketPathConverter;
@@ -68,17 +69,6 @@ public class FileStoreService<D>
     @Activate
     void activate( ComponentContext componentContext, FileStore.Configuration configuration, Map<String, Object> properties )
     {
-//        if (properties.containsKey( "uuid" ))
-//        {
-//            name = new StringBuilder()
-//                    .append( descriptor.name().substring( 0, descriptor.name().lastIndexOf( "-" ) ) )
-//                    .append( "-" )
-//                    .append( properties.get( "uuid" ) )
-//                    .append( "-FileStore" )
-//                    .toString();
-//
-//        }
-
         name = configuration.name();
         location = configuration.location();
         outerPath = configuration.outerPath();
@@ -117,6 +107,9 @@ public class FileStoreService<D>
     @Override
     public List<String> buckets()
     {
+        if (Thread.interrupted())
+            throw new UncheckedInterruptedException();
+
         try
         {
             final Path base = baseAndOuterPath();
@@ -219,15 +212,18 @@ public class FileStoreService<D>
 
                 deferred.resolve( stream );
             }
-            catch ( Throwable t )
+            catch ( Exception e )
             {
-                logger.log( 
-                        FrameworkUtil.getBundle( getClass() ).getBundleContext().getServiceReference( getClass() ), 
-                        LogService.LOG_ERROR, 
-                        "An error occurred when reading from the FileStore", 
-                        t );
+                if (!(e instanceof UncheckedInterruptedException))
+                {
+                    logger.log( 
+                            FrameworkUtil.getBundle( getClass() ).getBundleContext().getServiceReference( getClass() ), 
+                            LogService.LOG_ERROR, 
+                            "An error occurred when reading from the FileStore", 
+                            e );
+                }
 
-                deferred.fail( t );
+                deferred.fail( e );
             }
         }).start();
 

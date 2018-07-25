@@ -7,13 +7,17 @@ import java.util.Collections;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import org.bucketz.Bucket;
 import org.bucketz.BucketIO;
 import org.bucketz.Bucketz;
 import org.bucketz.Bucketz.Type;
 import org.bucketz.UncheckedBucketException;
+import org.bucketz.UncheckedInterruptedException;
 import org.bucketz.lib.BucketContextualizer;
 import org.bucketz.lib.BucketNameParser;
 import org.bucketz.lib.BucketPathConverter;
@@ -57,12 +61,16 @@ public class BundleStoreService<D>
     private BucketDescriptor<D> descriptor;
     private BucketIO<D> io;
 
+    private ExecutorService executor;
+
     @Reference private LogService logger;
 
     @SuppressWarnings( "unchecked" )
     @Activate
     void activate( BundleStore.Configuration configuration, Map<String, Object> properties )
     {
+        executor = Executors.newSingleThreadExecutor();
+
         name = configuration.name();
         bundleId = configuration.bundleId();
         location = configuration.location();
@@ -80,6 +88,8 @@ public class BundleStoreService<D>
 
     void deactivate()
     {
+        executor.shutdownNow();
+
         name = null;
         bundleId = -1;
         location = null;
@@ -97,6 +107,9 @@ public class BundleStoreService<D>
     @Override
     public List<String> buckets()
     {
+        if (Thread.interrupted())
+            throw new UncheckedInterruptedException();
+
         final Bundle bundle = FrameworkUtil.getBundle( getClass() ).getBundleContext().getBundle( bundleId );
         final URI uri = uri();
 
@@ -110,10 +123,33 @@ public class BundleStoreService<D>
         if (urls == null)
             return Collections.emptyList();
 
+//        final Enumeration<URL> urls2 = bundle.findEntries( searchPath, "*", true );
+//        final List<String> result = new ArrayList<>();
+//        for( URL url : Collections.list( urls2 ))
+//        {
+//            String urlString = url.toString();
+//            urlString = urlString.replace( uriString + outerPath, "" );
+//            if (urlString.endsWith( "/" ))
+//                continue;
+//            if (urlString.isEmpty())
+//                continue;
+//            if (!urlString.contains( "/" ) && ( descriptor.packaging() == Bucket.Packaging.PARTITIONED ))
+//                continue;
+//            if (!urlString.startsWith( descriptor.brn()))
+//                continue;
+//            if (!((descriptor.filter().isPresent()) ? urlString.matches( descriptor.filter().get() ) : true))
+//                continue;
+//            result.add( urlString );
+//        }
+
         return Collections.list( urls ).stream()
                 .map( u -> u.toString() )
                 .map( u -> u.replace( uriString + outerPath, "" ) )
-                .filter( u -> !u.endsWith( "/" ) )
+                .filter( b -> !b.endsWith( "/" ) )
+                .filter( b -> !b.isEmpty() )
+                .filter( b -> !( !b.contains( "/" ) && ( descriptor.packaging() == Bucket.Packaging.PARTITIONED ) ) )
+                .filter( b -> b.startsWith( descriptor.brn() ) )
+                .filter( b -> (descriptor.filter().isPresent()) ? b.matches( descriptor.filter().get() ) : true )
                 .collect( Collectors.toList() );
     }
 
@@ -152,42 +188,45 @@ public class BundleStoreService<D>
     public Promise<Stream<D>> stream()
     {
         final Deferred<Stream<D>> deferred = new Deferred<>();
-        new Thread(() -> {
-            try
-            {
-                final BucketNameParser parser = BucketNameParser.newParser();
-                final BucketPathConverter converter = BucketPathConverter.newConverter();
-                final BucketContextualizer contextualizer = BucketContextualizer.newContextualizer();
+        executor.submit( () -> {
+                try
+                {
+                    final BucketNameParser parser = BucketNameParser.newParser();
+                    final BucketPathConverter converter = BucketPathConverter.newConverter();
+                    final BucketContextualizer contextualizer = BucketContextualizer.newContextualizer();
 
-//                for( String bucketName : buckets() )
-//                {
-//                    final BucketName bn = parser.parse( bucketName, descriptor.packaging() );
-//                    final BucketStore.BucketContextDTO ctx = converter.convert( descriptor, outerPath, bn );
-//                    final Bucket bucket = contextualizer.contextualize( uri(), ctx );
-//                    final List<D> e = io.debucketize( bucket )
-//                            .collect( Collectors.toList() );
-//                    e.toString();
-//                }
+//                    for( String bucketName : buckets() )
+//                    {
+//                        final BucketName bn = parser.parse( bucketName, descriptor.packaging() );
+//                        final BucketStore.BucketContextDTO ctx = converter.convert( descriptor, outerPath, bn );
+//                        final Bucket bucket = contextualizer.contextualize( uri(), ctx );
+//                        final List<D> e = io.debucketize( bucket )
+//                                .collect( Collectors.toList() );
+//                        e.toString();
+//                    }
 
-                final Stream<D> stream = buckets().stream()
-                        .map( bn -> parser.parse( bn, descriptor.packaging() ) )
-                        .map( bn -> converter.convert( descriptor, outerPath, bn ) )
-                        .map( c -> contextualizer.contextualize( uri(), c ) )
-                        .flatMap( b -> io.debucketize( b ) );
+                    final Stream<D> stream = buckets().stream()
+                            .map( bn -> parser.parse( bn, descriptor.packaging() ) )
+                            .map( bn -> converter.convert( descriptor, outerPath, bn ) )
+                            .map( c -> contextualizer.contextualize( uri(), c ) )
+                            .flatMap( b -> io.debucketize( b ) );
 
-                deferred.resolve( stream );
-            }
-            catch ( Exception e )
-            {
-                logger.log( 
-                        FrameworkUtil.getBundle( getClass() ).getBundleContext().getServiceReference( getClass() ), 
-                        LogService.LOG_ERROR, 
-                        "An error occurred when reading from the FileStore", 
-                        e );
+                    deferred.resolve( stream );
+                }
+                catch ( Exception e )
+                {
+                    if (!(e instanceof UncheckedInterruptedException))
+                    {
+                        logger.log( 
+                                FrameworkUtil.getBundle( getClass() ).getBundleContext().getServiceReference( getClass() ), 
+                                LogService.LOG_ERROR, 
+                                "An error occurred when reading from the FileStore", 
+                                e );
+                    }
 
-                deferred.fail( e );
-            }
-        }).start();
+                    deferred.fail( e );
+                }
+        });
 
         return deferred.getPromise();
     }

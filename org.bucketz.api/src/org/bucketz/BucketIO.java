@@ -40,6 +40,10 @@ public interface BucketIO<D>
             return b -> {
                 if (b == null)
                     throw new IllegalArgumentException( "No Bucket provided" );
+
+                if (Thread.interrupted())
+                    throw new UncheckedInterruptedException();
+
                 final D object = debucketizeObject( b );
                 final Stream<D> stream = Stream.of( object );
                 return stream;
