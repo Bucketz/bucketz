@@ -225,7 +225,7 @@ public class DelimiterSeparatedValuesIO<D>
     }
 
     @Override
-    public List<Bucket> bucketize( Stream<D> stream, String url )
+    public List<Bucket> bucketize( Stream<D> stream, String outerPath, String url )
         throws UncheckedBucketException
     {
         final List<String> errors = validateConfig();
@@ -248,7 +248,7 @@ public class DelimiterSeparatedValuesIO<D>
             final String content = lines.stream()
                     .collect( Collectors.joining( "\n" ) );
 
-            final Bucket singleBucket = newBucket( content, url );
+            final Bucket singleBucket = newBucket( content, outerPath, url );
 
             final List<Bucket> bucketList = new ArrayList<>();
             bucketList.add( singleBucket );
@@ -261,12 +261,13 @@ public class DelimiterSeparatedValuesIO<D>
         }
     }
 
-    private Bucket newBucket( String content, String url )
+    private Bucket newBucket( String content, String outerPath, String url )
     {
         final BucketStore.BucketDTO dto = new BucketStore.BucketDTO();
         final BucketStore.BucketContextDTO bucketContext = new BucketStore.BucketContextDTO();
         dto.context = bucketContext;
         dto.context.innerPath = innerPath;
+        dto.context.outerPath = outerPath;
         dto.context.simpleName = simpleName;
         dto.context.format = format;
         dto.context.packaging = packaging.name();

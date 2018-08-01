@@ -120,7 +120,7 @@ public class SingleObjectJsonIO<D>
     }
 
     @Override
-    public List<Bucket> bucketize( Stream<D> stream, String url )
+    public List<Bucket> bucketize( Stream<D> stream, String outerPath, String url )
         throws UncheckedBucketException
     {
         final List<String> errors = validateConfig();
@@ -144,7 +144,7 @@ public class SingleObjectJsonIO<D>
                         .toString();
 
             final List<Bucket> buckets = new ArrayList<>();
-            final Bucket bucket = newBucket( content, url );
+            final Bucket bucket = newBucket( content, outerPath, url );
             buckets.add( bucket );
             return buckets;
         }
@@ -187,12 +187,13 @@ public class SingleObjectJsonIO<D>
         return errors;
     }
 
-    private Bucket newBucket( String content, String location )
+    private Bucket newBucket( String content, String outerPath, String location )
     {
         final BucketStore.BucketDTO dto = new BucketStore.BucketDTO();
         final BucketStore.BucketContextDTO bucketContext = new BucketStore.BucketContextDTO();
         dto.context = bucketContext;
         dto.context.innerPath = innerPath;
+        dto.context.outerPath = outerPath;
         dto.context.simpleName = simpleName;
         dto.context.format = format;
         dto.context.packaging = packaging.name();

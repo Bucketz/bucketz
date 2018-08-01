@@ -9,6 +9,6 @@ import java.util.stream.Stream;
 @FunctionalInterface
 public interface Bucketizer<D>
 {
-    List<Bucket> bucketize( Stream<D> aDTOStream, String aLocation )
+    List<Bucket> bucketize( Stream<D> aDTOStream, String anOuterPath, String aLocation )
             throws UncheckedBucketException;
 }

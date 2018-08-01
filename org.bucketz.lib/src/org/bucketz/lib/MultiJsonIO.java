@@ -190,7 +190,7 @@ public class MultiJsonIO<D>
     }
 
     @Override
-    public List<Bucket> bucketize( Stream<D> stream, String url )
+    public List<Bucket> bucketize( Stream<D> stream, String outerPath, String url )
         throws UncheckedBucketException
     {
         final List<String> errors = validateConfig();
@@ -206,7 +206,7 @@ public class MultiJsonIO<D>
                     stream.collect( Collectors.toList() );
             output.put( arrayName, allItems );
             final String content = toString( arrayName, output );
-            buckets.add( newBucket( content, url ) );
+            buckets.add( newBucket( content, outerPath, url ) );
 
             return buckets;
         }
@@ -249,12 +249,13 @@ public class MultiJsonIO<D>
         return errors;
     }
 
-    private Bucket newBucket( String content, String url )
+    private Bucket newBucket( String content, String outerPath, String url )
     {
         final BucketStore.BucketDTO dto = new BucketStore.BucketDTO();
         final BucketStore.BucketContextDTO bucketContext = new BucketStore.BucketContextDTO();
         dto.context = bucketContext;
         dto.context.innerPath = innerPath;
+        dto.context.outerPath = outerPath;
         dto.context.simpleName = simpleName;
         dto.context.format = format;
         dto.context.packaging = packaging.name();

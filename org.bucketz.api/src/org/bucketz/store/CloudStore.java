@@ -12,9 +12,4 @@ public interface CloudStore<D>
      * Used to indicate that the CloudStore backend is ready.
      */
     static interface Ready {}
-
-    static @interface Configuration
-    {
-        String location();
-    }
 }

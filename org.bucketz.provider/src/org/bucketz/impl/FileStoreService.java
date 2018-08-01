@@ -35,12 +35,11 @@ import org.osgi.service.log.LogService;
 import org.osgi.util.promise.Deferred;
 import org.osgi.util.promise.Promise;
 
-import aQute.bnd.annotation.headers.ProvideCapability;
-
-//Need to provide the capability for the resolver
-@ProvideCapability(
-      ns = "osgi.service",
-      value = "objectClass:List<String>=\"org.osgi.service.component.ComponentFactory\"" )
+// TODO: is this really necessary??
+////Need to provide the capability for the resolver
+//@ProvideCapability(
+//      ns = "osgi.service",
+//      value = "objectClass:List<String>=\"org.osgi.service.component.ComponentFactory\"" )
 @Bucketz.Provide(type=Bucketz.TypeConstants.FILE)
 @Component(
       name = FileStoreService.COMPONENT_NAME,
@@ -234,7 +233,7 @@ public class FileStoreService<D>
         new Thread(() -> {
             try
             {
-                final List<Bucket> buckets = io.bucketize( aDTOStream, uri().toString() );
+                final List<Bucket> buckets = io.bucketize( aDTOStream, outerPath, uri().toString() );
 
                 for( Bucket bucket : buckets )
                 {
@@ -265,7 +264,9 @@ public class FileStoreService<D>
             try
             {
                 final List<Bucket> bucketList = io.bucketize(
-                        Stream.of( anIncrement.value() ), uri().toString() );
+                        Stream.of( anIncrement.value() ),
+                        outerPath,
+                        uri().toString() );
                 if( bucketList.size() != 1 )
                     throw new UncheckedBucketException(
                             "An error occurred when attempting to process the Bucket" );
@@ -444,7 +445,7 @@ public class FileStoreService<D>
     {
         try
         {
-            final List<Bucket> bucketList = io.bucketize( stream, uri().toString() );
+            final List<Bucket> bucketList = io.bucketize( stream, outerPath, uri().toString() );
             if (bucketList.size() != 1)
                 throw new UncheckedBucketException( "Could not convert to Bucket" );
             final Bucket bucket = bucketList.get( 0 );

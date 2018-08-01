@@ -17,17 +17,17 @@ public interface BucketIO<D>
         D debucketizeObject( Bucket bucket )
                 throws UncheckedBucketException;
 
-        Bucket bucketizeObject( D aDTO, String aUrl )
+        Bucket bucketizeObject( D aDTO, String anOuterPath, String aUrl )
                 throws UncheckedBucketException;
 
         default Bucketizer<D> bucketizer()
                 throws UncheckedBucketException
         {
-            return (s,url) -> {
+            return (s,op,url) -> {
                 final D singleDTO = s.findAny().orElse( null );
                 if (singleDTO == null)
                     throw new IllegalArgumentException( "No DTO provided" );
-                final Bucket bucket = this.bucketizeObject( singleDTO, url );
+                final Bucket bucket = this.bucketizeObject( singleDTO, op, url );
                 final List<Bucket> list = new ArrayList<>();
                 list.add( bucket );
                 return list;

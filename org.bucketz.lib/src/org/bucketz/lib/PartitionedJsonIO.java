@@ -97,7 +97,7 @@ public class PartitionedJsonIO<D>
     }
 
     @Override
-    public List<Bucket> bucketize( Stream<D> stream, String url )
+    public List<Bucket> bucketize( Stream<D> stream, String outerPath, String url )
         throws UncheckedBucketException
     {
         final List<String> errors = validateConfig();
@@ -111,7 +111,7 @@ public class PartitionedJsonIO<D>
                         e -> bucketFunction.toBucket( e ), 
                         e -> serialize( e ) ) )
                 .entrySet().stream()
-                .map( newBucket( url ) )
+                .map( newBucket( outerPath, url ) )
                 .collect( Collectors.toList() );
 
             return buckets;
@@ -211,7 +211,7 @@ public class PartitionedJsonIO<D>
                 .anyMatch( p -> p.matcher( s ).matches() );
     };
 
-    private Function<Map.Entry<String, String>, Bucket> newBucket( String url )
+    private Function<Map.Entry<String, String>, Bucket> newBucket( String outerPath, String url )
     {
         return e -> {
             final BucketStore.BucketDTO dto = new BucketStore.BucketDTO();
@@ -223,6 +223,7 @@ public class PartitionedJsonIO<D>
                 bucketContext.innerPath = bp.innerPath;
                 bucketContext.simpleName = bp.simpleName;
                 bucketContext.format = bp.format;
+                bucketContext.outerPath = outerPath;
             }
             catch ( Exception ex )
             {
