@@ -12,6 +12,8 @@ import java.nio.file.Paths;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -61,12 +63,16 @@ public class FileStoreService<D>
     private BucketDescriptor<D> descriptor;
     private BucketIO<D> io;
 
+    private ExecutorService executor;
+
     @Reference private LogService logger;
 
     @SuppressWarnings( "unchecked" )
     @Activate
     void activate( ComponentContext componentContext, FileStore.Configuration configuration, Map<String, Object> properties )
     {
+        executor = Executors.newCachedThreadPool();
+
         name = configuration.name();
         location = configuration.location();
         outerPath = configuration.outerPath();
@@ -83,6 +89,8 @@ public class FileStoreService<D>
 
     void deactivate()
     {
+        executor.shutdownNow();
+
         name = null;
         location = null;
         outerPath = null;
@@ -192,7 +200,7 @@ public class FileStoreService<D>
     public Promise<Stream<D>> stream()
     {
         final Deferred<Stream<D>> deferred = new Deferred<>();
-        new Thread(() -> {
+        executor.submit(() -> {
             try
             {
                 final BucketNameParser parser = BucketNameParser.newParser();
@@ -220,7 +228,7 @@ public class FileStoreService<D>
 
                 deferred.fail( e );
             }
-        }).start();
+        });
 
         return deferred.getPromise();
     }
@@ -230,7 +238,7 @@ public class FileStoreService<D>
     {
         final Deferred<Boolean> deferred = new Deferred<>();
 
-        new Thread(() -> {
+        executor.submit(() -> {
             try
             {
                 final List<Bucket> buckets = io.bucketize( aDTOStream, outerPath, uri().toString() );
@@ -250,7 +258,7 @@ public class FileStoreService<D>
             {
                 deferred.fail( e );
             }
-        }).start();
+        });
 
         return deferred.getPromise();
     }
@@ -260,7 +268,7 @@ public class FileStoreService<D>
     {
         final Deferred<Boolean> deferred = new Deferred<>();
 
-        new Thread(() -> {
+        executor.submit(() -> {
             try
             {
                 final List<Bucket> bucketList = io.bucketize(
@@ -284,7 +292,7 @@ public class FileStoreService<D>
             {
                 deferred.fail( e );
             }
-        }).start();
+        });
 
         return deferred.getPromise();
     }
