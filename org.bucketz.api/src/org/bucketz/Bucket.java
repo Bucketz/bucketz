@@ -3,20 +3,26 @@ package org.bucketz;
 import java.net.URI;
 import java.util.Optional;
 
+/**
+ * The Bucket is the main abstraction. A DTO is serialized into a Bucket, and deserialized
+ * from a Bucket.
+ */
 public interface Bucket
 {
     /**
-     * The location of the BucketStore. It is included as part of the Bucket for convenience only.
+     * The location of the BucketStore that contains this Bucket. It is included as part of the 
+     * Bucket for convenience.
      */
     URI location();
 
     /**
-     * Same as the common outer path, provided for convenience.
+     * Same as the common outer path for all the Buckets in a given BucketStore, provided here 
+     * for convenience. Must end with a "/".
      */
     BucketPath outerPath();
 
     /**
-     * The path part of the bucketName. Should end with a "/".
+     * The path part of the bucketName. Must not start with a "/", but must end with a "/".
      */
     BucketPath innerPath();
 
@@ -25,10 +31,19 @@ public interface Bucket
      */
     String fullPath();
 
+    /**
+     * The "simple" part of the name. See {@link Bucketz} for details.
+     */
     String simpleName();
 
+    /**
+     * The Format of this Bucket.
+     */
     Format format();
 
+    /**
+     * The Packaging for this Bucket.
+     */
     Packaging packaging();
 
     /**

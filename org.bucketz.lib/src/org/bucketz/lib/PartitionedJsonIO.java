@@ -31,73 +31,51 @@ import org.osgi.util.converter.Converter;
  * When reading, either the list of provided Bucket names or the BucketFilter 
  * determines whether or not the file is part of the AR. When writing, the 
  * BucketFuction will transform the DTO into a Bucket name.
+ * 
+ * This class is immutable and therefore thread safe.
  */
 public class PartitionedJsonIO<D>
     implements BucketIO<D>
 {
-    private Serializer serializer;
-    private Writer writer;
-    private Codec<D> codec;
+    private final Serializer serializer;
+    private final Writer writer;
+    private final Codec<D> codec;
 
-    private Function<D, D> preprocessor;
-    private boolean preprocess;
+    private final Function<D, D> preprocessor;
+    private final boolean preprocess;
 
-    private String version;
-    private Bucket.Packaging packaging;
-    private Set<Pattern> bucketFilters = new HashSet<>();
+    private final String version;
+    private final Bucket.Packaging packaging;
+    private final Set<Pattern> bucketFilters = new HashSet<>();
 
     private final Class<D> dtoClass;
 
-    private BucketFunction<D> bucketFunction;
+    private BucketIO.BucketFunction<D> bucketFunction;
 
-    PartitionedJsonIO( Class<D> aDTOClass )
+    PartitionedJsonIO( 
+            Class<D> aDTOClass,
+            BucketDescriptor<D> aDescriptor,
+            String aFilter,
+            BucketIO.BucketFunction<D> aBucketFunction,
+            Function<D, D> aPreprocessor,
+            Serializer aSerializer,
+            Writer aWriter )
     {
         dtoClass = aDTOClass;
-    }
-
-    public PartitionedJsonIO<D> setSerializer( Serializer aSerializer )
-    {
-        serializer = aSerializer;
-        return this;
-    }
-
-    public PartitionedJsonIO<D> setSerializer( Serializer aSerializer, Writer aWriter )
-    {
-        serializer = aSerializer;
-        writer = aWriter;
-        return this;
-    }
-
-    public PartitionedJsonIO<D> configureWith( BucketDescriptor<D> aDescriptor )
-    {
         version = aDescriptor.version();
         packaging = aDescriptor.packaging();
-        codec = new DefaultJsonConverter<>( aDescriptor, serializer );
-        return this;
-    }
-
-    public PartitionedJsonIO<D> addBucketFilter( String aFilter )
-    {
         final Pattern p = Pattern.compile( aFilter );
         bucketFilters.add( p );
-        return this;
-    }
-
-    public PartitionedJsonIO<D> setBucketFunction( BucketFunction<D> aBucketFunction )
-    {
         bucketFunction = aBucketFunction;
-        return this;
-    }
-
-    public PartitionedJsonIO<D> preprocess( Function<D, D> aPreprocessor )
-    {
         preprocess = true;
         preprocessor = aPreprocessor;
-        return this;
+        serializer = aSerializer;
+        codec = new DefaultJsonConverter<>( aDescriptor, serializer );
+        writer = aWriter;
     }
 
     @Override
-    public List<Bucket> bucketize( Stream<D> stream, String outerPath, String url )
+    public List<Bucket> bucketize( Stream<D> stream, String url, String outerPath, Object o )
         throws UncheckedBucketException
     {
         final List<String> errors = validateConfig();

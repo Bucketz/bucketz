@@ -20,7 +20,7 @@ public interface BucketContextualizer
 
     static Contextualizer newContextualizer()
     {
-        return new Contextualizer();// null );
+        return new Contextualizer();
     }
 
     static class Contextualizer

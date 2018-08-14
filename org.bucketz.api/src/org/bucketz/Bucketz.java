@@ -9,10 +9,10 @@ import aQute.bnd.annotation.headers.ProvideCapability;
 import aQute.bnd.annotation.headers.RequireCapability;
 
 /**
- * A BucketStore is a data store in which DTOs are stored in partitions called "Buckets".
+ * A BucketStore is a data store in which DTOs are stored in groupings called "Buckets".
  * 
- * The BucketStore has a location, represented by a URI. It could be a backed by a file system, a
- * bundle, or someplace remote in the Cloud.
+ * The BucketStore has a location, represented by a URI. It could be backed by a file system, a
+ * bundle, a specialed persistence application, or someplace remote in the Cloud.
  * 
  * A BucketStore is divided into Buckets. Each Bucket holds one or more persisted DTOs.
  * The Bucket can have a hierarchical location within the BucketStore, represented by the
@@ -61,16 +61,39 @@ public interface Bucketz
     static final String CONFIG = "bucketz.config";
     static final String VERSION = "1.0.0";
 
+    /**
+     * The type of BucketStore.
+     */
     static enum Type { EMPTY, BUNDLE, FILE, CLOUD }
+
+    /**
+     * The provider of the BucketStore. The default is the internal "BUCKETZ", but there
+     * is a known implementation of a Firebase Bucket as well.
+     */
     static enum Provider { BUCKETZ, FIREBASE }
 
     static final class TypeConstants
     {
         private TypeConstants() {}
 
+        /**
+         * Represents an Empty BucketStore. Used when no backing persistence is required.
+         */
         public static final String EMPTY = "empty";
+
+        /**
+         * Read-only BundleStore.
+         */
         public static final String BUNDLE = "bundle";
+
+        /**
+         * FileStore for persisting to the local file system.
+         */
         public static final String FILE = "file";
+
+        /**
+         * CloudStore for persistence to a cloud-based system (such as Firebase).
+         */
         public static final String CLOUD = "cloud";
 
         public static final class Provider

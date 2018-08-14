@@ -14,6 +14,9 @@ import org.bucketz.UncheckedBucketException;
 import org.bucketz.store.BucketDescriptor;
 import org.osgi.service.log.LogService;
 
+/**
+ * To be used once only in a single thread only. Not thread safe.
+ */
 public class BucketIOFactory<D>
 {
     public static <D>BucketIOFactory<D> newFactory( Class<D> dtoClass )
@@ -193,6 +196,8 @@ public class BucketIOFactory<D>
         }
     }
 
+    private boolean isUsed;
+
     private BucketIO.Configuration.Tsv tsvConfig;
     @SuppressWarnings( "unused" ) // There are no values to configure at this time
     private BucketIO.Configuration.MultiJson multiJsonConfig;
@@ -205,7 +210,6 @@ public class BucketIOFactory<D>
     private Class<D> dtoClass;
 
     private Function<D, D> preprocessor;
-    private boolean preprocess;
 
     private BucketDescriptor<D> descriptor;
     private BucketDescriptor.Single<D> singleObjectDescriptor;
@@ -219,11 +223,13 @@ public class BucketIOFactory<D>
 
     public BucketIOFactory<D> setSerializer( Serializer aSerializer )
     {
+        assertNotUsed();
         return setSerializer( aSerializer, null );
     }
 
     public BucketIOFactory<D> setSerializer( Serializer aSerializer, Writer aWriter )
     {
+        assertNotUsed();
         serializer = aSerializer;
         writer = aWriter;
         return this;
@@ -231,19 +237,21 @@ public class BucketIOFactory<D>
 
     public BucketIOFactory<D> setLogService( LogService aLogService )
     {
+        assertNotUsed();
         logger = aLogService;
         return this;
     }
 
     public BucketIOFactory<D> preprocess( Function<D, D> aPreprocessor )
     {
-        preprocess = true;
+        assertNotUsed();
         preprocessor = aPreprocessor;
         return this;
     }
 
     public BucketIOFactory<D> configureWith( BucketDescriptor<D> aDescriptor )
     {
+        assertNotUsed();
         if (aDescriptor instanceof BucketDescriptor.Single)
             singleObjectDescriptor = (BucketDescriptor.Single<D>)aDescriptor;
         else
@@ -254,6 +262,8 @@ public class BucketIOFactory<D>
     @SuppressWarnings( { "rawtypes", "unchecked" } )
     public BucketIOFactory<D> useConfiguration( BucketIO.ConfigurationProfile withConfiguration )
     {
+        assertNotUsed();
+
         final BucketIO.Profile configurationProfile = withConfiguration.profile();
         switch( configurationProfile )
         {
@@ -277,6 +287,7 @@ public class BucketIOFactory<D>
 
     public BucketIOFactory<D> useConfiguration( BucketIO.Configuration.Tsv withConfiguration )
     {
+        assertNotUsed();
         tsvConfig = withConfiguration;
         profile = BucketIO.Profile.MULTI_TSV;
         return this;
@@ -284,6 +295,7 @@ public class BucketIOFactory<D>
 
     public BucketIOFactory<D> useConfiguration( BucketIO.Configuration.MultiJson withConfiguration )
     {
+        assertNotUsed();
         multiJsonConfig = withConfiguration;
         profile = BucketIO.Profile.MULTI_JSON;
         return this;
@@ -291,6 +303,7 @@ public class BucketIOFactory<D>
 
     public BucketIOFactory<D> useConfiguration( BucketIO.Configuration.PartitionedJson<D> withConfiguration )
     {
+        assertNotUsed();
         partitionedJsonConfig = withConfiguration;
         profile = BucketIO.Profile.PARTITIONED_JSON;
         return this;
@@ -298,6 +311,7 @@ public class BucketIOFactory<D>
 
     public BucketIOFactory<D> useConfiguration( BucketIO.Configuration.SingleObject withConfiguration )
     {
+        assertNotUsed();
         singleObjectConfig = withConfiguration;
         profile = BucketIO.Profile.SINGLE;
         return this;
@@ -306,6 +320,8 @@ public class BucketIOFactory<D>
     public BucketIO<D> get()
         throws UncheckedBucketException
     {
+        assertNotUsed();
+
         errors.addAll( validateCommonConfig() );
         if( !errors.isEmpty() )
             throw new UncheckedBucketException( errors.get( 0 ) );
@@ -342,6 +358,7 @@ public class BucketIOFactory<D>
         else
             throw new UncheckedBucketException( "Could not instantiate a BucketReader" );
 
+        isUsed = true;
         return io;
     }
 
@@ -367,18 +384,13 @@ public class BucketIOFactory<D>
 
     private DelimiterSeparatedValuesIO<D> newTabSeparatedValuesIO()
     {
-        final DelimiterSeparatedValuesIO<D> io = new DelimiterSeparatedValuesIO<>( dtoClass )
-                .setSerializer( serializer )
-                .configureWith( descriptor )
-                .setColumns( tsvConfig.columns() )
-                .useTabDelimiters();
-
-        if (tsvConfig.headers().isPresent())
-            io.includeHeaders();
-        if (preprocess)
-            io.preprocess( preprocessor );
-
-        return io;
+        return new DelimiterSeparatedValuesIO<>(
+                descriptor,
+                "/t",
+                tsvConfig.headers(),
+                tsvConfig.columns(),
+                preprocessor,
+                serializer );
     }
 
     private List<String> validateTsvConfig()
@@ -406,15 +418,13 @@ public class BucketIOFactory<D>
 
     private MultiJsonIO<D> newMultiJsonIO()
     {
-        final MultiJsonIO<D> io = new MultiJsonIO<>( dtoClass )
-                .setLogService( logger )
-                .setSerializer( serializer, writer )
-                .configureWith( descriptor );
-
-        if (preprocess)
-            io.preprocess( preprocessor );
-
-        return io;
+        return new MultiJsonIO<>( 
+                dtoClass,
+                descriptor,
+                preprocessor,
+                serializer,
+                writer,
+                logger );
     }
 
     private List<String> validateMultiJsonConfig()
@@ -456,16 +466,14 @@ public class BucketIOFactory<D>
 
     private PartitionedJsonIO<D> newPartitionedJsonIO()
     {
-        final PartitionedJsonIO<D> io = new PartitionedJsonIO<>( dtoClass )
-                .setSerializer( serializer, writer )
-                .configureWith( descriptor )
-                .addBucketFilter( partitionedJsonConfig.bucketFilter() )
-                .setBucketFunction( partitionedJsonConfig.bucketFunction() );
-
-        if (preprocess)
-            io.preprocess( preprocessor );
-
-        return io;
+        return new PartitionedJsonIO<>( 
+                dtoClass,
+                descriptor,
+                partitionedJsonConfig.bucketFilter(),
+                partitionedJsonConfig.bucketFunction(),
+                preprocessor,
+                serializer,
+                writer );
     }
 
     private List<String> validatePartitionedJsonConfig()
@@ -487,15 +495,13 @@ public class BucketIOFactory<D>
 
     private SingleObjectJsonIO<D> newSingleObjectJsonIO()
     {
-        final SingleObjectJsonIO<D> io = new SingleObjectJsonIO<>( dtoClass )
-                .setSerializer( serializer, writer )
-                .configureWith( singleObjectDescriptor )
-                .setBucketName( singleObjectConfig.bucketName() );
-
-        if (preprocess)
-            io.preprocess( preprocessor );
-
-        return io;
+        return new SingleObjectJsonIO<>( 
+                dtoClass,
+                singleObjectDescriptor,
+                singleObjectConfig.bucketName(),
+                preprocessor,
+                serializer,
+                writer );
     }
 
     private List<String> validateSingleObjectJsonConfig()
@@ -514,4 +520,10 @@ public class BucketIOFactory<D>
 
         return errors;
     }    
+
+    private void assertNotUsed()
+    {
+        if (isUsed)
+            throw new IllegalStateException( "This Factory has already been used" );
+    }
 }

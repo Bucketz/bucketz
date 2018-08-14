@@ -12,8 +12,6 @@ import java.nio.file.Paths;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -37,11 +35,10 @@ import org.osgi.service.log.LogService;
 import org.osgi.util.promise.Deferred;
 import org.osgi.util.promise.Promise;
 
-// TODO: is this really necessary??
-////Need to provide the capability for the resolver
-//@ProvideCapability(
-//      ns = "osgi.service",
-//      value = "objectClass:List<String>=\"org.osgi.service.component.ComponentFactory\"" )
+/**
+ * Implementation note: We expect that operations with the file system will be very quick,
+ * so IO operations are not executed concurrently.
+ */
 @Bucketz.Provide(type=Bucketz.TypeConstants.FILE)
 @Component(
       name = FileStoreService.COMPONENT_NAME,
@@ -63,16 +60,12 @@ public class FileStoreService<D>
     private BucketDescriptor<D> descriptor;
     private BucketIO<D> io;
 
-    private ExecutorService executor;
-
     @Reference private LogService logger;
 
     @SuppressWarnings( "unchecked" )
     @Activate
     void activate( ComponentContext componentContext, FileStore.Configuration configuration, Map<String, Object> properties )
     {
-        executor = Executors.newCachedThreadPool();
-
         name = configuration.name();
         location = configuration.location();
         outerPath = configuration.outerPath();
@@ -89,8 +82,6 @@ public class FileStoreService<D>
 
     void deactivate()
     {
-        executor.shutdownNow();
-
         name = null;
         location = null;
         outerPath = null;
@@ -200,35 +191,31 @@ public class FileStoreService<D>
     public Promise<Stream<D>> stream()
     {
         final Deferred<Stream<D>> deferred = new Deferred<>();
-        executor.submit(() -> {
-            try
-            {
-                final BucketNameParser parser = BucketNameParser.newParser();
-                final BucketPathConverter converter = BucketPathConverter.newConverter();
-                final BucketContextualizer contextualizer = BucketContextualizer.newContextualizer();
 
-                final Stream<D> stream = buckets().stream()
-                        .map( bn -> parser.parse( bn, descriptor.packaging() ) )
-                        .map( bn -> converter.convert( descriptor, outerPath, bn ) )
-                        .map( c -> contextualizer.contextualize( uri(), c ) )
-                        .flatMap( b -> io.debucketize( b ) );
+        try
+        {
+            final BucketNameParser parser = BucketNameParser.newParser();
+            final BucketPathConverter converter = BucketPathConverter.newConverter();
+            final BucketContextualizer contextualizer = BucketContextualizer.newContextualizer();
 
-                deferred.resolve( stream );
-            }
-            catch ( Exception e )
-            {
-                if (!Thread.interrupted())
-                {
-                    logger.log( 
-                            FrameworkUtil.getBundle( getClass() ).getBundleContext().getServiceReference( getClass() ), 
-                            LogService.LOG_ERROR, 
-                            "An error occurred when reading from the FileStore", 
-                            e );
-                }
+            final Stream<D> stream = buckets().stream()
+                    .map( bn -> parser.parse( bn, descriptor.packaging() ) )
+                    .map( bn -> converter.convert( descriptor, outerPath, bn ) )
+                    .map( c -> contextualizer.contextualize( uri(), c ) )
+                    .flatMap( b -> io.debucketize( b ) );
 
-                deferred.fail( e );
-            }
-        });
+            deferred.resolve( stream );
+        }
+        catch ( Exception e )
+        {
+            logger.log( 
+                    FrameworkUtil.getBundle( getClass() ).getBundleContext().getServiceReference( getClass() ), 
+                    LogService.LOG_ERROR, 
+                    "An error occurred when reading from the FileStore", 
+                    e );
+
+            deferred.fail( e );
+        }
 
         return deferred.getPromise();
     }
@@ -238,27 +225,25 @@ public class FileStoreService<D>
     {
         final Deferred<Boolean> deferred = new Deferred<>();
 
-        executor.submit(() -> {
-            try
-            {
-                final List<Bucket> buckets = io.bucketize( aDTOStream, outerPath, uri().toString() );
+        try
+        {
+            final List<Bucket> buckets = io.bucketize( aDTOStream, uri().toString(), outerPath, null );
 
-                for( Bucket bucket : buckets )
-                {
-                    final Path base = baseAndOuterPath();
-                    final File bucketFile = new File( base.toFile(), bucket.fullName() );
-                    bucketFile.getParentFile().mkdirs();
-                    bucketFile.createNewFile();
-                    writeToFile( bucket.content().get(), bucketFile );
-                }
-
-                deferred.resolve( true );
-            }
-            catch ( Exception e )
+            for( Bucket bucket : buckets )
             {
-                deferred.fail( e );
+                final Path base = baseAndOuterPath();
+                final File bucketFile = new File( base.toFile(), bucket.fullName() );
+                bucketFile.getParentFile().mkdirs();
+                bucketFile.createNewFile();
+                writeToFile( bucket.content().get(), bucketFile );
             }
-        });
+
+            deferred.resolve( true );
+        }
+        catch ( Exception e )
+        {
+            deferred.fail( e );
+        }
 
         return deferred.getPromise();
     }
@@ -268,31 +253,30 @@ public class FileStoreService<D>
     {
         final Deferred<Boolean> deferred = new Deferred<>();
 
-        executor.submit(() -> {
-            try
-            {
-                final List<Bucket> bucketList = io.bucketize(
-                        Stream.of( anIncrement.value() ),
-                        outerPath,
-                        uri().toString() );
-                if( bucketList.size() != 1 )
-                    throw new UncheckedBucketException(
-                            "An error occurred when attempting to process the Bucket" );
-                final Bucket bucket = bucketList.get( 0 );
-                if( !bucket.content().isPresent() )
-                    throw new UncheckedBucketException( "No content to write" );
-                if( Increment.Type.PUT == anIncrement.type() )
-                    put( bucket, anIncrement, repo );
-                else
-                    delete( bucket, anIncrement, repo );
+        try
+        {
+            final List<Bucket> bucketList = io.bucketize(
+                    Stream.of( anIncrement.value() ),
+                    uri().toString(),
+                    outerPath,
+                    null );
+            if( bucketList.size() != 1 )
+                throw new UncheckedBucketException(
+                        "An error occurred when attempting to process the Bucket" );
+            final Bucket bucket = bucketList.get( 0 );
+            if( !bucket.content().isPresent() )
+                throw new UncheckedBucketException( "No content to write" );
+            if( Increment.Type.PUT == anIncrement.type() )
+                put( bucket, anIncrement, repo );
+            else
+                delete( bucket, anIncrement, repo );
 
-                deferred.resolve( true );
-            }
-            catch ( Exception e )
-            {
-                deferred.fail( e );
-            }
-        });
+            deferred.resolve( true );
+        }
+        catch ( Exception e )
+        {
+            deferred.fail( e );
+        }
 
         return deferred.getPromise();
     }
@@ -453,7 +437,7 @@ public class FileStoreService<D>
     {
         try
         {
-            final List<Bucket> bucketList = io.bucketize( stream, outerPath, uri().toString() );
+            final List<Bucket> bucketList = io.bucketize( stream, uri().toString(), outerPath, null );
             if (bucketList.size() != 1)
                 throw new UncheckedBucketException( "Could not convert to Bucket" );
             final Bucket bucket = bucketList.get( 0 );

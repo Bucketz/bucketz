@@ -15,15 +15,9 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.log.LogService;
-import org.osgi.util.promise.Deferred;
 import org.osgi.util.promise.Promise;
+import org.osgi.util.promise.Promises;
 
-import aQute.bnd.annotation.headers.ProvideCapability;
-
-//Need to provide the capability for the resolver
-@ProvideCapability(
-      ns = "osgi.service",
-      value = "objectClass:List<String>=\"org.osgi.service.component.ComponentFactory\"" )
 @Bucketz.Provide(type=Bucketz.TypeConstants.EMPTY)
 @Component(
       name = EmptyStoreService.COMPONENT_NAME,
@@ -106,8 +100,6 @@ public class EmptyStoreService<D>
     @Override
     public Promise<Stream<D>> stream()
     {
-        final Deferred<Stream<D>> deferred = new Deferred<>();
-        deferred.resolve( Stream.empty() );
-        return deferred.getPromise();
+        return Promises.resolved( Stream.empty() );
     }
 }

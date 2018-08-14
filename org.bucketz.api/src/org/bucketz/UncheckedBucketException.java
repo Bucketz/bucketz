@@ -2,6 +2,7 @@ package org.bucketz;
 
 /**
  * Use unchecked Exceptions so we can benefit from Java8 Streams.
+ * Checked exceptions makes the use of Streams very awkward.
  */
 public class UncheckedBucketException
     extends RuntimeException

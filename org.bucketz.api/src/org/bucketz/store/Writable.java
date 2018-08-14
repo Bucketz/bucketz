@@ -7,12 +7,29 @@ import java.util.stream.Stream;
 import org.osgi.dto.DTO;
 import org.osgi.util.promise.Promise;
 
+/**
+ * A BucketStore can accept write operations represented by Writable.
+ */
 public interface Writable<D>
 {
-    Promise<Boolean> push( Stream<D> anDataStream );
+    /**
+     * Push a Stream of DTOs to the BucketStore for persistence.
+     */
+    Promise<Boolean> push( Stream<D> aDataStream );
 
+    /**
+     * Push an incremental change to the BucketStore for persistence. A backreference to the
+     * repository is required, as the object may require additional context when being
+     * persisted. To persist in a MultiJson Bucket, for instance, the entire collection
+     * of DTOs must be updated, not just the DTO that is incrementally changed.
+     */
     Promise<Boolean> push( Increment<D> anIncrement, Supplier<Map<String, D>> repo );
 
+    /**
+     * Represents an incremental change. This is useful when the BucketStore should be
+     * incrementally updated to reflect changes. The Increment object contains enough
+     * information to allow the BucketStore to persist the incremental update.
+     */
     static <D>Increment<D> newIncrement( Increment.Type aType, D aDTO )
     {
         final IncrementDTO<D> dto = new IncrementDTO<>();

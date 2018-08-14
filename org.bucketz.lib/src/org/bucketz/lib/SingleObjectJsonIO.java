@@ -19,72 +19,47 @@ import org.bucketz.store.BucketDescriptor;
 import org.bucketz.store.BucketStore;
 import org.osgi.util.converter.Converter;
 
+/**
+ * This class is immutable and therefore thread safe.
+ */
 public class SingleObjectJsonIO<D>
     implements BucketIO<D>
 {
-    private Serializer serializer;
-    private Writer writer;
-    private Function<D, D> preprocessor;
-    private Codec<D> codec;
-    private boolean preprocess;
+    private final Serializer serializer;
+    private final Writer writer;
+    private final Function<D, D> preprocessor;
+    private final Codec<D> codec;
+    private final boolean preprocess;
 
     private final Class<D> dtoClass;
 
-    private String version;
-    private String innerPath;
-    private String simpleName;
-    private String format;
+    private final String version;
+    private final String innerPath;
+    private final String simpleName;
+    private final String format;
 
     private Bucket.Packaging packaging;
 
-    SingleObjectJsonIO( Class<D> aDTOClass )
+    SingleObjectJsonIO( 
+            Class<D> aDTOClass,
+            BucketDescriptor.Single<D> aDescriptor,
+            String aBucketName,
+            Function<D, D> aPreprocessor,
+            Serializer aSerializer,
+            Writer aWriter)
     {
         dtoClass = aDTOClass;
-    }
-
-    public SingleObjectJsonIO<D> setSerializer( Serializer aSerializer )
-    {
-        return setSerializer( serializer, null );
-    }
-
-    public SingleObjectJsonIO<D> setSerializer( Serializer aSerializer, Writer aWriter )
-    {
-        serializer = aSerializer;
-        writer = aWriter;
-        return this;
-    }
-
-    public SingleObjectJsonIO<D> configureWith( BucketDescriptor.Single<D> aDescriptor )
-    {
         version = aDescriptor.version();
         packaging = aDescriptor.packaging();
-        codec = new DefaultJsonConverter<>( aDescriptor, serializer );
-        return this;
-    }
-
-    public SingleObjectJsonIO<D> setBucketName( String aBucketName )
-    {
-        try
-        {
-            final BucketName bp = BucketNameParser.newParser().parse( aBucketName, packaging );
-            innerPath = bp.innerPath;
-            simpleName = bp.simpleName;
-            format = bp.format;
-        }
-        catch ( Exception e )
-        {
-            // TODO Handle error
-            e.printStackTrace();
-        }
-
-        return this;
-    }
-
-    public SingleObjectJsonIO<D> preprocess( Function<D, D> aPreprocessor )
-    {
-        preprocess = true;
+        final BucketName bp = BucketNameParser.newParser().parse( aBucketName, packaging );
+        innerPath = bp.innerPath;
+        simpleName = bp.simpleName;
+        format = bp.format;
         preprocessor = aPreprocessor;
-        return this;
+        preprocess = preprocessor != null;
+        serializer = aSerializer;
+        codec = new DefaultJsonConverter<>( aDescriptor, serializer );
+        writer = aWriter;
     }
 
     @SuppressWarnings( "rawtypes" )
@@ -120,7 +95,7 @@ public class SingleObjectJsonIO<D>
     }
 
     @Override
-    public List<Bucket> bucketize( Stream<D> stream, String outerPath, String url )
+    public List<Bucket> bucketize( Stream<D> stream, String url, String outerPath, Object o )
         throws UncheckedBucketException
     {
         final List<String> errors = validateConfig();

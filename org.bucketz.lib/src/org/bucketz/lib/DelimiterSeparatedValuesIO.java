@@ -21,11 +21,13 @@ import org.bucketz.store.BucketDescriptor;
 import org.bucketz.store.BucketStore;
 
 /**
- * All Entities are in the same Bucket, but stores in the form of a Delimiter-Separated-Values
- * form. Tabs are the default delimiter. Each line therefore represents a single DTO, each field 
+ * All Entities are in the same Bucket, but stored in Delimiter-Separated-Value form.
+ * Tabs are the default delimiter. Each line therefore represents a single DTO, each field 
  * being separated by the delimiter (i.e. tab).
  * 
  * There is one and only one Bucket, which may have an inner path.
+ * 
+ * This class is immutable and therefore thread safe.
  */
 public class DelimiterSeparatedValuesIO<D>
     implements BucketIO<D>
@@ -33,40 +35,38 @@ public class DelimiterSeparatedValuesIO<D>
     public static final String NULL = "##NULL##";
     public static final String DELIMITER = "##D##";
 
-    private Serializer serializer;
-    private Codec<D> codec;
-    private Optional<Function<D, D>> preprocessor = Optional.empty();
+    private final Serializer serializer;
+    private final Codec<D> codec;
+    private final Optional<Function<D, D>> preprocessor;
 
-    private BucketDescriptor<D> descriptor;
+    private final BucketDescriptor<D> descriptor;
 
-    /* Tabs are the default */
-    private String delimiter = "\t";
-    private boolean includeHeaders = false;
-    private String[] headers;
-    private String[] columns;
-    private String version;
-    private String innerPath;
-    private String simpleName;
-    /* TSV is the default */
-    private String format = Bucket.Format.TSV.name();
-    private Bucket.Packaging packaging;
-    private boolean doSort;
-    private Comparator<D> comparator;
+    private final String delimiter;
+    private final boolean includeHeaders;
+    private final String[] headers;
+    private final String[] columns;
+    private final String version;
+    private final String innerPath;
+    private final String simpleName;
+    private final String format;
+    private final Bucket.Packaging packaging;
+    private final boolean doSort;
+    private final Comparator<D> comparator;
 
-    final List<String> errors = new ArrayList<>();
+    private final List<String> errors = new ArrayList<>();
 
-    DelimiterSeparatedValuesIO( Class<D> aDTOClass ) {}
-
-    public DelimiterSeparatedValuesIO<D> setSerializer( Serializer aSerializer )
-    {
-        serializer = aSerializer;
-        return this;
-    }
-
-    public DelimiterSeparatedValuesIO<D> configureWith( BucketDescriptor<D> aDescriptor )
+    DelimiterSeparatedValuesIO( 
+            BucketDescriptor<D> aDescriptor,
+            String aDelimiter,
+            Optional<String[]> aHeadersArray,
+            String[] aColumnsArray,
+            Function<D, D> aPreprocessor,
+            Serializer aSerializer )
+        throws UncheckedBucketException
     {
         version = aDescriptor.version();
         packaging = aDescriptor.packaging();
+        format = aDescriptor.format().name();
         comparator = aDescriptor.comparator().orElse( null );
         doSort = comparator != null;
 
@@ -75,56 +75,27 @@ public class DelimiterSeparatedValuesIO<D>
                 .append( "." )
                 .append( format.toLowerCase() )
                 .toString();
-        try
-        {
-            final BucketName bp = BucketNameParser.newParser().parse( bucketName, packaging );
-            innerPath = bp.innerPath;
-            simpleName = bp.simpleName;
-            format = bp.format;
-        }
-        catch ( Exception e )
-        {
-            // TODO Handle this error
-        }
+        final BucketName bp = BucketNameParser.newParser().parse( bucketName, packaging );
+        innerPath = bp.innerPath;
+        simpleName = bp.simpleName;
         descriptor = aDescriptor;
-        return this;
-    }
 
-    public DelimiterSeparatedValuesIO<D> preprocess( Function<D, D> aPreprocessor )
-    {
+        delimiter = aDelimiter;
+        includeHeaders = aHeadersArray.isPresent();
+        headers = aHeadersArray.orElse( null );
+        columns = aColumnsArray;
         preprocessor = Optional.ofNullable( aPreprocessor );
-        return this;
-    }
-
-    public DelimiterSeparatedValuesIO<D> useTabDelimiters()
-    {
-        delimiter = "\t";
-        return this;
-    }
-
-    public DelimiterSeparatedValuesIO<D> includeHeaders()
-    {
-        includeHeaders = true;
-        return this;
-    }
-
-    public DelimiterSeparatedValuesIO<D> setColumns( String... aColumnList )
-    {
-        columns = aColumnList;
-        return this;
+        codec = new DefaultTsvConverter<>( 
+                delimiter, 
+                columns, 
+                NULL, 
+                preprocessor, 
+                descriptor );
+        serializer = aSerializer;
     }
 
     private Codec<D> codec()
     {
-        if (codec == null)
-            codec = new DefaultTsvConverter<>( 
-                    delimiter, 
-                    columns, 
-                    NULL, 
-                    preprocessor, 
-                    descriptor, 
-                    serializer );
-
         return codec;
     }
 
@@ -225,7 +196,7 @@ public class DelimiterSeparatedValuesIO<D>
     }
 
     @Override
-    public List<Bucket> bucketize( Stream<D> stream, String outerPath, String url )
+    public List<Bucket> bucketize( Stream<D> stream, String url, String outerPath, Object o )
         throws UncheckedBucketException
     {
         final List<String> errors = validateConfig();

@@ -7,6 +7,11 @@ import java.util.function.Function;
 import org.bucketz.Bucket;
 import org.osgi.annotation.versioning.ProviderType;
 
+/**
+ * Implement this interface to describe how a DTO is used by a BucketStore.
+ * To use a DTO with a BucketStore, an instance of this interface is required,
+ * either by implementing it directly, or by using a Builder.
+ */
 @ProviderType
 public interface BucketDescriptor<D>
 {
@@ -80,20 +85,6 @@ public interface BucketDescriptor<D>
         return Optional.empty();
     }
 
-    // TODO: It should be possible to simply annotate simple data types
-//    static @interface Describe
-//    {
-//        String name();
-//        String description();
-//        String version();
-//        String id();
-//        String brn();
-//        String containerName();
-//        String format();
-//        String packaging();
-//        String filter();
-//    }
-
     static interface Single<D>
         extends BucketDescriptor<D>
     {
@@ -113,6 +104,9 @@ public interface BucketDescriptor<D>
         }        
     }
 
+    /**
+     * Programmatically builds a BucketDescriptor.
+     */
     public interface Builder<D>
     {
         static interface Factory

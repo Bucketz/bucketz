@@ -9,16 +9,17 @@ import java.util.function.Function;
 import org.apache.felix.schematizer.Schema;
 import org.apache.felix.schematizer.Schematizer;
 import org.apache.felix.schematizer.StandardSchematizer;
-import org.apache.felix.serializer.Serializer;
 import org.bucketz.Codec;
 import org.bucketz.store.BucketDescriptor;
 import org.osgi.util.converter.Converter;
 
+/**
+ * Immutable, so thread safe.
+ */
 public class DefaultTsvConverter<D>
     implements Codec<D>
 {
-    final BucketDescriptor<D> descriptor;
-    final Serializer serializer;
+    private final BucketDescriptor<D> descriptor;
 
     private final String delimiter;
     private final String[] columns;
@@ -30,8 +31,7 @@ public class DefaultTsvConverter<D>
             String[] aColumnsSpecification,
             String aNullValue,
             Optional<Function<D, D>> aPreprocessor,
-            BucketDescriptor<D> aDescriptor, 
-            Serializer aSerializer )
+            BucketDescriptor<D> aDescriptor )
     {
         delimiter = aDelimiter;
         columns = aColumnsSpecification;
@@ -39,7 +39,6 @@ public class DefaultTsvConverter<D>
         preprocessor = aPreprocessor;
 
         descriptor = aDescriptor;
-        serializer = aSerializer;
     }
 
     @Override

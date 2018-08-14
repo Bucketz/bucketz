@@ -29,53 +29,40 @@ import org.osgi.util.converter.Converter;
  * For this reason, the Bucket contains "Multi" JSON contents.
  * 
  * There is one and only one Bucket, which has a known name.
+ * 
+ * This class is immutable and therefore thread safe.
  */
 public class MultiJsonIO<D>
     implements BucketIO<D>
 {
-    private Serializer serializer;
-    private org.apache.felix.serializer.Writer writer;
-    private LogService logger;
-    private Codec<D> codec;
-    private Function<D, D> preprocessor;
-    private boolean preprocess;
+    private final Serializer serializer;
+    private final org.apache.felix.serializer.Writer writer;
+    private final LogService logger;
+    private final Codec<D> codec;
+    private final Function<D, D> preprocessor;
+    private final boolean preprocess;
 
-    private Class<D> dtoClass;
+    private final Class<D> dtoClass;
 
-    private String arrayName = "data";
-    private String version;
-    private String innerPath;
-    private String simpleName;
-    private String format;
-    private Bucket.Packaging packaging;
-    private boolean doSort;
-    private Comparator<D> comparator;
+    private final String arrayName;// = "data";
+    private final String version;
+    private final String innerPath;
+    private final String simpleName;
+    private final String format;
+    private final Bucket.Packaging packaging;
+    private final boolean doSort;
+    private final Comparator<D> comparator;
 
-    MultiJsonIO( Class<D> aDTOClass )
+    MultiJsonIO( 
+            Class<D> aDTOClass,
+            BucketDescriptor<D> aDescriptor,
+            Function<D, D> aPreprocessor,
+            Serializer aSerializer,
+            Writer aWriter,
+            LogService aLogService )
+        throws UncheckedBucketException
     {
         dtoClass = aDTOClass;
-    }
-
-    public MultiJsonIO<D> setSerializer( Serializer aSerializer )
-    {
-        return setSerializer( aSerializer, null );
-    }
-
-    public MultiJsonIO<D> setSerializer( Serializer aSerializer, Writer aWriter )
-    {
-        serializer = aSerializer;
-        writer = aWriter;
-        return this;
-    }
-
-    public MultiJsonIO<D> setLogService( LogService aLogService )
-    {
-        logger = aLogService;
-        return this;
-    }
-
-    public MultiJsonIO<D> configureWith( BucketDescriptor<D> aDescriptor )
-    {
         version = aDescriptor.version();
         packaging = aDescriptor.packaging();
         arrayName = aDescriptor.containerName().orElseGet( null );
@@ -87,27 +74,16 @@ public class MultiJsonIO<D>
                 .append( "." )
                 .append( Bucket.Format.JSON.name().toLowerCase() )
                 .toString();
-        try
-        {
-            final BucketName bp = BucketNameParser.newParser().parse( bucketName, packaging );
-            innerPath = bp.innerPath;
-            simpleName = bp.simpleName;
-            format = bp.format;
-        }
-        catch ( Exception e )
-        {
-            // TODO Handle this error
-        }
-
-        codec = new DefaultJsonConverter<>( aDescriptor, serializer );
-        return this;
-    }
-
-    public MultiJsonIO<D> preprocess( Function<D, D> aPreprocessor )
-    {
-        preprocess = true;
+        final BucketName bp = BucketNameParser.newParser().parse( bucketName, packaging );
+        innerPath = bp.innerPath;
+        simpleName = bp.simpleName;
+        format = bp.format;
         preprocessor = aPreprocessor;
-        return this;
+        preprocess = aPreprocessor != null;
+        serializer = aSerializer;
+        codec = new DefaultJsonConverter<>( aDescriptor, serializer );
+        writer = aWriter;
+        logger = aLogService;
     }
 
     @SuppressWarnings( { "rawtypes", "unchecked" } )
@@ -190,7 +166,7 @@ public class MultiJsonIO<D>
     }
 
     @Override
-    public List<Bucket> bucketize( Stream<D> stream, String outerPath, String url )
+    public List<Bucket> bucketize( Stream<D> stream, String url, String outerPath, Object o )
         throws UncheckedBucketException
     {
         final List<String> errors = validateConfig();

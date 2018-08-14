@@ -29,15 +29,21 @@ public class BucketStoreFactoryImpl
         cf = aComponentFactory;
     }
 
+    /*
+     * Interestingly, could not figure out how to safely iterate over the map and perform
+     * the dispose() operation atomically.
+     * 
+     * There should be only one thread (managed by the using component) accessing this
+     * method, and this instance should be out of use when this method is called, 
+     * so hopefully even if it is not atomic, the operation should work as expected
+     * even in a concurrent environment.
+     */
     public void dispose()
     {
-        if (!instances.isEmpty())
-        {
-            final ConcurrentHashMap<String, ComponentInstance> copy = new ConcurrentHashMap<>( instances );
-            instances.clear();
-            copy.values()
-                .forEach( ci -> ci.dispose() );
-        }
+        // Warning: NOT atomic. See note in comment above.
+        instances.values()
+            .forEach( ci -> ci.dispose() );
+        instances.clear();
     }
 
     @Override
@@ -72,13 +78,16 @@ public class BucketStoreFactoryImpl
         final ComponentInstance component = cf.newInstance( properties );
         @SuppressWarnings( "unchecked" )
         final BucketStore<D> store = (BucketStore<D>)component.getInstance();
-        if (instances.containsKey(store.name()))
-        {
-            component.dispose();
-            throw new UncheckedBucketException( String.format( "A BucketStore with the name '%s' is already registered.", store.name() ) );
-        }
+        instances.compute( store.name(), (k,v) -> {
+            if (k != null)
+            {
+                component.dispose();
+                throw new UncheckedBucketException( String.format( "A BucketStore with the name '%s' is already registered.", k ) );
+            }
 
-        instances.put( store.name(), component );
+            return component;
+        });
+
         return store;
     }
 

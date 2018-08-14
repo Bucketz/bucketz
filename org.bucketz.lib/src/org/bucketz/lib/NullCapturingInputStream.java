@@ -6,6 +6,7 @@ import java.util.Arrays;
 
 /**
  * Captures a processing error so that the error can be properly handled.
+ * Not thread safe. Assumed to be running in a single thread.
  */
 public class NullCapturingInputStream
     extends InputStream

@@ -4,11 +4,14 @@ import org.apache.felix.serializer.Serializer;
 import org.bucketz.Codec;
 import org.bucketz.store.BucketDescriptor;
 
+/**
+ * Immutable, so thread safe.
+ */
 public class DefaultJsonConverter<D>
     implements Codec<D>
 {
-    final BucketDescriptor<D> descriptor;
-    final Serializer serializer;
+    private final BucketDescriptor<D> descriptor;
+    private final Serializer serializer;
 
     public DefaultJsonConverter( BucketDescriptor<D> aDescriptor, Serializer aSerializer )
     {
