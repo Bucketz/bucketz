@@ -75,7 +75,7 @@ public class PartitionedJsonIO<D>
     }
 
     @Override
-    public List<Bucket> bucketize( Stream<D> stream, String url, String outerPath, Object o )
+    public List<Bucket> bucketize( Stream<D> stream, String url, String outerPath )
         throws UncheckedBucketException
     {
         final List<String> errors = validateConfig();

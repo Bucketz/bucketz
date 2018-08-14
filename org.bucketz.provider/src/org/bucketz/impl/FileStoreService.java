@@ -227,7 +227,7 @@ public class FileStoreService<D>
 
         try
         {
-            final List<Bucket> buckets = io.bucketize( aDTOStream, uri().toString(), outerPath, null );
+            final List<Bucket> buckets = io.bucketize( aDTOStream, uri().toString(), outerPath );
 
             for( Bucket bucket : buckets )
             {
@@ -258,8 +258,7 @@ public class FileStoreService<D>
             final List<Bucket> bucketList = io.bucketize(
                     Stream.of( anIncrement.value() ),
                     uri().toString(),
-                    outerPath,
-                    null );
+                    outerPath );
             if( bucketList.size() != 1 )
                 throw new UncheckedBucketException(
                         "An error occurred when attempting to process the Bucket" );
@@ -437,7 +436,7 @@ public class FileStoreService<D>
     {
         try
         {
-            final List<Bucket> bucketList = io.bucketize( stream, uri().toString(), outerPath, null );
+            final List<Bucket> bucketList = io.bucketize( stream, uri().toString(), outerPath );
             if (bucketList.size() != 1)
                 throw new UncheckedBucketException( "Could not convert to Bucket" );
             final Bucket bucket = bucketList.get( 0 );
