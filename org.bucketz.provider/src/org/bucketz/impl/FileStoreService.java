@@ -37,7 +37,13 @@ import org.osgi.util.promise.Promise;
 
 /**
  * Implementation note: We expect that operations with the file system will be very quick,
- * so IO operations are not executed concurrently.
+ * so IO operations are executed synchronously.
+ * 
+ * Since we do not anticipate a heavy number of transactions (most are done in-memory), we
+ * use synchronization, guarding with "this" for simplicity. For even more simplicity, we
+ * use course-grained synchronization for IO at the method level. If this proves to be to
+ * contentious, synchronization should be made more fine-grained. At this time, however,
+ * it would be a premature optimization.
  */
 @Bucketz.Provide(type=Bucketz.TypeConstants.FILE)
 @Component(
@@ -59,12 +65,16 @@ public class FileStoreService<D>
 
     private BucketDescriptor<D> descriptor;
     private BucketIO<D> io;
+    private Path baseLocation;
+    private Path baseAndOuterPath;
+    private URI uri;
 
     @Reference private LogService logger;
 
     @SuppressWarnings( "unchecked" )
     @Activate
     void activate( ComponentContext componentContext, FileStore.Configuration configuration, Map<String, Object> properties )
+        throws Exception
     {
         name = configuration.name();
         location = configuration.location();
@@ -78,15 +88,12 @@ public class FileStoreService<D>
 
         descriptor = (BucketDescriptor<D>)properties.get( Bucketz.Parameters.DESCRIPTOR );
         io = (BucketIO<D>)properties.get( Bucketz.Parameters.IO );
-    }
 
-    void deactivate()
-    {
-        name = null;
-        location = null;
-        outerPath = null;
-        descriptor = null;
-        io = null;
+        final String base = location.replaceFirst( "^~", System.getProperty( "user.home" ) );
+        baseLocation = new File( base ).toPath();
+        uri = baseLocation.toUri();
+        final Path outerPathPath = Paths.get( outerPath );
+        baseAndOuterPath = baseLocation.resolve( outerPathPath );
     }
 
     @Override
@@ -102,11 +109,11 @@ public class FileStoreService<D>
     }
 
     @Override
-    public List<String> buckets()
+    public synchronized List<String> buckets()
     {
         try
         {
-            final Path base = baseAndOuterPath();
+            final Path base = baseAndOuterPath;
             if( !Files.exists( base ) && !Files.isDirectory( base ) )
                 return Collections.emptyList();
 
@@ -156,29 +163,8 @@ public class FileStoreService<D>
 
     @Override
     public URI uri()
-        throws UncheckedBucketException
     {
-        try
-        {
-            return baseLocation().toUri();
-        }
-        catch ( Exception e )
-        {
-            throw new UncheckedBucketException( e );
-        }
-    }
-
-    private Path baseLocation()
-    {
-        final String baseLocation = location.replaceFirst( "^~", System.getProperty( "user.home" ) );
-        final Path base = new File( baseLocation ).toPath();
-        return base;
-    }
-
-    private Path baseAndOuterPath()
-    {
-        final Path path = Paths.get( outerPath );
-        return baseLocation().resolve( path );
+        return uri;
     }
 
     @Override
@@ -188,7 +174,7 @@ public class FileStoreService<D>
     }
 
     @Override
-    public Promise<Stream<D>> stream()
+    public synchronized Promise<Stream<D>> stream()
     {
         final Deferred<Stream<D>> deferred = new Deferred<>();
 
@@ -221,7 +207,7 @@ public class FileStoreService<D>
     }
 
     @Override
-    public Promise<Boolean> push( Stream<D> aDTOStream )
+    public synchronized Promise<Boolean> push( Stream<D> aDTOStream )
     {
         final Deferred<Boolean> deferred = new Deferred<>();
 
@@ -231,7 +217,7 @@ public class FileStoreService<D>
 
             for( Bucket bucket : buckets )
             {
-                final Path base = baseAndOuterPath();
+                final Path base = baseAndOuterPath;
                 final File bucketFile = new File( base.toFile(), bucket.fullName() );
                 bucketFile.getParentFile().mkdirs();
                 bucketFile.createNewFile();
@@ -249,7 +235,7 @@ public class FileStoreService<D>
     }
 
     @Override
-    public Promise<Boolean> push( Increment<D> anIncrement, Supplier<Map<String, D>> repo )
+    public synchronized Promise<Boolean> push( Increment<D> anIncrement, Supplier<Map<String, D>> repo )
     {
         final Deferred<Boolean> deferred = new Deferred<>();
 
@@ -395,7 +381,7 @@ public class FileStoreService<D>
     {
         try
         {
-            final Path base = baseAndOuterPath();
+            final Path base = baseAndOuterPath;
             final Path bucketFilePath = base.resolve( bucket.fullName() );
             final Path parent = bucketFilePath.getParent();
             if (parent != null) // null will be returned if the path has no parent
@@ -416,7 +402,7 @@ public class FileStoreService<D>
     {
         try
         {
-            final Path base = baseAndOuterPath();
+            final Path base = baseAndOuterPath;
             final File bucketFile = new File( base.toFile(), bucket.fullName() );
             if (!bucketFile.delete())
                 throw new UncheckedBucketException( String.format( "Could not remove file: %s", bucketFile.getPath() ) );
@@ -443,7 +429,7 @@ public class FileStoreService<D>
             if (!bucket.content().isPresent())
                 throw new UncheckedBucketException( "No content to write" );
 
-            final Path base = baseAndOuterPath();
+            final Path base = baseAndOuterPath;
             final File bucketFile = new File( base.toFile(), bucket.fullName() );
             writeToFile( bucket.content().get(), bucketFile );
         }

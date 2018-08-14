@@ -1,14 +1,12 @@
 package org.bucketz.impl;
 
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
 
 import org.bucketz.Bucketz;
-import org.bucketz.UncheckedBucketException;
 import org.bucketz.store.BucketStore;
 import org.bucketz.store.EmptyStore;
 import org.osgi.service.component.annotations.Activate;
@@ -18,6 +16,9 @@ import org.osgi.service.log.LogService;
 import org.osgi.util.promise.Promise;
 import org.osgi.util.promise.Promises;
 
+/**
+ * This component is EffectivelyMutable.
+ */
 @Bucketz.Provide(type=Bucketz.TypeConstants.EMPTY)
 @Component(
       name = EmptyStoreService.COMPONENT_NAME,
@@ -35,11 +36,13 @@ public class EmptyStoreService<D>
 
     private String location;
     private String outerPath;
+    private URI uri;
 
     @Reference private LogService logger;
 
     @Activate
     void activate( EmptyStore.Configuration configuration, Map<String, Object> properties )
+        throws Exception
     {
         name = configuration.name();
         location = configuration.location();
@@ -50,13 +53,8 @@ public class EmptyStoreService<D>
 
         if (!outerPath.isEmpty() && !outerPath.endsWith( "/" ))
             outerPath += "/";
-    }
 
-    void deactivate()
-    {
-        name = null;
-        location = null;
-        outerPath = null;
+        new URI( location );
     }
 
     @Override
@@ -73,16 +71,8 @@ public class EmptyStoreService<D>
 
     @Override
     public URI uri()
-            throws UncheckedBucketException
     {
-        try
-        {
-            return new URI( location );
-        }
-        catch ( URISyntaxException e )
-        {
-            throw new UncheckedBucketException( e );
-        }
+        return uri;
     }
 
     @Override

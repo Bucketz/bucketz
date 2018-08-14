@@ -35,6 +35,13 @@ import org.osgi.util.promise.Promise;
  * update is simply an automation of the offline update. It should happen within a reasonable
  * amount of time, but does not need to occur in real time. Currently there is only a weak
  * check for consistency, as it is expected that there are not many updates to contend with.
+ * 
+ * In terms of concurrency and synchronization, the base assumption is that reading the 
+ * stream may take some time, but should be a fairly rare operation. A BucketStore is used 
+ * only as a backing mechanism for an in-memory repository. Thus, the repository will be 
+ * hydrated only once upon startup. When a BucketStore is Writable,
+ * writes may happen incrementally, and should be synchronized. Writes for an entire
+ * stream may happen during an export operation, but should be a once-only occurrence.
  */
 public interface BucketStore<D>
 {
