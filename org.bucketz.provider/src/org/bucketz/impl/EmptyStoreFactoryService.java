@@ -40,7 +40,6 @@ public class EmptyStoreFactoryService
     void deactivate()
     {
         implementation.dispose();
-        implementation = null;
     }
 
     @Override

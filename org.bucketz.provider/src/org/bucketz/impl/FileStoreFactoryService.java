@@ -40,7 +40,6 @@ public class FileStoreFactoryService
     void deactivate()
     {
         implementation.dispose();
-        implementation = null;
     }
 
     @Override

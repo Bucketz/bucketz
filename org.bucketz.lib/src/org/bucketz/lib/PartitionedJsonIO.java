@@ -67,8 +67,8 @@ public class PartitionedJsonIO<D>
         final Pattern p = Pattern.compile( aFilter );
         bucketFilters.add( p );
         bucketFunction = aBucketFunction;
-        preprocess = true;
         preprocessor = aPreprocessor;
+        preprocess = aPreprocessor != null;
         serializer = aSerializer;
         codec = new DefaultJsonConverter<>( aDescriptor, serializer );
         writer = aWriter;

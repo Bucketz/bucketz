@@ -40,7 +40,6 @@ public class BundleStoreFactoryService
     void deactivate()
     {
         implementation.dispose();
-        implementation = null;
     }
 
     @Override

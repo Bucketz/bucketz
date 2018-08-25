@@ -79,7 +79,7 @@ public class BucketStoreFactoryImpl
         @SuppressWarnings( "unchecked" )
         final BucketStore<D> store = (BucketStore<D>)component.getInstance();
         instances.compute( store.name(), (k,v) -> {
-            if (k != null)
+            if (instances.containsKey(k))
             {
                 component.dispose();
                 throw new UncheckedBucketException( String.format( "A BucketStore with the name '%s' is already registered.", k ) );

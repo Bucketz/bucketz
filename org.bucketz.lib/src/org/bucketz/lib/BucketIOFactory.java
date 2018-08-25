@@ -386,7 +386,7 @@ public class BucketIOFactory<D>
     {
         return new DelimiterSeparatedValuesIO<>(
                 descriptor,
-                "/t",
+                "\t",
                 tsvConfig.headers(),
                 tsvConfig.columns(),
                 preprocessor,
