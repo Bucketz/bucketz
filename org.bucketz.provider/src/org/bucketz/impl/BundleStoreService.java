@@ -29,6 +29,7 @@ import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.log.LogService;
 import org.osgi.util.promise.Deferred;
 import org.osgi.util.promise.Promise;
+import org.osgi.util.promise.Promises;
 
 /**
  * Implementation note: We expect that operations with the bundle will be very quick,
@@ -200,5 +201,14 @@ public class BundleStoreService<D>
         }
 
         return deferred.getPromise();
+    }
+
+    @Override
+    public Promise<Integer> size()
+    {
+        return stream()
+                .then( p -> {
+                    return Promises.resolved((int)p.getValue().count());
+                });
     }
 }

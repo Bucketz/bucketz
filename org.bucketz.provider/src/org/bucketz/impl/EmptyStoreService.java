@@ -92,4 +92,13 @@ public class EmptyStoreService<D>
     {
         return Promises.resolved( Stream.empty() );
     }
+
+    @Override
+    public Promise<Integer> size()
+    {
+        return stream()
+                .then( p -> {
+                    return Promises.resolved((int)p.getValue().count());
+                });
+    }
 }

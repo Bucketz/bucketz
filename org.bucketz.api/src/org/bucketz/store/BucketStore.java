@@ -82,6 +82,11 @@ public interface BucketStore<D>
      */
     Promise<Stream<D>> stream();
 
+    /**
+     * Returns the number of entites stored. This is mostly for diagnostic purposes.
+     */
+    Promise<Integer> size();
+
     default boolean isWritable()
     {
         return (this instanceof Writable);
