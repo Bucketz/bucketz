@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-  <repository xmlns="http://www.osgi.org/xmlns/repository/v1.0.0" name="org.osgi:osgi.enroute.pom.distro:2.0.0" increment="1531799461807">
+  <repository xmlns="http://www.osgi.org/xmlns/repository/v1.0.0" name="org.osgi:osgi.enroute.pom.distro:2.0.0" increment="1535520743748">
     <resource>
       <capability namespace="osgi.identity">
         <attribute name="license" value="http://opensource.org/licenses/apache2.0.php; link=&quot;http://www.apache.org/licenses/LICENSE-2.0&quot;; description=&quot;Apache License, Version 2.0&quot;"/>
@@ -2552,23 +2552,6 @@
       </requirement>
     </resource>
     <resource>
-      <capability namespace="osgi.content">
-        <attribute name="size" value="194354" type="Long"/>
-        <attribute name="url" value="file:/Users/dleangen/eclipse/java-mars/Eclipse.app/Contents/MacOS/enroute-distro/xml-apis/xml-apis/1.3.04/xml-apis-1.3.04.jar"/>
-        <attribute name="mime" value="vnd.osgi.bundle"/>
-        <attribute name="osgi.content" value="D404AA881EB9C5F7A4FB546E84EA11506CD417A72B5972E88EFF17F43F9F8A64"/>
-      </capability>
-      <capability namespace="osgi.identity">
-        <attribute name="osgi.identity" value="xml-apis:xml-apis"/>
-        <attribute name="type" value="application/java-archive"/>
-        <attribute name="version" value="1.3.4" type="Version"/>
-      </capability>
-      <capability namespace="bnd.info">
-        <attribute name="name" value="xml-apis:xml-apis:1.3.04"/>
-        <attribute name="from" value="xml-apis:xml-apis:1.3.04"/>
-      </capability>
-    </resource>
-    <resource>
       <capability namespace="osgi.identity">
         <attribute name="license" value="http://opensource.org/licenses/EPL-1.0"/>
         <attribute name="osgi.identity" value="osgi.enroute.junit.wrapper"/>
@@ -2826,6 +2809,23 @@
       </requirement>
     </resource>
     <resource>
+      <capability namespace="osgi.content">
+        <attribute name="size" value="194354" type="Long"/>
+        <attribute name="url" value="file:/Users/dleangen/eclipse/java-mars/Eclipse.app/Contents/MacOS/enroute-distro/xml-apis/xml-apis/1.3.04/xml-apis-1.3.04.jar"/>
+        <attribute name="mime" value="vnd.osgi.bundle"/>
+        <attribute name="osgi.content" value="D404AA881EB9C5F7A4FB546E84EA11506CD417A72B5972E88EFF17F43F9F8A64"/>
+      </capability>
+      <capability namespace="osgi.identity">
+        <attribute name="osgi.identity" value="xml-apis:xml-apis"/>
+        <attribute name="type" value="application/java-archive"/>
+        <attribute name="version" value="1.3.4" type="Version"/>
+      </capability>
+      <capability namespace="bnd.info">
+        <attribute name="name" value="xml-apis:xml-apis:1.3.04"/>
+        <attribute name="from" value="xml-apis:xml-apis:1.3.04"/>
+      </capability>
+    </resource>
+    <resource>
       <capability namespace="osgi.identity">
         <attribute name="license" value="http://opensource.org/licenses/MIT;link = &quot;http://en.wikipedia.org/wiki/MIT_License&quot;;description = &quot;MIT License&quot;"/>
         <attribute name="osgi.identity" value="osgi.enroute.github.angular-ui.webresource"/>
@@ -3035,6 +3035,40 @@
       </requirement>
     </resource>
     <resource>
+      <capability namespace="osgi.content">
+        <attribute name="size" value="87325" type="Long"/>
+        <attribute name="url" value="file:/Users/dleangen/eclipse/java-mars/Eclipse.app/Contents/MacOS/enroute-distro/jline/jline/0.9.94/jline-0.9.94.jar"/>
+        <attribute name="mime" value="vnd.osgi.bundle"/>
+        <attribute name="osgi.content" value="D8DF0FFB12D87CA876271CDA4D59B3FEB94123882C1BE1763B7FAF2E0A0B0CBB"/>
+      </capability>
+      <capability namespace="osgi.identity">
+        <attribute name="osgi.identity" value="jline:jline"/>
+        <attribute name="type" value="application/java-archive"/>
+        <attribute name="version" value="0.9.94" type="Version"/>
+      </capability>
+      <capability namespace="bnd.info">
+        <attribute name="name" value="jline:jline:0.9.94"/>
+        <attribute name="from" value="jline:jline:0.9.94"/>
+      </capability>
+    </resource>
+    <resource>
+      <capability namespace="osgi.content">
+        <attribute name="size" value="16369" type="Long"/>
+        <attribute name="url" value="file:/Users/dleangen/eclipse/java-mars/Eclipse.app/Contents/MacOS/enroute-distro/org/apache/rat/apache-rat-tasks/0.6/apache-rat-tasks-0.6.jar"/>
+        <attribute name="mime" value="vnd.osgi.bundle"/>
+        <attribute name="osgi.content" value="5B7C0CDC6CFBA06AE4A41787CDE8D04EDDD23D7AB692E5EE61727E75832F51AA"/>
+      </capability>
+      <capability namespace="osgi.identity">
+        <attribute name="osgi.identity" value="org.apache.rat:apache-rat-tasks"/>
+        <attribute name="type" value="application/java-archive"/>
+        <attribute name="version" value="0.6.0" type="Version"/>
+      </capability>
+      <capability namespace="bnd.info">
+        <attribute name="name" value="org.apache.rat:apache-rat-tasks:0.6"/>
+        <attribute name="from" value="org.apache.rat:apache-rat-tasks:0.6"/>
+      </capability>
+    </resource>
+    <resource>
       <capability namespace="osgi.identity">
         <attribute name="license" value="http://www.apache.org/licenses/LICENSE-2.0, http://www.eclipse.org/org/documents/epl-v10.php"/>
         <attribute name="osgi.identity" value="org.eclipse.jetty.io"/>
@@ -3093,40 +3127,6 @@
       <requirement namespace="osgi.wiring.package">
         <directive name="filter" value="(&amp;(osgi.wiring.package=org.eclipse.jetty.util.thread)(&amp;(version&gt;=9.2.0)(!(version&gt;=10.0.0))))"/>
       </requirement>
-    </resource>
-    <resource>
-      <capability namespace="osgi.content">
-        <attribute name="size" value="87325" type="Long"/>
-        <attribute name="url" value="file:/Users/dleangen/eclipse/java-mars/Eclipse.app/Contents/MacOS/enroute-distro/jline/jline/0.9.94/jline-0.9.94.jar"/>
-        <attribute name="mime" value="vnd.osgi.bundle"/>
-        <attribute name="osgi.content" value="D8DF0FFB12D87CA876271CDA4D59B3FEB94123882C1BE1763B7FAF2E0A0B0CBB"/>
-      </capability>
-      <capability namespace="osgi.identity">
-        <attribute name="osgi.identity" value="jline:jline"/>
-        <attribute name="type" value="application/java-archive"/>
-        <attribute name="version" value="0.9.94" type="Version"/>
-      </capability>
-      <capability namespace="bnd.info">
-        <attribute name="name" value="jline:jline:0.9.94"/>
-        <attribute name="from" value="jline:jline:0.9.94"/>
-      </capability>
-    </resource>
-    <resource>
-      <capability namespace="osgi.content">
-        <attribute name="size" value="16369" type="Long"/>
-        <attribute name="url" value="file:/Users/dleangen/eclipse/java-mars/Eclipse.app/Contents/MacOS/enroute-distro/org/apache/rat/apache-rat-tasks/0.6/apache-rat-tasks-0.6.jar"/>
-        <attribute name="mime" value="vnd.osgi.bundle"/>
-        <attribute name="osgi.content" value="5B7C0CDC6CFBA06AE4A41787CDE8D04EDDD23D7AB692E5EE61727E75832F51AA"/>
-      </capability>
-      <capability namespace="osgi.identity">
-        <attribute name="osgi.identity" value="org.apache.rat:apache-rat-tasks"/>
-        <attribute name="type" value="application/java-archive"/>
-        <attribute name="version" value="0.6.0" type="Version"/>
-      </capability>
-      <capability namespace="bnd.info">
-        <attribute name="name" value="org.apache.rat:apache-rat-tasks:0.6"/>
-        <attribute name="from" value="org.apache.rat:apache-rat-tasks:0.6"/>
-      </capability>
     </resource>
     <resource>
       <capability namespace="osgi.identity">
@@ -3769,54 +3769,6 @@
     <resource>
       <capability namespace="osgi.identity">
         <attribute name="license" value="http://opensource.org/licenses/apache2.0.php; link=&quot;http://www.apache.org/licenses/LICENSE-2.0&quot;; description=&quot;Apache License, Version 2.0&quot;"/>
-        <attribute name="osgi.identity" value="org.osgi.service.remoteserviceadmin"/>
-        <attribute name="copyright" value="Copyright (c) OSGi Alliance (2000, 2015). All Rights Reserved."/>
-        <attribute name="documentation" value="http://www.osgi.org/"/>
-        <attribute name="description" value="OSGi Companion Code for org.osgi.service.remoteserviceadmin Version 1.1.0."/>
-        <attribute name="type" value="osgi.bundle"/>
-        <attribute name="version" value="1.1.0.201505202024" type="Version"/>
-      </capability>
-      <capability namespace="osgi.wiring.bundle">
-        <attribute name="bundle-version" value="1.1.0.201505202024" type="Version"/>
-        <attribute name="osgi.wiring.bundle" value="org.osgi.service.remoteserviceadmin"/>
-      </capability>
-      <capability namespace="osgi.wiring.host">
-        <attribute name="bundle-version" value="1.1.0.201505202024" type="Version"/>
-        <attribute name="osgi.wiring.host" value="org.osgi.service.remoteserviceadmin"/>
-      </capability>
-      <capability namespace="osgi.wiring.package">
-        <directive name="uses" value="org.osgi.framework"/>
-        <attribute name="version" value="1.1.0" type="Version"/>
-        <attribute name="osgi.wiring.package" value="org.osgi.service.remoteserviceadmin"/>
-      </capability>
-      <capability namespace="osgi.wiring.package">
-        <directive name="uses" value="org.osgi.resource"/>
-        <attribute name="version" value="1.0.0" type="Version"/>
-        <attribute name="osgi.wiring.package" value="org.osgi.service.remoteserviceadmin.namespace"/>
-      </capability>
-      <capability namespace="osgi.content">
-        <attribute name="size" value="69625" type="Long"/>
-        <attribute name="url" value="file:/Users/dleangen/eclipse/java-mars/Eclipse.app/Contents/MacOS/enroute-distro/org/osgi/org.osgi.service.remoteserviceadmin/1.1.0/org.osgi.service.remoteserviceadmin-1.1.0.jar"/>
-        <attribute name="mime" value="vnd.osgi.bundle"/>
-        <attribute name="osgi.content" value="AC23029BFFA4B82FCD19BE7C25581D14D64D5DF20786179BA7933C19938C4960"/>
-      </capability>
-      <capability namespace="bnd.info">
-        <attribute name="name" value="org.osgi:org.osgi.service.remoteserviceadmin:1.1.0"/>
-        <attribute name="from" value="org.osgi:org.osgi.service.remoteserviceadmin:1.1.0"/>
-      </capability>
-      <requirement namespace="osgi.wiring.package">
-        <directive name="filter" value="(&amp;(osgi.wiring.package=org.osgi.framework)(&amp;(version&gt;=1.7.0)(!(version&gt;=2.0.0))))"/>
-      </requirement>
-      <requirement namespace="osgi.wiring.package">
-        <directive name="filter" value="(&amp;(osgi.wiring.package=org.osgi.resource)(&amp;(version&gt;=1.0.0)(!(version&gt;=2.0.0))))"/>
-      </requirement>
-      <requirement namespace="osgi.ee">
-        <directive name="filter" value="(&amp;(osgi.ee=JavaSE)(version=1.5))"/>
-      </requirement>
-    </resource>
-    <resource>
-      <capability namespace="osgi.identity">
-        <attribute name="license" value="http://opensource.org/licenses/apache2.0.php; link=&quot;http://www.apache.org/licenses/LICENSE-2.0&quot;; description=&quot;Apache License, Version 2.0&quot;"/>
         <attribute name="osgi.identity" value="osgi.cmpn"/>
         <attribute name="copyright" value="Copyright (c) OSGi Alliance (2000, 2009). All Rights Reserved."/>
         <attribute name="description" value="OSGi Service Platform Release 4 Version 4.2, Compendium Interfaces and Classes for use in compiling bundles."/>
@@ -4154,6 +4106,54 @@
       <requirement namespace="osgi.wiring.package">
         <directive name="filter" value="(&amp;(osgi.wiring.package=org.osgi.util.xml)(&amp;(version&gt;=1.0.0)(!(version&gt;=2.0.0))))"/>
         <directive name="resolution" value="optional"/>
+      </requirement>
+    </resource>
+    <resource>
+      <capability namespace="osgi.identity">
+        <attribute name="license" value="http://opensource.org/licenses/apache2.0.php; link=&quot;http://www.apache.org/licenses/LICENSE-2.0&quot;; description=&quot;Apache License, Version 2.0&quot;"/>
+        <attribute name="osgi.identity" value="org.osgi.service.remoteserviceadmin"/>
+        <attribute name="copyright" value="Copyright (c) OSGi Alliance (2000, 2015). All Rights Reserved."/>
+        <attribute name="documentation" value="http://www.osgi.org/"/>
+        <attribute name="description" value="OSGi Companion Code for org.osgi.service.remoteserviceadmin Version 1.1.0."/>
+        <attribute name="type" value="osgi.bundle"/>
+        <attribute name="version" value="1.1.0.201505202024" type="Version"/>
+      </capability>
+      <capability namespace="osgi.wiring.bundle">
+        <attribute name="bundle-version" value="1.1.0.201505202024" type="Version"/>
+        <attribute name="osgi.wiring.bundle" value="org.osgi.service.remoteserviceadmin"/>
+      </capability>
+      <capability namespace="osgi.wiring.host">
+        <attribute name="bundle-version" value="1.1.0.201505202024" type="Version"/>
+        <attribute name="osgi.wiring.host" value="org.osgi.service.remoteserviceadmin"/>
+      </capability>
+      <capability namespace="osgi.wiring.package">
+        <directive name="uses" value="org.osgi.framework"/>
+        <attribute name="version" value="1.1.0" type="Version"/>
+        <attribute name="osgi.wiring.package" value="org.osgi.service.remoteserviceadmin"/>
+      </capability>
+      <capability namespace="osgi.wiring.package">
+        <directive name="uses" value="org.osgi.resource"/>
+        <attribute name="version" value="1.0.0" type="Version"/>
+        <attribute name="osgi.wiring.package" value="org.osgi.service.remoteserviceadmin.namespace"/>
+      </capability>
+      <capability namespace="osgi.content">
+        <attribute name="size" value="69625" type="Long"/>
+        <attribute name="url" value="file:/Users/dleangen/eclipse/java-mars/Eclipse.app/Contents/MacOS/enroute-distro/org/osgi/org.osgi.service.remoteserviceadmin/1.1.0/org.osgi.service.remoteserviceadmin-1.1.0.jar"/>
+        <attribute name="mime" value="vnd.osgi.bundle"/>
+        <attribute name="osgi.content" value="AC23029BFFA4B82FCD19BE7C25581D14D64D5DF20786179BA7933C19938C4960"/>
+      </capability>
+      <capability namespace="bnd.info">
+        <attribute name="name" value="org.osgi:org.osgi.service.remoteserviceadmin:1.1.0"/>
+        <attribute name="from" value="org.osgi:org.osgi.service.remoteserviceadmin:1.1.0"/>
+      </capability>
+      <requirement namespace="osgi.wiring.package">
+        <directive name="filter" value="(&amp;(osgi.wiring.package=org.osgi.framework)(&amp;(version&gt;=1.7.0)(!(version&gt;=2.0.0))))"/>
+      </requirement>
+      <requirement namespace="osgi.wiring.package">
+        <directive name="filter" value="(&amp;(osgi.wiring.package=org.osgi.resource)(&amp;(version&gt;=1.0.0)(!(version&gt;=2.0.0))))"/>
+      </requirement>
+      <requirement namespace="osgi.ee">
+        <directive name="filter" value="(&amp;(osgi.ee=JavaSE)(version=1.5))"/>
       </requirement>
     </resource>
     <resource>
@@ -5892,6 +5892,23 @@
       </capability>
     </resource>
     <resource>
+      <capability namespace="osgi.content">
+        <attribute name="size" value="60047" type="Long"/>
+        <attribute name="url" value="file:/Users/dleangen/eclipse/java-mars/Eclipse.app/Contents/MacOS/enroute-distro/xml-resolver/xml-resolver/1.1/xml-resolver-1.1.jar"/>
+        <attribute name="mime" value="vnd.osgi.bundle"/>
+        <attribute name="osgi.content" value="CD722B46A9CA4BF820867A15BB465BA3E8BB17608AECC1CDFEA9D1706E3DCFD7"/>
+      </capability>
+      <capability namespace="osgi.identity">
+        <attribute name="osgi.identity" value="xml-resolver:xml-resolver"/>
+        <attribute name="type" value="application/java-archive"/>
+        <attribute name="version" value="1.1.0" type="Version"/>
+      </capability>
+      <capability namespace="bnd.info">
+        <attribute name="name" value="xml-resolver:xml-resolver:1.1"/>
+        <attribute name="from" value="xml-resolver:xml-resolver:1.1"/>
+      </capability>
+    </resource>
+    <resource>
       <capability namespace="osgi.identity">
         <attribute name="license" value="http://www.apache.org/licenses/LICENSE-2.0, http://www.eclipse.org/org/documents/epl-v10.php"/>
         <attribute name="osgi.identity" value="org.eclipse.jetty.util"/>
@@ -5999,23 +6016,6 @@
         <directive name="filter" value="(&amp;(osgi.wiring.package=org.slf4j.spi)(&amp;(version&gt;=1.6.0)(!(version&gt;=2.0.0))))"/>
         <directive name="resolution" value="optional"/>
       </requirement>
-    </resource>
-    <resource>
-      <capability namespace="osgi.content">
-        <attribute name="size" value="60047" type="Long"/>
-        <attribute name="url" value="file:/Users/dleangen/eclipse/java-mars/Eclipse.app/Contents/MacOS/enroute-distro/xml-resolver/xml-resolver/1.1/xml-resolver-1.1.jar"/>
-        <attribute name="mime" value="vnd.osgi.bundle"/>
-        <attribute name="osgi.content" value="CD722B46A9CA4BF820867A15BB465BA3E8BB17608AECC1CDFEA9D1706E3DCFD7"/>
-      </capability>
-      <capability namespace="osgi.identity">
-        <attribute name="osgi.identity" value="xml-resolver:xml-resolver"/>
-        <attribute name="type" value="application/java-archive"/>
-        <attribute name="version" value="1.1.0" type="Version"/>
-      </capability>
-      <capability namespace="bnd.info">
-        <attribute name="name" value="xml-resolver:xml-resolver:1.1"/>
-        <attribute name="from" value="xml-resolver:xml-resolver:1.1"/>
-      </capability>
     </resource>
     <resource>
       <capability namespace="osgi.identity">
@@ -6994,23 +6994,6 @@
     </resource>
     <resource>
       <capability namespace="osgi.content">
-        <attribute name="size" value="276420" type="Long"/>
-        <attribute name="url" value="file:/Users/dleangen/eclipse/java-mars/Eclipse.app/Contents/MacOS/enroute-distro/xalan/serializer/2.7.2/serializer-2.7.2.jar"/>
-        <attribute name="mime" value="vnd.osgi.bundle"/>
-        <attribute name="osgi.content" value="E8F5B4340D3B12A0CFA44AC2DB4BE4E0639E479AE847DF04C4ED8B521734BB4A"/>
-      </capability>
-      <capability namespace="osgi.identity">
-        <attribute name="osgi.identity" value="xalan:serializer"/>
-        <attribute name="type" value="application/java-archive"/>
-        <attribute name="version" value="2.7.2" type="Version"/>
-      </capability>
-      <capability namespace="bnd.info">
-        <attribute name="name" value="xalan:serializer:2.7.2"/>
-        <attribute name="from" value="xalan:serializer:2.7.2"/>
-      </capability>
-    </resource>
-    <resource>
-      <capability namespace="osgi.content">
         <attribute name="size" value="14839" type="Long"/>
         <attribute name="url" value="file:/Users/dleangen/eclipse/java-mars/Eclipse.app/Contents/MacOS/enroute-distro/org/apache/maven/wagon/wagon-http-lightweight/1.0-beta-6/wagon-http-lightweight-1.0-beta-6.jar"/>
         <attribute name="mime" value="vnd.osgi.bundle"/>
@@ -7024,6 +7007,23 @@
       <capability namespace="bnd.info">
         <attribute name="name" value="org.apache.maven.wagon:wagon-http-lightweight:1.0-beta-6"/>
         <attribute name="from" value="org.apache.maven.wagon:wagon-http-lightweight:1.0-beta-6"/>
+      </capability>
+    </resource>
+    <resource>
+      <capability namespace="osgi.content">
+        <attribute name="size" value="276420" type="Long"/>
+        <attribute name="url" value="file:/Users/dleangen/eclipse/java-mars/Eclipse.app/Contents/MacOS/enroute-distro/xalan/serializer/2.7.2/serializer-2.7.2.jar"/>
+        <attribute name="mime" value="vnd.osgi.bundle"/>
+        <attribute name="osgi.content" value="E8F5B4340D3B12A0CFA44AC2DB4BE4E0639E479AE847DF04C4ED8B521734BB4A"/>
+      </capability>
+      <capability namespace="osgi.identity">
+        <attribute name="osgi.identity" value="xalan:serializer"/>
+        <attribute name="type" value="application/java-archive"/>
+        <attribute name="version" value="2.7.2" type="Version"/>
+      </capability>
+      <capability namespace="bnd.info">
+        <attribute name="name" value="xalan:serializer:2.7.2"/>
+        <attribute name="from" value="xalan:serializer:2.7.2"/>
       </capability>
     </resource>
     <resource>
@@ -8540,23 +8540,6 @@
     </resource>
     <resource>
       <capability namespace="osgi.content">
-        <attribute name="size" value="220536" type="Long"/>
-        <attribute name="url" value="file:/Users/dleangen/eclipse/java-mars/Eclipse.app/Contents/MacOS/enroute-distro/xml-apis/xml-apis/1.4.01/xml-apis-1.4.01.jar"/>
-        <attribute name="mime" value="vnd.osgi.bundle"/>
-        <attribute name="osgi.content" value="A840968176645684BB01AED376E067AB39614885F9EEE44ABE35A5F20EBE7FAD"/>
-      </capability>
-      <capability namespace="osgi.identity">
-        <attribute name="osgi.identity" value="xml-apis:xml-apis"/>
-        <attribute name="type" value="application/java-archive"/>
-        <attribute name="version" value="1.4.1" type="Version"/>
-      </capability>
-      <capability namespace="bnd.info">
-        <attribute name="name" value="xml-apis:xml-apis:1.4.01"/>
-        <attribute name="from" value="xml-apis:xml-apis:1.4.01"/>
-      </capability>
-    </resource>
-    <resource>
-      <capability namespace="osgi.content">
         <attribute name="size" value="228110" type="Long"/>
         <attribute name="url" value="file:/Users/dleangen/eclipse/java-mars/Eclipse.app/Contents/MacOS/enroute-distro/org/codehaus/plexus/plexus-utils/1.5.15/plexus-utils-1.5.15.jar"/>
         <attribute name="mime" value="vnd.osgi.bundle"/>
@@ -8570,6 +8553,23 @@
       <capability namespace="bnd.info">
         <attribute name="name" value="org.codehaus.plexus:plexus-utils:1.5.15"/>
         <attribute name="from" value="org.codehaus.plexus:plexus-utils:1.5.15"/>
+      </capability>
+    </resource>
+    <resource>
+      <capability namespace="osgi.content">
+        <attribute name="size" value="220536" type="Long"/>
+        <attribute name="url" value="file:/Users/dleangen/eclipse/java-mars/Eclipse.app/Contents/MacOS/enroute-distro/xml-apis/xml-apis/1.4.01/xml-apis-1.4.01.jar"/>
+        <attribute name="mime" value="vnd.osgi.bundle"/>
+        <attribute name="osgi.content" value="A840968176645684BB01AED376E067AB39614885F9EEE44ABE35A5F20EBE7FAD"/>
+      </capability>
+      <capability namespace="osgi.identity">
+        <attribute name="osgi.identity" value="xml-apis:xml-apis"/>
+        <attribute name="type" value="application/java-archive"/>
+        <attribute name="version" value="1.4.1" type="Version"/>
+      </capability>
+      <capability namespace="bnd.info">
+        <attribute name="name" value="xml-apis:xml-apis:1.4.01"/>
+        <attribute name="from" value="xml-apis:xml-apis:1.4.01"/>
       </capability>
     </resource>
     <resource>
@@ -8708,6 +8708,23 @@
       </capability>
     </resource>
     <resource>
+      <capability namespace="osgi.content">
+        <attribute name="size" value="65777" type="Long"/>
+        <attribute name="url" value="file:/Users/dleangen/eclipse/java-mars/Eclipse.app/Contents/MacOS/enroute-distro/org/apache/maven/maven-artifact-manager/2.1.0/maven-artifact-manager-2.1.0.jar"/>
+        <attribute name="mime" value="vnd.osgi.bundle"/>
+        <attribute name="osgi.content" value="C5A234610C68D13E6D2EFEAD2BCB12A21FD6BB5A73C933EBCAB226C2C999E8BA"/>
+      </capability>
+      <capability namespace="osgi.identity">
+        <attribute name="osgi.identity" value="org.apache.maven:maven-artifact-manager"/>
+        <attribute name="type" value="application/java-archive"/>
+        <attribute name="version" value="2.1.0" type="Version"/>
+      </capability>
+      <capability namespace="bnd.info">
+        <attribute name="name" value="org.apache.maven:maven-artifact-manager:2.1.0"/>
+        <attribute name="from" value="org.apache.maven:maven-artifact-manager:2.1.0"/>
+      </capability>
+    </resource>
+    <resource>
       <capability namespace="osgi.identity">
         <attribute name="license" value="http://www.apache.org/licenses/LICENSE-2.0, http://www.eclipse.org/org/documents/epl-v10.php"/>
         <attribute name="osgi.identity" value="org.eclipse.jetty.websocket.client"/>
@@ -8801,23 +8818,6 @@
       <requirement namespace="osgi.ee">
         <directive name="filter" value="(&amp;(osgi.ee=JavaSE)(version=1.8))"/>
       </requirement>
-    </resource>
-    <resource>
-      <capability namespace="osgi.content">
-        <attribute name="size" value="65777" type="Long"/>
-        <attribute name="url" value="file:/Users/dleangen/eclipse/java-mars/Eclipse.app/Contents/MacOS/enroute-distro/org/apache/maven/maven-artifact-manager/2.1.0/maven-artifact-manager-2.1.0.jar"/>
-        <attribute name="mime" value="vnd.osgi.bundle"/>
-        <attribute name="osgi.content" value="C5A234610C68D13E6D2EFEAD2BCB12A21FD6BB5A73C933EBCAB226C2C999E8BA"/>
-      </capability>
-      <capability namespace="osgi.identity">
-        <attribute name="osgi.identity" value="org.apache.maven:maven-artifact-manager"/>
-        <attribute name="type" value="application/java-archive"/>
-        <attribute name="version" value="2.1.0" type="Version"/>
-      </capability>
-      <capability namespace="bnd.info">
-        <attribute name="name" value="org.apache.maven:maven-artifact-manager:2.1.0"/>
-        <attribute name="from" value="org.apache.maven:maven-artifact-manager:2.1.0"/>
-      </capability>
     </resource>
     <resource>
       <capability namespace="osgi.identity">
@@ -11337,63 +11337,6 @@
     </resource>
     <resource>
       <capability namespace="osgi.identity">
-        <attribute name="license" value="http://www.apache.org/licenses/LICENSE-2.0, http://www.eclipse.org/org/documents/epl-v10.php"/>
-        <attribute name="osgi.identity" value="org.eclipse.jetty.http"/>
-        <attribute name="copyright" value="Copyright (c) 2008-2016 Mort Bay Consulting Pty. Ltd."/>
-        <attribute name="documentation" value="http://www.eclipse.org/jetty"/>
-        <attribute name="description" value="Jetty module for Jetty :: Http Utility"/>
-        <attribute name="type" value="osgi.bundle"/>
-        <attribute name="version" value="9.3.8.v20160314" type="Version"/>
-      </capability>
-      <capability namespace="osgi.wiring.bundle">
-        <attribute name="bundle-version" value="9.3.8.v20160314" type="Version"/>
-        <attribute name="osgi.wiring.bundle" value="org.eclipse.jetty.http"/>
-      </capability>
-      <capability namespace="osgi.wiring.host">
-        <attribute name="bundle-version" value="9.3.8.v20160314" type="Version"/>
-        <attribute name="osgi.wiring.host" value="org.eclipse.jetty.http"/>
-      </capability>
-      <capability namespace="osgi.wiring.package">
-        <directive name="uses" value="org.eclipse.jetty.util,org.eclipse.jetty.util.log,org.eclipse.jetty.util.resource"/>
-        <attribute name="version" value="9.3.8" type="Version"/>
-        <attribute name="osgi.wiring.package" value="org.eclipse.jetty.http"/>
-      </capability>
-      <capability namespace="osgi.wiring.package">
-        <directive name="uses" value="org.eclipse.jetty.util.annotation,org.eclipse.jetty.util.component"/>
-        <attribute name="version" value="9.3.8" type="Version"/>
-        <attribute name="osgi.wiring.package" value="org.eclipse.jetty.http.pathmap"/>
-      </capability>
-      <capability namespace="osgi.content">
-        <attribute name="size" value="138378" type="Long"/>
-        <attribute name="url" value="file:/Users/dleangen/eclipse/java-mars/Eclipse.app/Contents/MacOS/enroute-distro/org/eclipse/jetty/jetty-http/9.3.8.v20160314/jetty-http-9.3.8.v20160314.jar"/>
-        <attribute name="mime" value="vnd.osgi.bundle"/>
-        <attribute name="osgi.content" value="F0F55FB8A3CFD570F878C0A08C3A4FB37ACCC945108B511CBABE3F8D28B47140"/>
-      </capability>
-      <capability namespace="bnd.info">
-        <attribute name="name" value="org.eclipse.jetty:jetty-http:9.3.8.v20160314"/>
-        <attribute name="from" value="org.eclipse.jetty:jetty-http:9.3.8.v20160314"/>
-      </capability>
-      <requirement namespace="osgi.wiring.package">
-        <directive name="filter" value="(&amp;(osgi.wiring.package=org.eclipse.jetty.util)(&amp;(version&gt;=9.3.8)(!(version&gt;=9.3.9))))"/>
-      </requirement>
-      <requirement namespace="osgi.wiring.package">
-        <directive name="filter" value="(&amp;(osgi.wiring.package=org.eclipse.jetty.util.annotation)(&amp;(version&gt;=9.3.8)(!(version&gt;=9.3.9))))"/>
-      </requirement>
-      <requirement namespace="osgi.wiring.package">
-        <directive name="filter" value="(&amp;(osgi.wiring.package=org.eclipse.jetty.util.component)(&amp;(version&gt;=9.3.8)(!(version&gt;=9.3.9))))"/>
-      </requirement>
-      <requirement namespace="osgi.wiring.package">
-        <directive name="filter" value="(&amp;(osgi.wiring.package=org.eclipse.jetty.util.log)(&amp;(version&gt;=9.3.8)(!(version&gt;=9.3.9))))"/>
-      </requirement>
-      <requirement namespace="osgi.wiring.package">
-        <directive name="filter" value="(&amp;(osgi.wiring.package=org.eclipse.jetty.util.resource)(&amp;(version&gt;=9.3.8)(!(version&gt;=9.3.9))))"/>
-      </requirement>
-      <requirement namespace="osgi.ee">
-        <directive name="filter" value="(&amp;(osgi.ee=JavaSE)(version=1.8))"/>
-      </requirement>
-    </resource>
-    <resource>
-      <capability namespace="osgi.identity">
         <attribute name="license" value="http://opensource.org/licenses/MIT&quot;"/>
         <attribute name="osgi.identity" value="osgi.enroute.google.angular.webresource"/>
         <attribute name="copyright" value="Copyright (c) 2010-2016 Google, Inc. http://angularjs.org"/>
@@ -11449,6 +11392,63 @@
         <attribute name="name" value="logkit:logkit:1.0.1"/>
         <attribute name="from" value="logkit:logkit:1.0.1"/>
       </capability>
+    </resource>
+    <resource>
+      <capability namespace="osgi.identity">
+        <attribute name="license" value="http://www.apache.org/licenses/LICENSE-2.0, http://www.eclipse.org/org/documents/epl-v10.php"/>
+        <attribute name="osgi.identity" value="org.eclipse.jetty.http"/>
+        <attribute name="copyright" value="Copyright (c) 2008-2016 Mort Bay Consulting Pty. Ltd."/>
+        <attribute name="documentation" value="http://www.eclipse.org/jetty"/>
+        <attribute name="description" value="Jetty module for Jetty :: Http Utility"/>
+        <attribute name="type" value="osgi.bundle"/>
+        <attribute name="version" value="9.3.8.v20160314" type="Version"/>
+      </capability>
+      <capability namespace="osgi.wiring.bundle">
+        <attribute name="bundle-version" value="9.3.8.v20160314" type="Version"/>
+        <attribute name="osgi.wiring.bundle" value="org.eclipse.jetty.http"/>
+      </capability>
+      <capability namespace="osgi.wiring.host">
+        <attribute name="bundle-version" value="9.3.8.v20160314" type="Version"/>
+        <attribute name="osgi.wiring.host" value="org.eclipse.jetty.http"/>
+      </capability>
+      <capability namespace="osgi.wiring.package">
+        <directive name="uses" value="org.eclipse.jetty.util,org.eclipse.jetty.util.log,org.eclipse.jetty.util.resource"/>
+        <attribute name="version" value="9.3.8" type="Version"/>
+        <attribute name="osgi.wiring.package" value="org.eclipse.jetty.http"/>
+      </capability>
+      <capability namespace="osgi.wiring.package">
+        <directive name="uses" value="org.eclipse.jetty.util.annotation,org.eclipse.jetty.util.component"/>
+        <attribute name="version" value="9.3.8" type="Version"/>
+        <attribute name="osgi.wiring.package" value="org.eclipse.jetty.http.pathmap"/>
+      </capability>
+      <capability namespace="osgi.content">
+        <attribute name="size" value="138378" type="Long"/>
+        <attribute name="url" value="file:/Users/dleangen/eclipse/java-mars/Eclipse.app/Contents/MacOS/enroute-distro/org/eclipse/jetty/jetty-http/9.3.8.v20160314/jetty-http-9.3.8.v20160314.jar"/>
+        <attribute name="mime" value="vnd.osgi.bundle"/>
+        <attribute name="osgi.content" value="F0F55FB8A3CFD570F878C0A08C3A4FB37ACCC945108B511CBABE3F8D28B47140"/>
+      </capability>
+      <capability namespace="bnd.info">
+        <attribute name="name" value="org.eclipse.jetty:jetty-http:9.3.8.v20160314"/>
+        <attribute name="from" value="org.eclipse.jetty:jetty-http:9.3.8.v20160314"/>
+      </capability>
+      <requirement namespace="osgi.wiring.package">
+        <directive name="filter" value="(&amp;(osgi.wiring.package=org.eclipse.jetty.util)(&amp;(version&gt;=9.3.8)(!(version&gt;=9.3.9))))"/>
+      </requirement>
+      <requirement namespace="osgi.wiring.package">
+        <directive name="filter" value="(&amp;(osgi.wiring.package=org.eclipse.jetty.util.annotation)(&amp;(version&gt;=9.3.8)(!(version&gt;=9.3.9))))"/>
+      </requirement>
+      <requirement namespace="osgi.wiring.package">
+        <directive name="filter" value="(&amp;(osgi.wiring.package=org.eclipse.jetty.util.component)(&amp;(version&gt;=9.3.8)(!(version&gt;=9.3.9))))"/>
+      </requirement>
+      <requirement namespace="osgi.wiring.package">
+        <directive name="filter" value="(&amp;(osgi.wiring.package=org.eclipse.jetty.util.log)(&amp;(version&gt;=9.3.8)(!(version&gt;=9.3.9))))"/>
+      </requirement>
+      <requirement namespace="osgi.wiring.package">
+        <directive name="filter" value="(&amp;(osgi.wiring.package=org.eclipse.jetty.util.resource)(&amp;(version&gt;=9.3.8)(!(version&gt;=9.3.9))))"/>
+      </requirement>
+      <requirement namespace="osgi.ee">
+        <directive name="filter" value="(&amp;(osgi.ee=JavaSE)(version=1.8))"/>
+      </requirement>
     </resource>
     <resource>
       <capability namespace="osgi.content">
@@ -11715,23 +11715,6 @@
     </resource>
     <resource>
       <capability namespace="osgi.content">
-        <attribute name="size" value="1217231" type="Long"/>
-        <attribute name="url" value="file:/Users/dleangen/eclipse/java-mars/Eclipse.app/Contents/MacOS/enroute-distro/net/sourceforge/htmlunit/htmlunit-core-js/2.22/htmlunit-core-js-2.22.jar"/>
-        <attribute name="mime" value="vnd.osgi.bundle"/>
-        <attribute name="osgi.content" value="3C02E6FFE0CDA8A94CF1322B3E045CC5ACA8392182579C2F68A731F40C9FF645"/>
-      </capability>
-      <capability namespace="osgi.identity">
-        <attribute name="osgi.identity" value="net.sourceforge.htmlunit:htmlunit-core-js"/>
-        <attribute name="type" value="application/java-archive"/>
-        <attribute name="version" value="2.22.0" type="Version"/>
-      </capability>
-      <capability namespace="bnd.info">
-        <attribute name="name" value="net.sourceforge.htmlunit:htmlunit-core-js:2.22"/>
-        <attribute name="from" value="net.sourceforge.htmlunit:htmlunit-core-js:2.22"/>
-      </capability>
-    </resource>
-    <resource>
-      <capability namespace="osgi.content">
         <attribute name="size" value="170430" type="Long"/>
         <attribute name="url" value="file:/Users/dleangen/eclipse/java-mars/Eclipse.app/Contents/MacOS/enroute-distro/org/apache/maven/maven-project/2.1.0/maven-project-2.1.0.jar"/>
         <attribute name="mime" value="vnd.osgi.bundle"/>
@@ -11745,6 +11728,23 @@
       <capability namespace="bnd.info">
         <attribute name="name" value="org.apache.maven:maven-project:2.1.0"/>
         <attribute name="from" value="org.apache.maven:maven-project:2.1.0"/>
+      </capability>
+    </resource>
+    <resource>
+      <capability namespace="osgi.content">
+        <attribute name="size" value="1217231" type="Long"/>
+        <attribute name="url" value="file:/Users/dleangen/eclipse/java-mars/Eclipse.app/Contents/MacOS/enroute-distro/net/sourceforge/htmlunit/htmlunit-core-js/2.22/htmlunit-core-js-2.22.jar"/>
+        <attribute name="mime" value="vnd.osgi.bundle"/>
+        <attribute name="osgi.content" value="3C02E6FFE0CDA8A94CF1322B3E045CC5ACA8392182579C2F68A731F40C9FF645"/>
+      </capability>
+      <capability namespace="osgi.identity">
+        <attribute name="osgi.identity" value="net.sourceforge.htmlunit:htmlunit-core-js"/>
+        <attribute name="type" value="application/java-archive"/>
+        <attribute name="version" value="2.22.0" type="Version"/>
+      </capability>
+      <capability namespace="bnd.info">
+        <attribute name="name" value="net.sourceforge.htmlunit:htmlunit-core-js:2.22"/>
+        <attribute name="from" value="net.sourceforge.htmlunit:htmlunit-core-js:2.22"/>
       </capability>
     </resource>
     <resource>
@@ -12045,23 +12045,6 @@
     </resource>
     <resource>
       <capability namespace="osgi.content">
-        <attribute name="size" value="3154938" type="Long"/>
-        <attribute name="url" value="file:/Users/dleangen/eclipse/java-mars/Eclipse.app/Contents/MacOS/enroute-distro/xalan/xalan/2.7.2/xalan-2.7.2.jar"/>
-        <attribute name="mime" value="vnd.osgi.bundle"/>
-        <attribute name="osgi.content" value="A44BD80E82CB0F4CFAC0DAC8575746223802514E3CEC9DC75235BC0DE646AF14"/>
-      </capability>
-      <capability namespace="osgi.identity">
-        <attribute name="osgi.identity" value="xalan:xalan"/>
-        <attribute name="type" value="application/java-archive"/>
-        <attribute name="version" value="2.7.2" type="Version"/>
-      </capability>
-      <capability namespace="bnd.info">
-        <attribute name="name" value="xalan:xalan:2.7.2"/>
-        <attribute name="from" value="xalan:xalan:2.7.2"/>
-      </capability>
-    </resource>
-    <resource>
-      <capability namespace="osgi.content">
         <attribute name="size" value="53186" type="Long"/>
         <attribute name="url" value="file:/Users/dleangen/eclipse/java-mars/Eclipse.app/Contents/MacOS/enroute-distro/org/apache/maven/wagon/wagon-provider-api/1.0-beta-6/wagon-provider-api-1.0-beta-6.jar"/>
         <attribute name="mime" value="vnd.osgi.bundle"/>
@@ -12075,6 +12058,23 @@
       <capability namespace="bnd.info">
         <attribute name="name" value="org.apache.maven.wagon:wagon-provider-api:1.0-beta-6"/>
         <attribute name="from" value="org.apache.maven.wagon:wagon-provider-api:1.0-beta-6"/>
+      </capability>
+    </resource>
+    <resource>
+      <capability namespace="osgi.content">
+        <attribute name="size" value="3154938" type="Long"/>
+        <attribute name="url" value="file:/Users/dleangen/eclipse/java-mars/Eclipse.app/Contents/MacOS/enroute-distro/xalan/xalan/2.7.2/xalan-2.7.2.jar"/>
+        <attribute name="mime" value="vnd.osgi.bundle"/>
+        <attribute name="osgi.content" value="A44BD80E82CB0F4CFAC0DAC8575746223802514E3CEC9DC75235BC0DE646AF14"/>
+      </capability>
+      <capability namespace="osgi.identity">
+        <attribute name="osgi.identity" value="xalan:xalan"/>
+        <attribute name="type" value="application/java-archive"/>
+        <attribute name="version" value="2.7.2" type="Version"/>
+      </capability>
+      <capability namespace="bnd.info">
+        <attribute name="name" value="xalan:xalan:2.7.2"/>
+        <attribute name="from" value="xalan:xalan:2.7.2"/>
       </capability>
     </resource>
     <resource>
@@ -13359,6 +13359,23 @@
       </capability>
     </resource>
     <resource>
+      <capability namespace="osgi.content">
+        <attribute name="size" value="111869" type="Long"/>
+        <attribute name="url" value="file:/Users/dleangen/eclipse/java-mars/Eclipse.app/Contents/MacOS/enroute-distro/nekohtml/nekohtml/1.9.6.2/nekohtml-1.9.6.2.jar"/>
+        <attribute name="mime" value="vnd.osgi.bundle"/>
+        <attribute name="osgi.content" value="FDFF6CFA9ED9CC911C842A5D2395F209EC621EF1239D46810E9E495809D3AE09"/>
+      </capability>
+      <capability namespace="osgi.identity">
+        <attribute name="osgi.identity" value="nekohtml:nekohtml"/>
+        <attribute name="type" value="application/java-archive"/>
+        <attribute name="version" value="1.9.6.2" type="Version"/>
+      </capability>
+      <capability namespace="bnd.info">
+        <attribute name="name" value="nekohtml:nekohtml:1.9.6.2"/>
+        <attribute name="from" value="nekohtml:nekohtml:1.9.6.2"/>
+      </capability>
+    </resource>
+    <resource>
       <capability namespace="osgi.identity">
         <attribute name="license" value="http://www.apache.org/licenses/LICENSE-2.0.txt"/>
         <attribute name="osgi.identity" value="org.apache.commons.codec"/>
@@ -13421,23 +13438,6 @@
     </resource>
     <resource>
       <capability namespace="osgi.content">
-        <attribute name="size" value="111869" type="Long"/>
-        <attribute name="url" value="file:/Users/dleangen/eclipse/java-mars/Eclipse.app/Contents/MacOS/enroute-distro/nekohtml/nekohtml/1.9.6.2/nekohtml-1.9.6.2.jar"/>
-        <attribute name="mime" value="vnd.osgi.bundle"/>
-        <attribute name="osgi.content" value="FDFF6CFA9ED9CC911C842A5D2395F209EC621EF1239D46810E9E495809D3AE09"/>
-      </capability>
-      <capability namespace="osgi.identity">
-        <attribute name="osgi.identity" value="nekohtml:nekohtml"/>
-        <attribute name="type" value="application/java-archive"/>
-        <attribute name="version" value="1.9.6.2" type="Version"/>
-      </capability>
-      <capability namespace="bnd.info">
-        <attribute name="name" value="nekohtml:nekohtml:1.9.6.2"/>
-        <attribute name="from" value="nekohtml:nekohtml:1.9.6.2"/>
-      </capability>
-    </resource>
-    <resource>
-      <capability namespace="osgi.content">
         <attribute name="size" value="1323005" type="Long"/>
         <attribute name="url" value="file:/Users/dleangen/eclipse/java-mars/Eclipse.app/Contents/MacOS/enroute-distro/org/apache/ant/ant/1.7.1/ant-1.7.1.jar"/>
         <attribute name="mime" value="vnd.osgi.bundle"/>
@@ -13451,6 +13451,23 @@
       <capability namespace="bnd.info">
         <attribute name="name" value="org.apache.ant:ant:1.7.1"/>
         <attribute name="from" value="org.apache.ant:ant:1.7.1"/>
+      </capability>
+    </resource>
+    <resource>
+      <capability namespace="osgi.content">
+        <attribute name="size" value="98828" type="Long"/>
+        <attribute name="url" value="file:/Users/dleangen/eclipse/java-mars/Eclipse.app/Contents/MacOS/enroute-distro/org/apache/rat/apache-rat-core/0.6/apache-rat-core-0.6.jar"/>
+        <attribute name="mime" value="vnd.osgi.bundle"/>
+        <attribute name="osgi.content" value="0E2A7EA6DAF92B927DB3C59B2F53392A75D80EA9050609AFBFB41065675D31EB"/>
+      </capability>
+      <capability namespace="osgi.identity">
+        <attribute name="osgi.identity" value="org.apache.rat:apache-rat-core"/>
+        <attribute name="type" value="application/java-archive"/>
+        <attribute name="version" value="0.6.0" type="Version"/>
+      </capability>
+      <capability namespace="bnd.info">
+        <attribute name="name" value="org.apache.rat:apache-rat-core:0.6"/>
+        <attribute name="from" value="org.apache.rat:apache-rat-core:0.6"/>
       </capability>
     </resource>
     <resource>
@@ -13538,23 +13555,6 @@
       <requirement namespace="osgi.wiring.package">
         <directive name="filter" value="(&amp;(osgi.wiring.package=org.eclipse.jetty.websocket.common.io.http)(&amp;(version&gt;=9.0.0)(!(version&gt;=10.0.0))))"/>
       </requirement>
-    </resource>
-    <resource>
-      <capability namespace="osgi.content">
-        <attribute name="size" value="98828" type="Long"/>
-        <attribute name="url" value="file:/Users/dleangen/eclipse/java-mars/Eclipse.app/Contents/MacOS/enroute-distro/org/apache/rat/apache-rat-core/0.6/apache-rat-core-0.6.jar"/>
-        <attribute name="mime" value="vnd.osgi.bundle"/>
-        <attribute name="osgi.content" value="0E2A7EA6DAF92B927DB3C59B2F53392A75D80EA9050609AFBFB41065675D31EB"/>
-      </capability>
-      <capability namespace="osgi.identity">
-        <attribute name="osgi.identity" value="org.apache.rat:apache-rat-core"/>
-        <attribute name="type" value="application/java-archive"/>
-        <attribute name="version" value="0.6.0" type="Version"/>
-      </capability>
-      <capability namespace="bnd.info">
-        <attribute name="name" value="org.apache.rat:apache-rat-core:0.6"/>
-        <attribute name="from" value="org.apache.rat:apache-rat-core:0.6"/>
-      </capability>
     </resource>
     <resource>
       <capability namespace="osgi.content">
@@ -14334,6 +14334,23 @@
       </requirement>
     </resource>
     <resource>
+      <capability namespace="osgi.content">
+        <attribute name="size" value="1367760" type="Long"/>
+        <attribute name="url" value="file:/Users/dleangen/eclipse/java-mars/Eclipse.app/Contents/MacOS/enroute-distro/xerces/xercesImpl/2.11.0/xercesImpl-2.11.0.jar"/>
+        <attribute name="mime" value="vnd.osgi.bundle"/>
+        <attribute name="osgi.content" value="175BBBD9DEF7A22A30E05F9C8DB629C88FA5BDFC57D5658791901B54222ABE1C"/>
+      </capability>
+      <capability namespace="osgi.identity">
+        <attribute name="osgi.identity" value="xerces:xercesImpl"/>
+        <attribute name="type" value="application/java-archive"/>
+        <attribute name="version" value="2.11.0" type="Version"/>
+      </capability>
+      <capability namespace="bnd.info">
+        <attribute name="name" value="xerces:xercesImpl:2.11.0"/>
+        <attribute name="from" value="xerces:xercesImpl:2.11.0"/>
+      </capability>
+    </resource>
+    <resource>
       <capability namespace="osgi.identity">
         <attribute name="license" value="http://www.apache.org/licenses/LICENSE-2.0.txt"/>
         <attribute name="osgi.identity" value="log4j"/>
@@ -14469,23 +14486,6 @@
       <requirement namespace="osgi.wiring.package">
         <directive name="filter" value="(&amp;(osgi.wiring.package=org.xml.sax.helpers))"/>
       </requirement>
-    </resource>
-    <resource>
-      <capability namespace="osgi.content">
-        <attribute name="size" value="1367760" type="Long"/>
-        <attribute name="url" value="file:/Users/dleangen/eclipse/java-mars/Eclipse.app/Contents/MacOS/enroute-distro/xerces/xercesImpl/2.11.0/xercesImpl-2.11.0.jar"/>
-        <attribute name="mime" value="vnd.osgi.bundle"/>
-        <attribute name="osgi.content" value="175BBBD9DEF7A22A30E05F9C8DB629C88FA5BDFC57D5658791901B54222ABE1C"/>
-      </capability>
-      <capability namespace="osgi.identity">
-        <attribute name="osgi.identity" value="xerces:xercesImpl"/>
-        <attribute name="type" value="application/java-archive"/>
-        <attribute name="version" value="2.11.0" type="Version"/>
-      </capability>
-      <capability namespace="bnd.info">
-        <attribute name="name" value="xerces:xercesImpl:2.11.0"/>
-        <attribute name="from" value="xerces:xercesImpl:2.11.0"/>
-      </capability>
     </resource>
     <resource>
       <capability namespace="osgi.identity">
