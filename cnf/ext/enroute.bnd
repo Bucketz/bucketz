@@ -16,7 +16,7 @@ local:					${build}/local
 # If the RELEASE variable is set, it signals that we want to release externally.
 # Otherwise, we only release locally.
 userepo:				${env;REMOTE_RELEASE;}
-repo:					${if;${userepo};"Local,Release";Local}
+repo:					${if;${userepo};Local,Release;Local}
 
 # Nexus Maven Repositories
 nexus.location:			${nexus.base}/repository
