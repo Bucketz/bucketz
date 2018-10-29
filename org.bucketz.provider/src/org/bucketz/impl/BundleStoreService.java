@@ -89,7 +89,7 @@ public class BundleStoreService<D>
     private void initialize( ComponentContext context )
         throws Exception
     {
-        initializeUri( context.getBundleContext().getBundle() );
+        initializeUri( context );
         initializeBuckets();
     }
 
@@ -148,9 +148,16 @@ public class BundleStoreService<D>
     /*
      * The URI does not change, so we can compute the value once upon startup.
      */
-    private void initializeUri( Bundle bundle )
+    private void initializeUri( ComponentContext context )
         throws Exception
     {
+        final Bundle bundle;
+        if (bundleId == -1)
+            // Use this bundle
+            bundle = context.getBundleContext().getBundle();
+        else
+            bundle = context.getBundleContext().getBundle( bundleId );
+
         final URL url = bundle.getEntry( location );
         if (url == null)
             throw new IllegalStateException( String.format( "Could not find entry at %s", location ) );

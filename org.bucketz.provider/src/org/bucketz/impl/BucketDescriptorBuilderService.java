@@ -7,6 +7,9 @@ import java.util.function.Function;
 import org.bucketz.Bucket;
 import org.bucketz.UncheckedBucketException;
 import org.bucketz.store.BucketDescriptor;
+import org.bucketz.store.BucketDescriptor.Builder;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 public class BucketDescriptorBuilderService<D>
     implements BucketDescriptor.Builder<D>
@@ -105,6 +108,21 @@ public class BucketDescriptorBuilderService<D>
     }
 
     @Override
+    public Builder<D> providedBy( Object aBundleService )
+    {
+        if (aBundleService == null)
+            return this;
+
+        final Bundle bundle = FrameworkUtil.getBundle( aBundleService.getClass() );
+        if (bundle != null)
+        {
+            data.bundleId = bundle.getBundleId();
+        }
+
+        return this;
+    }
+
+    @Override
     public BucketDescriptor<D> get()
     {
         validate();
@@ -149,7 +167,8 @@ public class BucketDescriptorBuilderService<D>
         private Bucket.Packaging packaging;
         private String filter;
         private String brn;
-        private String containerName;        
+        private String containerName;  
+        private long bundleId = -1;
     }
 
     public static class DefaultBucketDescriptor<D>
@@ -165,7 +184,8 @@ public class BucketDescriptorBuilderService<D>
         private final Bucket.Packaging packaging;
         private final String filter;
         private final String brn;
-        private final String containerName;        
+        private final String containerName; 
+        private final long bundleId;
 
         public DefaultBucketDescriptor( DescriptorData<D> data )
         {
@@ -180,6 +200,7 @@ public class BucketDescriptorBuilderService<D>
             filter = data.filter;
             brn = data.brn;
             containerName = data.containerName;
+            bundleId = data.bundleId;
         }
 
         @Override
@@ -258,6 +279,15 @@ public class BucketDescriptorBuilderService<D>
         public Optional<String> containerName()
         {
             return Optional.ofNullable( containerName );
+        }
+
+        @Override
+        public Optional<Long> bundleId()
+        {
+            if (bundleId != -1)
+                return Optional.of( bundleId );
+
+            return BucketDescriptor.super.bundleId();
         }
     }
 

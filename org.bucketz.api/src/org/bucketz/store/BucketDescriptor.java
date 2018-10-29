@@ -85,6 +85,11 @@ public interface BucketDescriptor<D>
         return Optional.empty();
     }
 
+    default Optional<Long> bundleId()
+    {
+        return Optional.empty();
+    }
+
     static interface Single<D>
         extends BucketDescriptor<D>
     {
@@ -119,11 +124,16 @@ public interface BucketDescriptor<D>
         Builder<D> setVersion( String aVersion );
         Builder<D> extractIdUsing( Function<D, String> anIdExtractor );
         Builder<D> compareWith( Comparator<D> aComparator );
-        Builder<D> representWith( String aBundleRepresentativeName );
+        Builder<D> representWith( String aBucketRepresentativeName );
         Builder<D> containWith( String aContainerName );
         Builder<D> formatAs( Bucket.Format aFormat );
         Builder<D> packageAs( Bucket.Packaging packaging );
         Builder<D> filterWith( String aFilter );
+        /**
+         * Determine the bundle ID by including some service object that
+         * originates from the data-containing bundle.
+         */
+        Builder<D> providedBy( Object aBundleService );
 
         BucketDescriptor<D> get();
     }
