@@ -58,12 +58,9 @@ public interface BucketNameParser
 
             if (bn.contains( "." ))
             {
-                parts = bn.split( "\\." );
-                if (parts.length != 2)
-                    throw new UncheckedBucketException( String.format( "Could not parse Bucket name %s", aBucketNameAsString ) );
-
-                bp.simpleName = parts[0];
-                bp.format = parts[1].toUpperCase();
+                final int index = bn.lastIndexOf( "." );
+                bp.simpleName = bn.substring( 0, index );
+                bp.format = bn.substring( index + 1 ).toUpperCase();
             }
             else
             {
