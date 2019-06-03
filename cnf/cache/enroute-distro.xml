@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<repository xmlns="http://www.osgi.org/xmlns/repository/v1.0.0" name="enRoute" increment="1559109760673">
+<repository xmlns="http://www.osgi.org/xmlns/repository/v1.0.0" name="enRoute" increment="1559536302780">
   <resource>
     <capability namespace="osgi.identity">
       <attribute name="license" value="http://opensource.org/licenses/apache2.0.php; link=&quot;http://www.apache.org/licenses/LICENSE-2.0&quot;; description=&quot;Apache License, Version 2.0&quot;"/>
@@ -2562,6 +2562,24 @@
     </requirement>
   </resource>
   <resource>
+    <capability namespace="osgi.content">
+      <attribute name="size" value="194354" type="Long"/>
+      <attribute name="url" value="file:/Users/dleangen/eclipse/java-photon/Eclipse.app/Contents/MacOS/enroute-distro/xml-apis/xml-apis/1.3.04/xml-apis-1.3.04.jar"/>
+      <attribute name="mime" value="application/vnd.osgi.bundle"/>
+      <attribute name="osgi.content" value="D404AA881EB9C5F7A4FB546E84EA11506CD417A72B5972E88EFF17F43F9F8A64"/>
+    </capability>
+    <capability namespace="osgi.identity">
+      <attribute name="osgi.identity" value="xml-apis:xml-apis"/>
+      <attribute name="type" value="application/java-archive"/>
+      <attribute name="version" value="1.3.4" type="Version"/>
+    </capability>
+    <capability namespace="bnd.info">
+      <attribute name="name" value="xml-apis:xml-apis:1.3.04"/>
+      <attribute name="from" value="xml-apis:xml-apis:1.3.04"/>
+      <attribute name="version" value="0.0.0" type="Version"/>
+    </capability>
+  </resource>
+  <resource>
     <capability namespace="osgi.identity">
       <attribute name="license" value="http://opensource.org/licenses/EPL-1.0"/>
       <attribute name="osgi.identity" value="osgi.enroute.junit.wrapper"/>
@@ -2818,24 +2836,6 @@
     </requirement>
   </resource>
   <resource>
-    <capability namespace="osgi.content">
-      <attribute name="size" value="194354" type="Long"/>
-      <attribute name="url" value="file:/Users/dleangen/eclipse/java-photon/Eclipse.app/Contents/MacOS/enroute-distro/xml-apis/xml-apis/1.3.04/xml-apis-1.3.04.jar"/>
-      <attribute name="mime" value="application/vnd.osgi.bundle"/>
-      <attribute name="osgi.content" value="D404AA881EB9C5F7A4FB546E84EA11506CD417A72B5972E88EFF17F43F9F8A64"/>
-    </capability>
-    <capability namespace="osgi.identity">
-      <attribute name="osgi.identity" value="xml-apis:xml-apis"/>
-      <attribute name="type" value="application/java-archive"/>
-      <attribute name="version" value="1.3.4" type="Version"/>
-    </capability>
-    <capability namespace="bnd.info">
-      <attribute name="name" value="xml-apis:xml-apis:1.3.04"/>
-      <attribute name="from" value="xml-apis:xml-apis:1.3.04"/>
-      <attribute name="version" value="0.0.0" type="Version"/>
-    </capability>
-  </resource>
-  <resource>
     <capability namespace="osgi.identity">
       <attribute name="license" value="http://opensource.org/licenses/MIT;link = &quot;http://en.wikipedia.org/wiki/MIT_License&quot;;description = &quot;MIT License&quot;"/>
       <attribute name="osgi.identity" value="osgi.enroute.github.angular-ui.webresource"/>
@@ -2873,6 +2873,86 @@
     </capability>
     <requirement namespace="osgi.ee">
       <directive name="filter" value="(&amp;(osgi.ee=JavaSE)(version=1.8))"/>
+    </requirement>
+  </resource>
+  <resource>
+    <capability namespace="osgi.identity">
+      <attribute name="license" value="http://www.apache.org/licenses/LICENSE-2.0.txt"/>
+      <attribute name="osgi.identity" value="org.apache.felix.http.base"/>
+      <attribute name="type" value="osgi.bundle"/>
+      <attribute name="version" value="3.0.8" type="Version"/>
+      <attribute name="documentation" value="http://www.apache.org/"/>
+    </capability>
+    <capability namespace="osgi.wiring.bundle">
+      <attribute name="bundle-version" value="3.0.8" type="Version"/>
+      <attribute name="osgi.wiring.bundle" value="org.apache.felix.http.base"/>
+    </capability>
+    <capability namespace="osgi.wiring.host">
+      <attribute name="bundle-version" value="3.0.8" type="Version"/>
+      <attribute name="osgi.wiring.host" value="org.apache.felix.http.base"/>
+    </capability>
+    <capability namespace="osgi.content">
+      <attribute name="size" value="230591" type="Long"/>
+      <attribute name="url" value="file:/Users/dleangen/eclipse/java-photon/Eclipse.app/Contents/MacOS/enroute-distro/org/apache/felix/org.apache.felix.http.base/3.0.8/org.apache.felix.http.base-3.0.8.jar"/>
+      <attribute name="mime" value="application/vnd.osgi.bundle"/>
+      <attribute name="osgi.content" value="ABE041C0FE27FC0BF1F52C73E3645D96723976770ADD6A8BC920A8708BC16FBA"/>
+    </capability>
+    <capability namespace="bnd.info">
+      <attribute name="name" value="org.apache.felix:org.apache.felix.http.base:3.0.8"/>
+      <attribute name="from" value="org.apache.felix:org.apache.felix.http.base:3.0.8"/>
+      <attribute name="version" value="0.0.0" type="Version"/>
+    </capability>
+    <requirement namespace="osgi.wiring.package">
+      <directive name="filter" value="(&amp;(osgi.wiring.package=org.osgi.service.http)(&amp;(version&gt;=1.2.0)(!(version&gt;=1.3.0))))"/>
+    </requirement>
+    <requirement namespace="osgi.wiring.package">
+      <directive name="filter" value="(&amp;(osgi.wiring.package=org.osgi.service.http.context)(&amp;(version&gt;=1.0.0)(!(version&gt;=1.1.0))))"/>
+    </requirement>
+    <requirement namespace="osgi.wiring.package">
+      <directive name="filter" value="(&amp;(osgi.wiring.package=org.osgi.service.http.runtime)(&amp;(version&gt;=1.0.0)(!(version&gt;=1.1.0))))"/>
+    </requirement>
+    <requirement namespace="osgi.wiring.package">
+      <directive name="filter" value="(&amp;(osgi.wiring.package=org.osgi.service.http.runtime.dto)(&amp;(version&gt;=1.0.0)(!(version&gt;=1.1.0))))"/>
+    </requirement>
+    <requirement namespace="osgi.wiring.package">
+      <directive name="filter" value="(&amp;(osgi.wiring.package=org.osgi.service.useradmin)(&amp;(version&gt;=1.1.0)(!(version&gt;=2.0.0))))"/>
+      <directive name="resolution" value="optional"/>
+    </requirement>
+    <requirement namespace="osgi.wiring.package">
+      <directive name="filter" value="(&amp;(osgi.wiring.package=javax.annotation))"/>
+    </requirement>
+    <requirement namespace="osgi.wiring.package">
+      <directive name="filter" value="(&amp;(osgi.wiring.package=javax.servlet)(&amp;(version&gt;=3.1.0)(!(version&gt;=4.0.0))))"/>
+    </requirement>
+    <requirement namespace="osgi.wiring.package">
+      <directive name="filter" value="(&amp;(osgi.wiring.package=javax.servlet.descriptor)(&amp;(version&gt;=3.1.0)(!(version&gt;=4.0.0))))"/>
+    </requirement>
+    <requirement namespace="osgi.wiring.package">
+      <directive name="filter" value="(&amp;(osgi.wiring.package=javax.servlet.http)(&amp;(version&gt;=3.1.0)(!(version&gt;=4.0.0))))"/>
+    </requirement>
+    <requirement namespace="osgi.wiring.package">
+      <directive name="filter" value="(&amp;(osgi.wiring.package=org.apache.felix.http.api)(&amp;(version&gt;=2.0.0)(!(version&gt;=3.0.0))))"/>
+    </requirement>
+    <requirement namespace="osgi.wiring.package">
+      <directive name="filter" value="(&amp;(osgi.wiring.package=org.osgi.dto)(&amp;(version&gt;=1.0.0)(!(version&gt;=2.0.0))))"/>
+    </requirement>
+    <requirement namespace="osgi.wiring.package">
+      <directive name="filter" value="(&amp;(osgi.wiring.package=org.osgi.framework)(&amp;(version&gt;=1.8.0)(!(version&gt;=2.0.0))))"/>
+    </requirement>
+    <requirement namespace="osgi.wiring.package">
+      <directive name="filter" value="(&amp;(osgi.wiring.package=org.osgi.framework.dto)(&amp;(version&gt;=1.8.0)(!(version&gt;=2.0.0))))"/>
+    </requirement>
+    <requirement namespace="osgi.wiring.package">
+      <directive name="filter" value="(&amp;(osgi.wiring.package=org.osgi.framework.wiring)(&amp;(version&gt;=1.2.0)(!(version&gt;=2.0.0))))"/>
+    </requirement>
+    <requirement namespace="osgi.wiring.package">
+      <directive name="filter" value="(&amp;(osgi.wiring.package=org.osgi.service.log)(&amp;(version&gt;=1.3.0)(!(version&gt;=2.0.0))))"/>
+    </requirement>
+    <requirement namespace="osgi.wiring.package">
+      <directive name="filter" value="(&amp;(osgi.wiring.package=org.osgi.util.tracker)(&amp;(version&gt;=1.5.0)(!(version&gt;=2.0.0))))"/>
+    </requirement>
+    <requirement namespace="osgi.ee">
+      <directive name="filter" value="(&amp;(osgi.ee=JavaSE)(version=1.6))"/>
     </requirement>
   </resource>
   <resource>
@@ -2964,122 +3044,6 @@
   </resource>
   <resource>
     <capability namespace="osgi.identity">
-      <attribute name="license" value="http://www.apache.org/licenses/LICENSE-2.0.txt"/>
-      <attribute name="osgi.identity" value="org.apache.felix.http.base"/>
-      <attribute name="type" value="osgi.bundle"/>
-      <attribute name="version" value="3.0.8" type="Version"/>
-      <attribute name="documentation" value="http://www.apache.org/"/>
-    </capability>
-    <capability namespace="osgi.wiring.bundle">
-      <attribute name="bundle-version" value="3.0.8" type="Version"/>
-      <attribute name="osgi.wiring.bundle" value="org.apache.felix.http.base"/>
-    </capability>
-    <capability namespace="osgi.wiring.host">
-      <attribute name="bundle-version" value="3.0.8" type="Version"/>
-      <attribute name="osgi.wiring.host" value="org.apache.felix.http.base"/>
-    </capability>
-    <capability namespace="osgi.content">
-      <attribute name="size" value="230591" type="Long"/>
-      <attribute name="url" value="file:/Users/dleangen/eclipse/java-photon/Eclipse.app/Contents/MacOS/enroute-distro/org/apache/felix/org.apache.felix.http.base/3.0.8/org.apache.felix.http.base-3.0.8.jar"/>
-      <attribute name="mime" value="application/vnd.osgi.bundle"/>
-      <attribute name="osgi.content" value="ABE041C0FE27FC0BF1F52C73E3645D96723976770ADD6A8BC920A8708BC16FBA"/>
-    </capability>
-    <capability namespace="bnd.info">
-      <attribute name="name" value="org.apache.felix:org.apache.felix.http.base:3.0.8"/>
-      <attribute name="from" value="org.apache.felix:org.apache.felix.http.base:3.0.8"/>
-      <attribute name="version" value="0.0.0" type="Version"/>
-    </capability>
-    <requirement namespace="osgi.wiring.package">
-      <directive name="filter" value="(&amp;(osgi.wiring.package=org.osgi.service.http)(&amp;(version&gt;=1.2.0)(!(version&gt;=1.3.0))))"/>
-    </requirement>
-    <requirement namespace="osgi.wiring.package">
-      <directive name="filter" value="(&amp;(osgi.wiring.package=org.osgi.service.http.context)(&amp;(version&gt;=1.0.0)(!(version&gt;=1.1.0))))"/>
-    </requirement>
-    <requirement namespace="osgi.wiring.package">
-      <directive name="filter" value="(&amp;(osgi.wiring.package=org.osgi.service.http.runtime)(&amp;(version&gt;=1.0.0)(!(version&gt;=1.1.0))))"/>
-    </requirement>
-    <requirement namespace="osgi.wiring.package">
-      <directive name="filter" value="(&amp;(osgi.wiring.package=org.osgi.service.http.runtime.dto)(&amp;(version&gt;=1.0.0)(!(version&gt;=1.1.0))))"/>
-    </requirement>
-    <requirement namespace="osgi.wiring.package">
-      <directive name="filter" value="(&amp;(osgi.wiring.package=org.osgi.service.useradmin)(&amp;(version&gt;=1.1.0)(!(version&gt;=2.0.0))))"/>
-      <directive name="resolution" value="optional"/>
-    </requirement>
-    <requirement namespace="osgi.wiring.package">
-      <directive name="filter" value="(&amp;(osgi.wiring.package=javax.annotation))"/>
-    </requirement>
-    <requirement namespace="osgi.wiring.package">
-      <directive name="filter" value="(&amp;(osgi.wiring.package=javax.servlet)(&amp;(version&gt;=3.1.0)(!(version&gt;=4.0.0))))"/>
-    </requirement>
-    <requirement namespace="osgi.wiring.package">
-      <directive name="filter" value="(&amp;(osgi.wiring.package=javax.servlet.descriptor)(&amp;(version&gt;=3.1.0)(!(version&gt;=4.0.0))))"/>
-    </requirement>
-    <requirement namespace="osgi.wiring.package">
-      <directive name="filter" value="(&amp;(osgi.wiring.package=javax.servlet.http)(&amp;(version&gt;=3.1.0)(!(version&gt;=4.0.0))))"/>
-    </requirement>
-    <requirement namespace="osgi.wiring.package">
-      <directive name="filter" value="(&amp;(osgi.wiring.package=org.apache.felix.http.api)(&amp;(version&gt;=2.0.0)(!(version&gt;=3.0.0))))"/>
-    </requirement>
-    <requirement namespace="osgi.wiring.package">
-      <directive name="filter" value="(&amp;(osgi.wiring.package=org.osgi.dto)(&amp;(version&gt;=1.0.0)(!(version&gt;=2.0.0))))"/>
-    </requirement>
-    <requirement namespace="osgi.wiring.package">
-      <directive name="filter" value="(&amp;(osgi.wiring.package=org.osgi.framework)(&amp;(version&gt;=1.8.0)(!(version&gt;=2.0.0))))"/>
-    </requirement>
-    <requirement namespace="osgi.wiring.package">
-      <directive name="filter" value="(&amp;(osgi.wiring.package=org.osgi.framework.dto)(&amp;(version&gt;=1.8.0)(!(version&gt;=2.0.0))))"/>
-    </requirement>
-    <requirement namespace="osgi.wiring.package">
-      <directive name="filter" value="(&amp;(osgi.wiring.package=org.osgi.framework.wiring)(&amp;(version&gt;=1.2.0)(!(version&gt;=2.0.0))))"/>
-    </requirement>
-    <requirement namespace="osgi.wiring.package">
-      <directive name="filter" value="(&amp;(osgi.wiring.package=org.osgi.service.log)(&amp;(version&gt;=1.3.0)(!(version&gt;=2.0.0))))"/>
-    </requirement>
-    <requirement namespace="osgi.wiring.package">
-      <directive name="filter" value="(&amp;(osgi.wiring.package=org.osgi.util.tracker)(&amp;(version&gt;=1.5.0)(!(version&gt;=2.0.0))))"/>
-    </requirement>
-    <requirement namespace="osgi.ee">
-      <directive name="filter" value="(&amp;(osgi.ee=JavaSE)(version=1.6))"/>
-    </requirement>
-  </resource>
-  <resource>
-    <capability namespace="osgi.content">
-      <attribute name="size" value="87325" type="Long"/>
-      <attribute name="url" value="file:/Users/dleangen/eclipse/java-photon/Eclipse.app/Contents/MacOS/enroute-distro/jline/jline/0.9.94/jline-0.9.94.jar"/>
-      <attribute name="mime" value="application/vnd.osgi.bundle"/>
-      <attribute name="osgi.content" value="D8DF0FFB12D87CA876271CDA4D59B3FEB94123882C1BE1763B7FAF2E0A0B0CBB"/>
-    </capability>
-    <capability namespace="osgi.identity">
-      <attribute name="osgi.identity" value="jline:jline"/>
-      <attribute name="type" value="application/java-archive"/>
-      <attribute name="version" value="0.9.94" type="Version"/>
-    </capability>
-    <capability namespace="bnd.info">
-      <attribute name="name" value="jline:jline:0.9.94"/>
-      <attribute name="from" value="jline:jline:0.9.94"/>
-      <attribute name="version" value="0.0.0" type="Version"/>
-    </capability>
-  </resource>
-  <resource>
-    <capability namespace="osgi.content">
-      <attribute name="size" value="16369" type="Long"/>
-      <attribute name="url" value="file:/Users/dleangen/eclipse/java-photon/Eclipse.app/Contents/MacOS/enroute-distro/org/apache/rat/apache-rat-tasks/0.6/apache-rat-tasks-0.6.jar"/>
-      <attribute name="mime" value="application/vnd.osgi.bundle"/>
-      <attribute name="osgi.content" value="5B7C0CDC6CFBA06AE4A41787CDE8D04EDDD23D7AB692E5EE61727E75832F51AA"/>
-    </capability>
-    <capability namespace="osgi.identity">
-      <attribute name="osgi.identity" value="org.apache.rat:apache-rat-tasks"/>
-      <attribute name="type" value="application/java-archive"/>
-      <attribute name="version" value="0.6.0" type="Version"/>
-    </capability>
-    <capability namespace="bnd.info">
-      <attribute name="name" value="org.apache.rat:apache-rat-tasks:0.6"/>
-      <attribute name="from" value="org.apache.rat:apache-rat-tasks:0.6"/>
-      <attribute name="version" value="0.0.0" type="Version"/>
-    </capability>
-  </resource>
-  <resource>
-    <capability namespace="osgi.identity">
       <attribute name="license" value="http://www.apache.org/licenses/LICENSE-2.0, http://www.eclipse.org/org/documents/epl-v10.php"/>
       <attribute name="osgi.identity" value="org.eclipse.jetty.io"/>
       <attribute name="type" value="osgi.bundle"/>
@@ -3136,6 +3100,42 @@
     <requirement namespace="osgi.wiring.package">
       <directive name="filter" value="(&amp;(osgi.wiring.package=org.eclipse.jetty.util.thread)(&amp;(version&gt;=9.2.0)(!(version&gt;=10.0.0))))"/>
     </requirement>
+  </resource>
+  <resource>
+    <capability namespace="osgi.content">
+      <attribute name="size" value="87325" type="Long"/>
+      <attribute name="url" value="file:/Users/dleangen/eclipse/java-photon/Eclipse.app/Contents/MacOS/enroute-distro/jline/jline/0.9.94/jline-0.9.94.jar"/>
+      <attribute name="mime" value="application/vnd.osgi.bundle"/>
+      <attribute name="osgi.content" value="D8DF0FFB12D87CA876271CDA4D59B3FEB94123882C1BE1763B7FAF2E0A0B0CBB"/>
+    </capability>
+    <capability namespace="osgi.identity">
+      <attribute name="osgi.identity" value="jline:jline"/>
+      <attribute name="type" value="application/java-archive"/>
+      <attribute name="version" value="0.9.94" type="Version"/>
+    </capability>
+    <capability namespace="bnd.info">
+      <attribute name="name" value="jline:jline:0.9.94"/>
+      <attribute name="from" value="jline:jline:0.9.94"/>
+      <attribute name="version" value="0.0.0" type="Version"/>
+    </capability>
+  </resource>
+  <resource>
+    <capability namespace="osgi.content">
+      <attribute name="size" value="16369" type="Long"/>
+      <attribute name="url" value="file:/Users/dleangen/eclipse/java-photon/Eclipse.app/Contents/MacOS/enroute-distro/org/apache/rat/apache-rat-tasks/0.6/apache-rat-tasks-0.6.jar"/>
+      <attribute name="mime" value="application/vnd.osgi.bundle"/>
+      <attribute name="osgi.content" value="5B7C0CDC6CFBA06AE4A41787CDE8D04EDDD23D7AB692E5EE61727E75832F51AA"/>
+    </capability>
+    <capability namespace="osgi.identity">
+      <attribute name="osgi.identity" value="org.apache.rat:apache-rat-tasks"/>
+      <attribute name="type" value="application/java-archive"/>
+      <attribute name="version" value="0.6.0" type="Version"/>
+    </capability>
+    <capability namespace="bnd.info">
+      <attribute name="name" value="org.apache.rat:apache-rat-tasks:0.6"/>
+      <attribute name="from" value="org.apache.rat:apache-rat-tasks:0.6"/>
+      <attribute name="version" value="0.0.0" type="Version"/>
+    </capability>
   </resource>
   <resource>
     <capability namespace="osgi.identity">
@@ -5603,60 +5603,6 @@
   </resource>
   <resource>
     <capability namespace="osgi.identity">
-      <attribute name="osgi.identity" value="org.eclipse.equinox.event"/>
-      <attribute name="type" value="osgi.bundle"/>
-      <attribute name="version" value="1.3.100.v20140115-1647" type="Version"/>
-    </capability>
-    <capability namespace="osgi.wiring.bundle">
-      <attribute name="bundle-version" value="1.3.100.v20140115-1647" type="Version"/>
-      <attribute name="osgi.wiring.bundle" value="org.eclipse.equinox.event"/>
-    </capability>
-    <capability namespace="osgi.wiring.host">
-      <attribute name="bundle-version" value="1.3.100.v20140115-1647" type="Version"/>
-      <attribute name="osgi.wiring.host" value="org.eclipse.equinox.event"/>
-    </capability>
-    <capability namespace="osgi.wiring.package">
-      <directive name="x-internal" value="true"/>
-      <attribute name="version" value="0.0.0" type="Version"/>
-      <attribute name="osgi.wiring.package" value="org.eclipse.equinox.internal.event"/>
-    </capability>
-    <capability namespace="osgi.wiring.package">
-      <directive name="x-internal" value="true"/>
-      <attribute name="version" value="0.0.0" type="Version"/>
-      <attribute name="osgi.wiring.package" value="org.eclipse.equinox.internal.event.mapper"/>
-    </capability>
-    <capability namespace="osgi.content">
-      <attribute name="size" value="26463" type="Long"/>
-      <attribute name="url" value="file:/Users/dleangen/eclipse/java-photon/Eclipse.app/Contents/MacOS/enroute-distro/org/osgi/org.eclipse.equinox.event/1.3.100.v20140115-1647/org.eclipse.equinox.event-1.3.100.v20140115-1647.jar"/>
-      <attribute name="mime" value="application/vnd.osgi.bundle"/>
-      <attribute name="osgi.content" value="B39F244054B46828850128FC8231AF892A89F50FC35281A0FF3F19135D00E376"/>
-    </capability>
-    <capability namespace="bnd.info">
-      <attribute name="name" value="org.osgi:org.eclipse.equinox.event:1.3.100.v20140115-1647"/>
-      <attribute name="from" value="org.osgi:org.eclipse.equinox.event:1.3.100.v20140115-1647"/>
-      <attribute name="version" value="0.0.0" type="Version"/>
-    </capability>
-    <requirement namespace="osgi.wiring.package">
-      <directive name="filter" value="(&amp;(osgi.wiring.package=org.eclipse.osgi.framework.eventmgr)(version&gt;=1.1.0))"/>
-    </requirement>
-    <requirement namespace="osgi.wiring.package">
-      <directive name="filter" value="(&amp;(osgi.wiring.package=org.eclipse.osgi.util)(version&gt;=1.1.0))"/>
-    </requirement>
-    <requirement namespace="osgi.wiring.package">
-      <directive name="filter" value="(&amp;(osgi.wiring.package=org.osgi.framework)(version&gt;=1.6.0))"/>
-    </requirement>
-    <requirement namespace="osgi.wiring.package">
-      <directive name="filter" value="(&amp;(osgi.wiring.package=org.osgi.service.event)(&amp;(version&gt;=1.3.0)(!(version&gt;=1.4.0))))"/>
-    </requirement>
-    <requirement namespace="osgi.wiring.package">
-      <directive name="filter" value="(&amp;(osgi.wiring.package=org.osgi.service.log)(version&gt;=1.3.0))"/>
-    </requirement>
-    <requirement namespace="osgi.wiring.package">
-      <directive name="filter" value="(&amp;(osgi.wiring.package=org.osgi.util.tracker)(version&gt;=1.5.0))"/>
-    </requirement>
-  </resource>
-  <resource>
-    <capability namespace="osgi.identity">
       <attribute name="license" value="http://www.apache.org/licenses/LICENSE-2.0, http://www.eclipse.org/org/documents/epl-v10.php"/>
       <attribute name="osgi.identity" value="org.eclipse.jetty.io"/>
       <attribute name="type" value="osgi.bundle"/>
@@ -5712,6 +5658,60 @@
     </requirement>
     <requirement namespace="osgi.ee">
       <directive name="filter" value="(&amp;(osgi.ee=JavaSE)(version=1.8))"/>
+    </requirement>
+  </resource>
+  <resource>
+    <capability namespace="osgi.identity">
+      <attribute name="osgi.identity" value="org.eclipse.equinox.event"/>
+      <attribute name="type" value="osgi.bundle"/>
+      <attribute name="version" value="1.3.100.v20140115-1647" type="Version"/>
+    </capability>
+    <capability namespace="osgi.wiring.bundle">
+      <attribute name="bundle-version" value="1.3.100.v20140115-1647" type="Version"/>
+      <attribute name="osgi.wiring.bundle" value="org.eclipse.equinox.event"/>
+    </capability>
+    <capability namespace="osgi.wiring.host">
+      <attribute name="bundle-version" value="1.3.100.v20140115-1647" type="Version"/>
+      <attribute name="osgi.wiring.host" value="org.eclipse.equinox.event"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <directive name="x-internal" value="true"/>
+      <attribute name="version" value="0.0.0" type="Version"/>
+      <attribute name="osgi.wiring.package" value="org.eclipse.equinox.internal.event"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <directive name="x-internal" value="true"/>
+      <attribute name="version" value="0.0.0" type="Version"/>
+      <attribute name="osgi.wiring.package" value="org.eclipse.equinox.internal.event.mapper"/>
+    </capability>
+    <capability namespace="osgi.content">
+      <attribute name="size" value="26463" type="Long"/>
+      <attribute name="url" value="file:/Users/dleangen/eclipse/java-photon/Eclipse.app/Contents/MacOS/enroute-distro/org/osgi/org.eclipse.equinox.event/1.3.100.v20140115-1647/org.eclipse.equinox.event-1.3.100.v20140115-1647.jar"/>
+      <attribute name="mime" value="application/vnd.osgi.bundle"/>
+      <attribute name="osgi.content" value="B39F244054B46828850128FC8231AF892A89F50FC35281A0FF3F19135D00E376"/>
+    </capability>
+    <capability namespace="bnd.info">
+      <attribute name="name" value="org.osgi:org.eclipse.equinox.event:1.3.100.v20140115-1647"/>
+      <attribute name="from" value="org.osgi:org.eclipse.equinox.event:1.3.100.v20140115-1647"/>
+      <attribute name="version" value="0.0.0" type="Version"/>
+    </capability>
+    <requirement namespace="osgi.wiring.package">
+      <directive name="filter" value="(&amp;(osgi.wiring.package=org.eclipse.osgi.framework.eventmgr)(version&gt;=1.1.0))"/>
+    </requirement>
+    <requirement namespace="osgi.wiring.package">
+      <directive name="filter" value="(&amp;(osgi.wiring.package=org.eclipse.osgi.util)(version&gt;=1.1.0))"/>
+    </requirement>
+    <requirement namespace="osgi.wiring.package">
+      <directive name="filter" value="(&amp;(osgi.wiring.package=org.osgi.framework)(version&gt;=1.6.0))"/>
+    </requirement>
+    <requirement namespace="osgi.wiring.package">
+      <directive name="filter" value="(&amp;(osgi.wiring.package=org.osgi.service.event)(&amp;(version&gt;=1.3.0)(!(version&gt;=1.4.0))))"/>
+    </requirement>
+    <requirement namespace="osgi.wiring.package">
+      <directive name="filter" value="(&amp;(osgi.wiring.package=org.osgi.service.log)(version&gt;=1.3.0))"/>
+    </requirement>
+    <requirement namespace="osgi.wiring.package">
+      <directive name="filter" value="(&amp;(osgi.wiring.package=org.osgi.util.tracker)(version&gt;=1.5.0))"/>
     </requirement>
   </resource>
   <resource>
@@ -5902,24 +5902,6 @@
     </capability>
   </resource>
   <resource>
-    <capability namespace="osgi.content">
-      <attribute name="size" value="60047" type="Long"/>
-      <attribute name="url" value="file:/Users/dleangen/eclipse/java-photon/Eclipse.app/Contents/MacOS/enroute-distro/xml-resolver/xml-resolver/1.1/xml-resolver-1.1.jar"/>
-      <attribute name="mime" value="application/vnd.osgi.bundle"/>
-      <attribute name="osgi.content" value="CD722B46A9CA4BF820867A15BB465BA3E8BB17608AECC1CDFEA9D1706E3DCFD7"/>
-    </capability>
-    <capability namespace="osgi.identity">
-      <attribute name="osgi.identity" value="xml-resolver:xml-resolver"/>
-      <attribute name="type" value="application/java-archive"/>
-      <attribute name="version" value="1.1.0" type="Version"/>
-    </capability>
-    <capability namespace="bnd.info">
-      <attribute name="name" value="xml-resolver:xml-resolver:1.1"/>
-      <attribute name="from" value="xml-resolver:xml-resolver:1.1"/>
-      <attribute name="version" value="0.0.0" type="Version"/>
-    </capability>
-  </resource>
-  <resource>
     <capability namespace="osgi.identity">
       <attribute name="license" value="http://www.apache.org/licenses/LICENSE-2.0, http://www.eclipse.org/org/documents/epl-v10.php"/>
       <attribute name="osgi.identity" value="org.eclipse.jetty.util"/>
@@ -6026,6 +6008,24 @@
       <directive name="filter" value="(&amp;(osgi.wiring.package=org.slf4j.spi)(&amp;(version&gt;=1.6.0)(!(version&gt;=2.0.0))))"/>
       <directive name="resolution" value="optional"/>
     </requirement>
+  </resource>
+  <resource>
+    <capability namespace="osgi.content">
+      <attribute name="size" value="60047" type="Long"/>
+      <attribute name="url" value="file:/Users/dleangen/eclipse/java-photon/Eclipse.app/Contents/MacOS/enroute-distro/xml-resolver/xml-resolver/1.1/xml-resolver-1.1.jar"/>
+      <attribute name="mime" value="application/vnd.osgi.bundle"/>
+      <attribute name="osgi.content" value="CD722B46A9CA4BF820867A15BB465BA3E8BB17608AECC1CDFEA9D1706E3DCFD7"/>
+    </capability>
+    <capability namespace="osgi.identity">
+      <attribute name="osgi.identity" value="xml-resolver:xml-resolver"/>
+      <attribute name="type" value="application/java-archive"/>
+      <attribute name="version" value="1.1.0" type="Version"/>
+    </capability>
+    <capability namespace="bnd.info">
+      <attribute name="name" value="xml-resolver:xml-resolver:1.1"/>
+      <attribute name="from" value="xml-resolver:xml-resolver:1.1"/>
+      <attribute name="version" value="0.0.0" type="Version"/>
+    </capability>
   </resource>
   <resource>
     <capability namespace="osgi.identity">
@@ -7004,24 +7004,6 @@
   </resource>
   <resource>
     <capability namespace="osgi.content">
-      <attribute name="size" value="14839" type="Long"/>
-      <attribute name="url" value="file:/Users/dleangen/eclipse/java-photon/Eclipse.app/Contents/MacOS/enroute-distro/org/apache/maven/wagon/wagon-http-lightweight/1.0-beta-6/wagon-http-lightweight-1.0-beta-6.jar"/>
-      <attribute name="mime" value="application/vnd.osgi.bundle"/>
-      <attribute name="osgi.content" value="BE214032DE23C6B520B79C1CCDB160948E0C67ED7C11984B7EC4CA5537867B4E"/>
-    </capability>
-    <capability namespace="osgi.identity">
-      <attribute name="osgi.identity" value="org.apache.maven.wagon:wagon-http-lightweight"/>
-      <attribute name="type" value="application/java-archive"/>
-      <attribute name="version" value="1.0.0.beta-6" type="Version"/>
-    </capability>
-    <capability namespace="bnd.info">
-      <attribute name="name" value="org.apache.maven.wagon:wagon-http-lightweight:1.0-beta-6"/>
-      <attribute name="from" value="org.apache.maven.wagon:wagon-http-lightweight:1.0-beta-6"/>
-      <attribute name="version" value="0.0.0" type="Version"/>
-    </capability>
-  </resource>
-  <resource>
-    <capability namespace="osgi.content">
       <attribute name="size" value="276420" type="Long"/>
       <attribute name="url" value="file:/Users/dleangen/eclipse/java-photon/Eclipse.app/Contents/MacOS/enroute-distro/xalan/serializer/2.7.2/serializer-2.7.2.jar"/>
       <attribute name="mime" value="application/vnd.osgi.bundle"/>
@@ -7035,6 +7017,24 @@
     <capability namespace="bnd.info">
       <attribute name="name" value="xalan:serializer:2.7.2"/>
       <attribute name="from" value="xalan:serializer:2.7.2"/>
+      <attribute name="version" value="0.0.0" type="Version"/>
+    </capability>
+  </resource>
+  <resource>
+    <capability namespace="osgi.content">
+      <attribute name="size" value="14839" type="Long"/>
+      <attribute name="url" value="file:/Users/dleangen/eclipse/java-photon/Eclipse.app/Contents/MacOS/enroute-distro/org/apache/maven/wagon/wagon-http-lightweight/1.0-beta-6/wagon-http-lightweight-1.0-beta-6.jar"/>
+      <attribute name="mime" value="application/vnd.osgi.bundle"/>
+      <attribute name="osgi.content" value="BE214032DE23C6B520B79C1CCDB160948E0C67ED7C11984B7EC4CA5537867B4E"/>
+    </capability>
+    <capability namespace="osgi.identity">
+      <attribute name="osgi.identity" value="org.apache.maven.wagon:wagon-http-lightweight"/>
+      <attribute name="type" value="application/java-archive"/>
+      <attribute name="version" value="1.0.0.beta-6" type="Version"/>
+    </capability>
+    <capability namespace="bnd.info">
+      <attribute name="name" value="org.apache.maven.wagon:wagon-http-lightweight:1.0-beta-6"/>
+      <attribute name="from" value="org.apache.maven.wagon:wagon-http-lightweight:1.0-beta-6"/>
       <attribute name="version" value="0.0.0" type="Version"/>
     </capability>
   </resource>
@@ -8507,24 +8507,6 @@
   </resource>
   <resource>
     <capability namespace="osgi.content">
-      <attribute name="size" value="228110" type="Long"/>
-      <attribute name="url" value="file:/Users/dleangen/eclipse/java-photon/Eclipse.app/Contents/MacOS/enroute-distro/org/codehaus/plexus/plexus-utils/1.5.15/plexus-utils-1.5.15.jar"/>
-      <attribute name="mime" value="application/vnd.osgi.bundle"/>
-      <attribute name="osgi.content" value="2CA121831E597B4D8F2CB22D17C5C041FC23A7777CEB6BFBDD4DFB34BBE7D997"/>
-    </capability>
-    <capability namespace="osgi.identity">
-      <attribute name="osgi.identity" value="org.codehaus.plexus:plexus-utils"/>
-      <attribute name="type" value="application/java-archive"/>
-      <attribute name="version" value="1.5.15" type="Version"/>
-    </capability>
-    <capability namespace="bnd.info">
-      <attribute name="name" value="org.codehaus.plexus:plexus-utils:1.5.15"/>
-      <attribute name="from" value="org.codehaus.plexus:plexus-utils:1.5.15"/>
-      <attribute name="version" value="0.0.0" type="Version"/>
-    </capability>
-  </resource>
-  <resource>
-    <capability namespace="osgi.content">
       <attribute name="size" value="220536" type="Long"/>
       <attribute name="url" value="file:/Users/dleangen/eclipse/java-photon/Eclipse.app/Contents/MacOS/enroute-distro/xml-apis/xml-apis/1.4.01/xml-apis-1.4.01.jar"/>
       <attribute name="mime" value="application/vnd.osgi.bundle"/>
@@ -8538,6 +8520,24 @@
     <capability namespace="bnd.info">
       <attribute name="name" value="xml-apis:xml-apis:1.4.01"/>
       <attribute name="from" value="xml-apis:xml-apis:1.4.01"/>
+      <attribute name="version" value="0.0.0" type="Version"/>
+    </capability>
+  </resource>
+  <resource>
+    <capability namespace="osgi.content">
+      <attribute name="size" value="228110" type="Long"/>
+      <attribute name="url" value="file:/Users/dleangen/eclipse/java-photon/Eclipse.app/Contents/MacOS/enroute-distro/org/codehaus/plexus/plexus-utils/1.5.15/plexus-utils-1.5.15.jar"/>
+      <attribute name="mime" value="application/vnd.osgi.bundle"/>
+      <attribute name="osgi.content" value="2CA121831E597B4D8F2CB22D17C5C041FC23A7777CEB6BFBDD4DFB34BBE7D997"/>
+    </capability>
+    <capability namespace="osgi.identity">
+      <attribute name="osgi.identity" value="org.codehaus.plexus:plexus-utils"/>
+      <attribute name="type" value="application/java-archive"/>
+      <attribute name="version" value="1.5.15" type="Version"/>
+    </capability>
+    <capability namespace="bnd.info">
+      <attribute name="name" value="org.codehaus.plexus:plexus-utils:1.5.15"/>
+      <attribute name="from" value="org.codehaus.plexus:plexus-utils:1.5.15"/>
       <attribute name="version" value="0.0.0" type="Version"/>
     </capability>
   </resource>
@@ -8679,24 +8679,6 @@
     </capability>
   </resource>
   <resource>
-    <capability namespace="osgi.content">
-      <attribute name="size" value="65777" type="Long"/>
-      <attribute name="url" value="file:/Users/dleangen/eclipse/java-photon/Eclipse.app/Contents/MacOS/enroute-distro/org/apache/maven/maven-artifact-manager/2.1.0/maven-artifact-manager-2.1.0.jar"/>
-      <attribute name="mime" value="application/vnd.osgi.bundle"/>
-      <attribute name="osgi.content" value="C5A234610C68D13E6D2EFEAD2BCB12A21FD6BB5A73C933EBCAB226C2C999E8BA"/>
-    </capability>
-    <capability namespace="osgi.identity">
-      <attribute name="osgi.identity" value="org.apache.maven:maven-artifact-manager"/>
-      <attribute name="type" value="application/java-archive"/>
-      <attribute name="version" value="2.1.0" type="Version"/>
-    </capability>
-    <capability namespace="bnd.info">
-      <attribute name="name" value="org.apache.maven:maven-artifact-manager:2.1.0"/>
-      <attribute name="from" value="org.apache.maven:maven-artifact-manager:2.1.0"/>
-      <attribute name="version" value="0.0.0" type="Version"/>
-    </capability>
-  </resource>
-  <resource>
     <capability namespace="osgi.identity">
       <attribute name="license" value="http://www.apache.org/licenses/LICENSE-2.0, http://www.eclipse.org/org/documents/epl-v10.php"/>
       <attribute name="osgi.identity" value="org.eclipse.jetty.websocket.client"/>
@@ -8789,6 +8771,24 @@
     <requirement namespace="osgi.ee">
       <directive name="filter" value="(&amp;(osgi.ee=JavaSE)(version=1.8))"/>
     </requirement>
+  </resource>
+  <resource>
+    <capability namespace="osgi.content">
+      <attribute name="size" value="65777" type="Long"/>
+      <attribute name="url" value="file:/Users/dleangen/eclipse/java-photon/Eclipse.app/Contents/MacOS/enroute-distro/org/apache/maven/maven-artifact-manager/2.1.0/maven-artifact-manager-2.1.0.jar"/>
+      <attribute name="mime" value="application/vnd.osgi.bundle"/>
+      <attribute name="osgi.content" value="C5A234610C68D13E6D2EFEAD2BCB12A21FD6BB5A73C933EBCAB226C2C999E8BA"/>
+    </capability>
+    <capability namespace="osgi.identity">
+      <attribute name="osgi.identity" value="org.apache.maven:maven-artifact-manager"/>
+      <attribute name="type" value="application/java-archive"/>
+      <attribute name="version" value="2.1.0" type="Version"/>
+    </capability>
+    <capability namespace="bnd.info">
+      <attribute name="name" value="org.apache.maven:maven-artifact-manager:2.1.0"/>
+      <attribute name="from" value="org.apache.maven:maven-artifact-manager:2.1.0"/>
+      <attribute name="version" value="0.0.0" type="Version"/>
+    </capability>
   </resource>
   <resource>
     <capability namespace="osgi.identity">
@@ -11352,46 +11352,6 @@
     </capability>
   </resource>
   <resource>
-    <capability namespace="osgi.identity">
-      <attribute name="license" value="http://opensource.org/licenses/MIT&quot;"/>
-      <attribute name="osgi.identity" value="osgi.enroute.google.angular.webresource"/>
-      <attribute name="type" value="osgi.bundle"/>
-      <attribute name="version" value="1.5.7.201610141744" type="Version"/>
-      <attribute name="documentation" value="http://angularjs.org/"/>
-    </capability>
-    <capability namespace="osgi.wiring.bundle">
-      <attribute name="bundle-version" value="1.5.7.201610141744" type="Version"/>
-      <attribute name="osgi.wiring.bundle" value="osgi.enroute.google.angular.webresource"/>
-    </capability>
-    <capability namespace="osgi.wiring.host">
-      <attribute name="bundle-version" value="1.5.7.201610141744" type="Version"/>
-      <attribute name="osgi.wiring.host" value="osgi.enroute.google.angular.webresource"/>
-    </capability>
-    <capability namespace="osgi.wiring.package">
-      <attribute name="version" value="1.5.7" type="Version"/>
-      <attribute name="osgi.wiring.package" value="osgi.enroute.google.angular.capabilities"/>
-    </capability>
-    <capability namespace="osgi.enroute.webresource">
-      <attribute name="version" value="1.5.7" type="Version"/>
-      <attribute name="osgi.enroute.webresource" value="/google/angular"/>
-      <attribute name="root" value="static/google/angular/1.5.7"/>
-    </capability>
-    <capability namespace="osgi.content">
-      <attribute name="size" value="1760184" type="Long"/>
-      <attribute name="url" value="file:/Users/dleangen/eclipse/java-photon/Eclipse.app/Contents/MacOS/enroute-distro/org/osgi/osgi.enroute.google.angular.webresource/1.5.7/osgi.enroute.google.angular.webresource-1.5.7.jar"/>
-      <attribute name="mime" value="application/vnd.osgi.bundle"/>
-      <attribute name="osgi.content" value="B7DB36D9055D26CCA1A30577BE82018047BC8D9923E62AA915D4BDE9502BE9D0"/>
-    </capability>
-    <capability namespace="bnd.info">
-      <attribute name="name" value="org.osgi:osgi.enroute.google.angular.webresource:1.5.7"/>
-      <attribute name="from" value="org.osgi:osgi.enroute.google.angular.webresource:1.5.7"/>
-      <attribute name="version" value="0.0.0" type="Version"/>
-    </capability>
-    <requirement namespace="osgi.ee">
-      <directive name="filter" value="(&amp;(osgi.ee=JavaSE)(version=1.8))"/>
-    </requirement>
-  </resource>
-  <resource>
     <capability namespace="osgi.content">
       <attribute name="size" value="72150" type="Long"/>
       <attribute name="url" value="file:/Users/dleangen/eclipse/java-photon/Eclipse.app/Contents/MacOS/enroute-distro/logkit/logkit/1.0.1/logkit-1.0.1.jar"/>
@@ -11461,6 +11421,46 @@
     <requirement namespace="osgi.wiring.package">
       <directive name="filter" value="(&amp;(osgi.wiring.package=org.eclipse.jetty.util.resource)(&amp;(version&gt;=9.3.8)(!(version&gt;=9.3.9))))"/>
     </requirement>
+    <requirement namespace="osgi.ee">
+      <directive name="filter" value="(&amp;(osgi.ee=JavaSE)(version=1.8))"/>
+    </requirement>
+  </resource>
+  <resource>
+    <capability namespace="osgi.identity">
+      <attribute name="license" value="http://opensource.org/licenses/MIT&quot;"/>
+      <attribute name="osgi.identity" value="osgi.enroute.google.angular.webresource"/>
+      <attribute name="type" value="osgi.bundle"/>
+      <attribute name="version" value="1.5.7.201610141744" type="Version"/>
+      <attribute name="documentation" value="http://angularjs.org/"/>
+    </capability>
+    <capability namespace="osgi.wiring.bundle">
+      <attribute name="bundle-version" value="1.5.7.201610141744" type="Version"/>
+      <attribute name="osgi.wiring.bundle" value="osgi.enroute.google.angular.webresource"/>
+    </capability>
+    <capability namespace="osgi.wiring.host">
+      <attribute name="bundle-version" value="1.5.7.201610141744" type="Version"/>
+      <attribute name="osgi.wiring.host" value="osgi.enroute.google.angular.webresource"/>
+    </capability>
+    <capability namespace="osgi.wiring.package">
+      <attribute name="version" value="1.5.7" type="Version"/>
+      <attribute name="osgi.wiring.package" value="osgi.enroute.google.angular.capabilities"/>
+    </capability>
+    <capability namespace="osgi.enroute.webresource">
+      <attribute name="version" value="1.5.7" type="Version"/>
+      <attribute name="osgi.enroute.webresource" value="/google/angular"/>
+      <attribute name="root" value="static/google/angular/1.5.7"/>
+    </capability>
+    <capability namespace="osgi.content">
+      <attribute name="size" value="1760184" type="Long"/>
+      <attribute name="url" value="file:/Users/dleangen/eclipse/java-photon/Eclipse.app/Contents/MacOS/enroute-distro/org/osgi/osgi.enroute.google.angular.webresource/1.5.7/osgi.enroute.google.angular.webresource-1.5.7.jar"/>
+      <attribute name="mime" value="application/vnd.osgi.bundle"/>
+      <attribute name="osgi.content" value="B7DB36D9055D26CCA1A30577BE82018047BC8D9923E62AA915D4BDE9502BE9D0"/>
+    </capability>
+    <capability namespace="bnd.info">
+      <attribute name="name" value="org.osgi:osgi.enroute.google.angular.webresource:1.5.7"/>
+      <attribute name="from" value="org.osgi:osgi.enroute.google.angular.webresource:1.5.7"/>
+      <attribute name="version" value="0.0.0" type="Version"/>
+    </capability>
     <requirement namespace="osgi.ee">
       <directive name="filter" value="(&amp;(osgi.ee=JavaSE)(version=1.8))"/>
     </requirement>
@@ -11730,24 +11730,6 @@
   </resource>
   <resource>
     <capability namespace="osgi.content">
-      <attribute name="size" value="170430" type="Long"/>
-      <attribute name="url" value="file:/Users/dleangen/eclipse/java-photon/Eclipse.app/Contents/MacOS/enroute-distro/org/apache/maven/maven-project/2.1.0/maven-project-2.1.0.jar"/>
-      <attribute name="mime" value="application/vnd.osgi.bundle"/>
-      <attribute name="osgi.content" value="D63FADE825CD73ACC9EC2B643E7BBA3BAE0B3759CF3FE0F22016800F5C14CC30"/>
-    </capability>
-    <capability namespace="osgi.identity">
-      <attribute name="osgi.identity" value="org.apache.maven:maven-project"/>
-      <attribute name="type" value="application/java-archive"/>
-      <attribute name="version" value="2.1.0" type="Version"/>
-    </capability>
-    <capability namespace="bnd.info">
-      <attribute name="name" value="org.apache.maven:maven-project:2.1.0"/>
-      <attribute name="from" value="org.apache.maven:maven-project:2.1.0"/>
-      <attribute name="version" value="0.0.0" type="Version"/>
-    </capability>
-  </resource>
-  <resource>
-    <capability namespace="osgi.content">
       <attribute name="size" value="1217231" type="Long"/>
       <attribute name="url" value="file:/Users/dleangen/eclipse/java-photon/Eclipse.app/Contents/MacOS/enroute-distro/net/sourceforge/htmlunit/htmlunit-core-js/2.22/htmlunit-core-js-2.22.jar"/>
       <attribute name="mime" value="application/vnd.osgi.bundle"/>
@@ -11761,6 +11743,24 @@
     <capability namespace="bnd.info">
       <attribute name="name" value="net.sourceforge.htmlunit:htmlunit-core-js:2.22"/>
       <attribute name="from" value="net.sourceforge.htmlunit:htmlunit-core-js:2.22"/>
+      <attribute name="version" value="0.0.0" type="Version"/>
+    </capability>
+  </resource>
+  <resource>
+    <capability namespace="osgi.content">
+      <attribute name="size" value="170430" type="Long"/>
+      <attribute name="url" value="file:/Users/dleangen/eclipse/java-photon/Eclipse.app/Contents/MacOS/enroute-distro/org/apache/maven/maven-project/2.1.0/maven-project-2.1.0.jar"/>
+      <attribute name="mime" value="application/vnd.osgi.bundle"/>
+      <attribute name="osgi.content" value="D63FADE825CD73ACC9EC2B643E7BBA3BAE0B3759CF3FE0F22016800F5C14CC30"/>
+    </capability>
+    <capability namespace="osgi.identity">
+      <attribute name="osgi.identity" value="org.apache.maven:maven-project"/>
+      <attribute name="type" value="application/java-archive"/>
+      <attribute name="version" value="2.1.0" type="Version"/>
+    </capability>
+    <capability namespace="bnd.info">
+      <attribute name="name" value="org.apache.maven:maven-project:2.1.0"/>
+      <attribute name="from" value="org.apache.maven:maven-project:2.1.0"/>
       <attribute name="version" value="0.0.0" type="Version"/>
     </capability>
   </resource>
@@ -12065,24 +12065,6 @@
   </resource>
   <resource>
     <capability namespace="osgi.content">
-      <attribute name="size" value="53186" type="Long"/>
-      <attribute name="url" value="file:/Users/dleangen/eclipse/java-photon/Eclipse.app/Contents/MacOS/enroute-distro/org/apache/maven/wagon/wagon-provider-api/1.0-beta-6/wagon-provider-api-1.0-beta-6.jar"/>
-      <attribute name="mime" value="application/vnd.osgi.bundle"/>
-      <attribute name="osgi.content" value="E116F32EDCB77067289A3148143F2C0C97B27CF9A1342F8108EE37DEC4868861"/>
-    </capability>
-    <capability namespace="osgi.identity">
-      <attribute name="osgi.identity" value="org.apache.maven.wagon:wagon-provider-api"/>
-      <attribute name="type" value="application/java-archive"/>
-      <attribute name="version" value="1.0.0.beta-6" type="Version"/>
-    </capability>
-    <capability namespace="bnd.info">
-      <attribute name="name" value="org.apache.maven.wagon:wagon-provider-api:1.0-beta-6"/>
-      <attribute name="from" value="org.apache.maven.wagon:wagon-provider-api:1.0-beta-6"/>
-      <attribute name="version" value="0.0.0" type="Version"/>
-    </capability>
-  </resource>
-  <resource>
-    <capability namespace="osgi.content">
       <attribute name="size" value="3154938" type="Long"/>
       <attribute name="url" value="file:/Users/dleangen/eclipse/java-photon/Eclipse.app/Contents/MacOS/enroute-distro/xalan/xalan/2.7.2/xalan-2.7.2.jar"/>
       <attribute name="mime" value="application/vnd.osgi.bundle"/>
@@ -12096,6 +12078,24 @@
     <capability namespace="bnd.info">
       <attribute name="name" value="xalan:xalan:2.7.2"/>
       <attribute name="from" value="xalan:xalan:2.7.2"/>
+      <attribute name="version" value="0.0.0" type="Version"/>
+    </capability>
+  </resource>
+  <resource>
+    <capability namespace="osgi.content">
+      <attribute name="size" value="53186" type="Long"/>
+      <attribute name="url" value="file:/Users/dleangen/eclipse/java-photon/Eclipse.app/Contents/MacOS/enroute-distro/org/apache/maven/wagon/wagon-provider-api/1.0-beta-6/wagon-provider-api-1.0-beta-6.jar"/>
+      <attribute name="mime" value="application/vnd.osgi.bundle"/>
+      <attribute name="osgi.content" value="E116F32EDCB77067289A3148143F2C0C97B27CF9A1342F8108EE37DEC4868861"/>
+    </capability>
+    <capability namespace="osgi.identity">
+      <attribute name="osgi.identity" value="org.apache.maven.wagon:wagon-provider-api"/>
+      <attribute name="type" value="application/java-archive"/>
+      <attribute name="version" value="1.0.0.beta-6" type="Version"/>
+    </capability>
+    <capability namespace="bnd.info">
+      <attribute name="name" value="org.apache.maven.wagon:wagon-provider-api:1.0-beta-6"/>
+      <attribute name="from" value="org.apache.maven.wagon:wagon-provider-api:1.0-beta-6"/>
       <attribute name="version" value="0.0.0" type="Version"/>
     </capability>
   </resource>
@@ -12498,24 +12498,6 @@
   </resource>
   <resource>
     <capability namespace="osgi.content">
-      <attribute name="size" value="194185" type="Long"/>
-      <attribute name="url" value="file:/Users/dleangen/eclipse/java-photon/Eclipse.app/Contents/MacOS/enroute-distro/org/codehaus/plexus/plexus-container-default/1.0-alpha-9-stable-1/plexus-container-default-1.0-alpha-9-stable-1.jar"/>
-      <attribute name="mime" value="application/vnd.osgi.bundle"/>
-      <attribute name="osgi.content" value="7C758612888782CCFE376823AEE7CDCC7E0CDAFB097F7EF50295A0B0C3A16EDF"/>
-    </capability>
-    <capability namespace="osgi.identity">
-      <attribute name="osgi.identity" value="org.codehaus.plexus:plexus-container-default"/>
-      <attribute name="type" value="application/java-archive"/>
-      <attribute name="version" value="1.0.0.alpha-9-stable-1" type="Version"/>
-    </capability>
-    <capability namespace="bnd.info">
-      <attribute name="name" value="org.codehaus.plexus:plexus-container-default:1.0-alpha-9-stable-1"/>
-      <attribute name="from" value="org.codehaus.plexus:plexus-container-default:1.0-alpha-9-stable-1"/>
-      <attribute name="version" value="0.0.0" type="Version"/>
-    </capability>
-  </resource>
-  <resource>
-    <capability namespace="osgi.content">
       <attribute name="size" value="433071" type="Long"/>
       <attribute name="url" value="file:/Users/dleangen/eclipse/java-photon/Eclipse.app/Contents/MacOS/enroute-distro/org/apache/httpcomponents/httpclient/4.2.3/httpclient-4.2.3.jar"/>
       <attribute name="mime" value="application/vnd.osgi.bundle"/>
@@ -12529,6 +12511,24 @@
     <capability namespace="bnd.info">
       <attribute name="name" value="org.apache.httpcomponents:httpclient:4.2.3"/>
       <attribute name="from" value="org.apache.httpcomponents:httpclient:4.2.3"/>
+      <attribute name="version" value="0.0.0" type="Version"/>
+    </capability>
+  </resource>
+  <resource>
+    <capability namespace="osgi.content">
+      <attribute name="size" value="194185" type="Long"/>
+      <attribute name="url" value="file:/Users/dleangen/eclipse/java-photon/Eclipse.app/Contents/MacOS/enroute-distro/org/codehaus/plexus/plexus-container-default/1.0-alpha-9-stable-1/plexus-container-default-1.0-alpha-9-stable-1.jar"/>
+      <attribute name="mime" value="application/vnd.osgi.bundle"/>
+      <attribute name="osgi.content" value="7C758612888782CCFE376823AEE7CDCC7E0CDAFB097F7EF50295A0B0C3A16EDF"/>
+    </capability>
+    <capability namespace="osgi.identity">
+      <attribute name="osgi.identity" value="org.codehaus.plexus:plexus-container-default"/>
+      <attribute name="type" value="application/java-archive"/>
+      <attribute name="version" value="1.0.0.alpha-9-stable-1" type="Version"/>
+    </capability>
+    <capability namespace="bnd.info">
+      <attribute name="name" value="org.codehaus.plexus:plexus-container-default:1.0-alpha-9-stable-1"/>
+      <attribute name="from" value="org.codehaus.plexus:plexus-container-default:1.0-alpha-9-stable-1"/>
       <attribute name="version" value="0.0.0" type="Version"/>
     </capability>
   </resource>
@@ -13389,24 +13389,6 @@
     </capability>
   </resource>
   <resource>
-    <capability namespace="osgi.content">
-      <attribute name="size" value="111869" type="Long"/>
-      <attribute name="url" value="file:/Users/dleangen/eclipse/java-photon/Eclipse.app/Contents/MacOS/enroute-distro/nekohtml/nekohtml/1.9.6.2/nekohtml-1.9.6.2.jar"/>
-      <attribute name="mime" value="application/vnd.osgi.bundle"/>
-      <attribute name="osgi.content" value="FDFF6CFA9ED9CC911C842A5D2395F209EC621EF1239D46810E9E495809D3AE09"/>
-    </capability>
-    <capability namespace="osgi.identity">
-      <attribute name="osgi.identity" value="nekohtml:nekohtml"/>
-      <attribute name="type" value="application/java-archive"/>
-      <attribute name="version" value="1.9.6.2" type="Version"/>
-    </capability>
-    <capability namespace="bnd.info">
-      <attribute name="name" value="nekohtml:nekohtml:1.9.6.2"/>
-      <attribute name="from" value="nekohtml:nekohtml:1.9.6.2"/>
-      <attribute name="version" value="0.0.0" type="Version"/>
-    </capability>
-  </resource>
-  <resource>
     <capability namespace="osgi.identity">
       <attribute name="license" value="http://www.apache.org/licenses/LICENSE-2.0.txt"/>
       <attribute name="osgi.identity" value="org.apache.commons.codec"/>
@@ -13469,6 +13451,24 @@
   </resource>
   <resource>
     <capability namespace="osgi.content">
+      <attribute name="size" value="111869" type="Long"/>
+      <attribute name="url" value="file:/Users/dleangen/eclipse/java-photon/Eclipse.app/Contents/MacOS/enroute-distro/nekohtml/nekohtml/1.9.6.2/nekohtml-1.9.6.2.jar"/>
+      <attribute name="mime" value="application/vnd.osgi.bundle"/>
+      <attribute name="osgi.content" value="FDFF6CFA9ED9CC911C842A5D2395F209EC621EF1239D46810E9E495809D3AE09"/>
+    </capability>
+    <capability namespace="osgi.identity">
+      <attribute name="osgi.identity" value="nekohtml:nekohtml"/>
+      <attribute name="type" value="application/java-archive"/>
+      <attribute name="version" value="1.9.6.2" type="Version"/>
+    </capability>
+    <capability namespace="bnd.info">
+      <attribute name="name" value="nekohtml:nekohtml:1.9.6.2"/>
+      <attribute name="from" value="nekohtml:nekohtml:1.9.6.2"/>
+      <attribute name="version" value="0.0.0" type="Version"/>
+    </capability>
+  </resource>
+  <resource>
+    <capability namespace="osgi.content">
       <attribute name="size" value="1323005" type="Long"/>
       <attribute name="url" value="file:/Users/dleangen/eclipse/java-photon/Eclipse.app/Contents/MacOS/enroute-distro/org/apache/ant/ant/1.7.1/ant-1.7.1.jar"/>
       <attribute name="mime" value="application/vnd.osgi.bundle"/>
@@ -13482,24 +13482,6 @@
     <capability namespace="bnd.info">
       <attribute name="name" value="org.apache.ant:ant:1.7.1"/>
       <attribute name="from" value="org.apache.ant:ant:1.7.1"/>
-      <attribute name="version" value="0.0.0" type="Version"/>
-    </capability>
-  </resource>
-  <resource>
-    <capability namespace="osgi.content">
-      <attribute name="size" value="98828" type="Long"/>
-      <attribute name="url" value="file:/Users/dleangen/eclipse/java-photon/Eclipse.app/Contents/MacOS/enroute-distro/org/apache/rat/apache-rat-core/0.6/apache-rat-core-0.6.jar"/>
-      <attribute name="mime" value="application/vnd.osgi.bundle"/>
-      <attribute name="osgi.content" value="0E2A7EA6DAF92B927DB3C59B2F53392A75D80EA9050609AFBFB41065675D31EB"/>
-    </capability>
-    <capability namespace="osgi.identity">
-      <attribute name="osgi.identity" value="org.apache.rat:apache-rat-core"/>
-      <attribute name="type" value="application/java-archive"/>
-      <attribute name="version" value="0.6.0" type="Version"/>
-    </capability>
-    <capability namespace="bnd.info">
-      <attribute name="name" value="org.apache.rat:apache-rat-core:0.6"/>
-      <attribute name="from" value="org.apache.rat:apache-rat-core:0.6"/>
       <attribute name="version" value="0.0.0" type="Version"/>
     </capability>
   </resource>
@@ -13587,6 +13569,24 @@
     <requirement namespace="osgi.wiring.package">
       <directive name="filter" value="(&amp;(osgi.wiring.package=org.eclipse.jetty.websocket.common.io.http)(&amp;(version&gt;=9.0.0)(!(version&gt;=10.0.0))))"/>
     </requirement>
+  </resource>
+  <resource>
+    <capability namespace="osgi.content">
+      <attribute name="size" value="98828" type="Long"/>
+      <attribute name="url" value="file:/Users/dleangen/eclipse/java-photon/Eclipse.app/Contents/MacOS/enroute-distro/org/apache/rat/apache-rat-core/0.6/apache-rat-core-0.6.jar"/>
+      <attribute name="mime" value="application/vnd.osgi.bundle"/>
+      <attribute name="osgi.content" value="0E2A7EA6DAF92B927DB3C59B2F53392A75D80EA9050609AFBFB41065675D31EB"/>
+    </capability>
+    <capability namespace="osgi.identity">
+      <attribute name="osgi.identity" value="org.apache.rat:apache-rat-core"/>
+      <attribute name="type" value="application/java-archive"/>
+      <attribute name="version" value="0.6.0" type="Version"/>
+    </capability>
+    <capability namespace="bnd.info">
+      <attribute name="name" value="org.apache.rat:apache-rat-core:0.6"/>
+      <attribute name="from" value="org.apache.rat:apache-rat-core:0.6"/>
+      <attribute name="version" value="0.0.0" type="Version"/>
+    </capability>
   </resource>
   <resource>
     <capability namespace="osgi.content">
@@ -14622,24 +14622,6 @@
   </resource>
   <resource>
     <capability namespace="osgi.content">
-      <attribute name="size" value="1812019" type="Long"/>
-      <attribute name="url" value="file:/Users/dleangen/eclipse/java-photon/Eclipse.app/Contents/MacOS/enroute-distro/xerces/xerces/1.4.4/xerces-1.4.4.jar"/>
-      <attribute name="mime" value="application/vnd.osgi.bundle"/>
-      <attribute name="osgi.content" value="3F9622B5A77C9474A322B21D158323C841FB951C3AEAE8A57BAE6E36D19B6CB7"/>
-    </capability>
-    <capability namespace="osgi.identity">
-      <attribute name="osgi.identity" value="xerces:xerces"/>
-      <attribute name="type" value="application/java-archive"/>
-      <attribute name="version" value="1.4.4" type="Version"/>
-    </capability>
-    <capability namespace="bnd.info">
-      <attribute name="name" value="xerces:xerces:1.4.4"/>
-      <attribute name="from" value="xerces:xerces:1.4.4"/>
-      <attribute name="version" value="0.0.0" type="Version"/>
-    </capability>
-  </resource>
-  <resource>
-    <capability namespace="osgi.content">
       <attribute name="size" value="1223877" type="Long"/>
       <attribute name="url" value="file:/Users/dleangen/eclipse/java-photon/Eclipse.app/Contents/MacOS/enroute-distro/xerces/xercesImpl/2.9.0/xercesImpl-2.9.0.jar"/>
       <attribute name="mime" value="application/vnd.osgi.bundle"/>
@@ -14653,6 +14635,24 @@
     <capability namespace="bnd.info">
       <attribute name="name" value="xerces:xercesImpl:2.9.0"/>
       <attribute name="from" value="xerces:xercesImpl:2.9.0"/>
+      <attribute name="version" value="0.0.0" type="Version"/>
+    </capability>
+  </resource>
+  <resource>
+    <capability namespace="osgi.content">
+      <attribute name="size" value="1812019" type="Long"/>
+      <attribute name="url" value="file:/Users/dleangen/eclipse/java-photon/Eclipse.app/Contents/MacOS/enroute-distro/xerces/xerces/1.4.4/xerces-1.4.4.jar"/>
+      <attribute name="mime" value="application/vnd.osgi.bundle"/>
+      <attribute name="osgi.content" value="3F9622B5A77C9474A322B21D158323C841FB951C3AEAE8A57BAE6E36D19B6CB7"/>
+    </capability>
+    <capability namespace="osgi.identity">
+      <attribute name="osgi.identity" value="xerces:xerces"/>
+      <attribute name="type" value="application/java-archive"/>
+      <attribute name="version" value="1.4.4" type="Version"/>
+    </capability>
+    <capability namespace="bnd.info">
+      <attribute name="name" value="xerces:xerces:1.4.4"/>
+      <attribute name="from" value="xerces:xerces:1.4.4"/>
       <attribute name="version" value="0.0.0" type="Version"/>
     </capability>
   </resource>

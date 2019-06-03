@@ -26,6 +26,8 @@ import org.bucketz.lib.BucketPathConverter;
 import org.bucketz.store.BucketDescriptor;
 import org.bucketz.store.BucketStore;
 import org.bucketz.store.FileStore;
+import org.bucketz.store.Patcher;
+import org.bucketz.store.Writable;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.service.component.ComponentContext;
 import org.osgi.service.component.annotations.Activate;
@@ -70,6 +72,7 @@ public class FileStoreService<D>
     private Path baseAndOuterPath;
     private URI uri;
 
+    @Reference private Patcher patcher;
     @Reference private LogService logger;
 
     @SuppressWarnings( "unchecked" )
@@ -265,6 +268,38 @@ public class FileStoreService<D>
                 put( bucket, anIncrement, repo );
             else
                 delete( bucket, anIncrement, repo );
+
+            deferred.resolve( true );
+        }
+        catch ( Exception e )
+        {
+            deferred.fail( e );
+        }
+
+        return deferred.getPromise();
+    }
+
+    @Override
+    public Promise<Boolean> patch( String anId, List<Patcher.Patch> patches, Supplier<Map<String, D>> repo )
+    {
+        final Deferred<Boolean> deferred = new Deferred<>();
+
+        try
+        {
+            final D original = repo.get().get( anId );
+            final D patched = patcher.patch( original, patches );
+            final List<Bucket> bucketList = io.bucketize(
+                    Stream.of( patched ),
+                    uri().toString(),
+                    outerPath );
+            if( bucketList.size() != 1 )
+                throw new UncheckedBucketException(
+                        "An error occurred when attempting to process the Bucket" );
+            final Bucket bucket = bucketList.get( 0 );
+            if( !bucket.content().isPresent() )
+                throw new UncheckedBucketException( "No content to write" );
+            final Increment<D> increment = Writable.newIncrement( Increment.Type.PUT, patched );
+            put( bucket, increment, repo );
 
             deferred.resolve( true );
         }

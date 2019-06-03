@@ -13,6 +13,6 @@ Private-Package: \
 	osgi.enroute.base.api;version=2.0,\
 	org.bucketz.api;version=snapshot,\
 	org.bucketz.lib;version=snapshot;packages=*,\
-	org.apache.felix.converter,\
+	org.osgi.util.converter,\
 	org.apache.felix.gogo.runtime,\
 	org.apache.felix.serializer

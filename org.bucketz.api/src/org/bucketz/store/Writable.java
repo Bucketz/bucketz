@@ -1,5 +1,6 @@
 package org.bucketz.store;
 
+import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
@@ -24,6 +25,14 @@ public interface Writable<D>
      * of DTOs must be updated, not just the DTO that is incrementally changed.
      */
     Promise<Boolean> push( Increment<D> anIncrement, Supplier<Map<String, D>> repo );
+
+    /**
+     * Patch an object as an incremental change to the BucketStore for persistence. A backreference 
+     * to the repository is required, as the object may require additional context when being
+     * persisted. To persist in a MultiJson Bucket, for instance, the entire collection
+     * of DTOs must be updated, not just the DTO that is incrementally changed.
+     */
+    Promise<Boolean> patch( String anId, List<Patcher.Patch> patches, Supplier<Map<String, D>> repo );
 
     /**
      * Represents an incremental change. This is useful when the BucketStore should be

@@ -11,6 +11,6 @@ Private-Package: \
 -buildpath: \
 	osgi.enroute.base.api;version=2.0,\
 	org.bucketz.api;version=snapshot,\
-	org.apache.felix.converter,\
+	org.osgi.util.converter,\
 	org.apache.felix.schematizer,\
 	org.apache.felix.serializer

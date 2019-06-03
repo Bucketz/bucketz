@@ -1,4 +1,5 @@
-org.apache.felix:org.apache.felix.converter:0.3.0-SNAPSHOT
+javax.json:javax.json.provider:1.1.4
 org.apache.felix:org.apache.felix.schematizer:0.3.0-SNAPSHOT
 org.apache.felix:org.apache.felix.serializer:0.3.0-SNAPSHOT
-org.apache.felix:org.apache.felix.persister:0.3.0-SNAPSHOT
+org.osgi:org.osgi.util.converter:1.0.0
+org.osgi:org.osgi.util.function:1.0.0
